@@ -27,7 +27,7 @@ export class Utils {
   async updateUser(id: string, data: any): Promise<UpdateStatus> {
     try {
       if (!(await this.fetchUser(id))) {
-        this.logger.log(`No user with id: ${id}`);
+        this.logger.warning(`No user with id: ${id}`);
         return UpdateStatus.noRef;
       }
       const { error } = await this.supabase.from("users").update(data).eq(
@@ -35,9 +35,12 @@ export class Utils {
         id,
       );
       if (error) {
-        this.logger.log(`Failed to update data for user: ${id}`);
+        this.logger.error(`Failed to update data for user: ${id}`);
         return UpdateStatus.failed;
       } else {
+        this.logger.log(
+          `Success updating user id=${id} with data=${JSON.stringify(data)}`,
+        );
         return UpdateStatus.success;
       }
     } catch (error) {
