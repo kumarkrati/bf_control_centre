@@ -32,6 +32,7 @@ export function encrypted(
         return context.json({ messsage: "Unauthorized" }, 401);
       }
     }
+    // TODO: Validate phone number [id]
     try {
       return await handler(json, context);
     } catch (e) {
