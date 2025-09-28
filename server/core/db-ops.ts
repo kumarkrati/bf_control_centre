@@ -1,7 +1,7 @@
 // deno-lint-ignore-file no-explicit-any
 
 import { SupabaseClient } from "npm:@supabase/supabase-js@2";
-import { AppLogger } from "./core/app_logger.ts";
+import { AppLogger } from "./app_logger.ts";
 
 export enum UpdateStatus {
   failed,
@@ -12,11 +12,10 @@ export enum UpdateStatus {
 export enum AuthenticateStatus {
   AUTHSUCCESS,
   AUTHFAILED,
-  USERNOTFOUND
+  USERNOTFOUND,
 }
 
-
-export class Utils {
+export class DbOps {
   supabase: SupabaseClient;
   logger: AppLogger;
 
@@ -56,6 +55,7 @@ export class Utils {
     }
   }
 
+  async rpc(id: string, data: any): Promise<any> {
+    return await this.supabase.rpc(id, data);
+  }
 }
-
-
