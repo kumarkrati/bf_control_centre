@@ -1,6 +1,8 @@
+import 'package:bf_control_centre/core/app_storage.dart';
 import 'package:bf_control_centre/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -94,6 +96,12 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('BillingFast Control Centre'),
         automaticallyImplyLeading: false,
+        bottom: PreferredSize(preferredSize: Size.fromHeight(12), child: Text(
+          "Logged in as ${AppStorage.get('user') ?? 'Arham'}",
+          style: GoogleFonts.poppins(
+            fontSize: 12,
+          ),
+        )),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -769,6 +777,17 @@ class ShopManagementSheet extends StatelessWidget {
               color: const Color(0xFF8B5CF6),
               onTap: () {
                 // TODO: Implement app versions view
+              },
+            ),
+            const SizedBox(height: 12),
+
+            _buildShopOption(
+              icon: Icons.receipt_long,
+              title: 'Repair Order Invoices',
+              subtitle: 'Click to fix invoice nos of this shop',
+              color: const Color(0xFFEF4444),
+              onTap: () {
+                // TODO: Implement repair order invoices fix
               },
             ),
           ],
