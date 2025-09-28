@@ -9,6 +9,11 @@ export enum UpdateStatus {
   success,
 }
 
+export enum RestoreProductStatus {
+  RESTORED,
+  FAILED,
+}
+
 export class DbOps {
   supabase: SupabaseClient;
   logger: AppLogger;
@@ -51,5 +56,25 @@ export class DbOps {
 
   async rpc(id: string, data: any): Promise<any> {
     return await this.supabase.rpc(id, data);
+  }
+
+  async restoreProduct(id: string): Promise<RestoreProductStatus> {
+    try {
+      if (!(await this.fetchUser(id))) {
+        this.logger.warning(`No user with id: ${id}`);
+        return RestoreProductStatus.FAILED;
+      }
+
+      const { error } = await this.supabase.from("inventory").update({
+        status: "Unverified",
+      }).eq("userid", id).eq("status", "Deleted");
+      if (error) {
+        return RestoreProductStatus.FAILED;
+      }
+      return RestoreProductStatus.RESTORED;
+    } catch (error) {
+      this.logger.error(`Exception restoreProduct(): ${error}`);
+      return RestoreProductStatus.FAILED;
+    }
   }
 }
