@@ -21,6 +21,13 @@ setPassword(app, logger, dbops)
 reassignInvoiceNo(app, logger, dbops)
 authorize(app, logger, dbops)
 
+/*
+TODO: Add Repair products endpoint
+update inventory
+set status = 'Unverified'
+where userid = ${id} and status = 'Deleted'
+*/
+
 // start serve at this point
 Deno.serve({
   port: 8001,
