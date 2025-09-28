@@ -1,14 +1,17 @@
 [
     {
         "username": "arham",
-        "password": "Abcd1234"
+        "password": "Abcd1234",
+        "role": "ADMIN"
     },
     {
         "username": "sankalp",
-        "password": "Abcd1233"
+        "password": "Abcd1233",
+        "role": "ADMIN"
     },
     {
-        "username": "sir",
-        "password": "Abcd1232"
+        "username": "ashish",
+        "password": "Abcd1232",
+        "role": "STAFF"
     }
 ]
