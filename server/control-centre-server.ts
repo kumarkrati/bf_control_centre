@@ -2,24 +2,14 @@ import { Hono } from "hono";
 import { supabase } from "./core/supabase-client.ts";
 import { DbOps } from "./core/db-ops.ts";
 import { AppLogger } from "./core/app_logger.ts";
-import { init } from "./v1/init.ts";
-import { viewPassword } from "./v1/view-password.ts";
-import { setPassword } from "./v1/set-password.ts";
-import { reassignInvoiceNo } from "./v1/reassign-invoice-no.ts";
-import { health } from "./v1/health.ts";
-import { authorize } from "./v1/authorize.ts";
+import { initV1 as initv1 } from "./v1/init.ts";
 
 const app = new Hono();
 const logger = new AppLogger("control-center-logs.log");
 const dbops = new DbOps(supabase, logger);
 
 // end-points initialization
-init(app)
-health(app)
-viewPassword(app, logger, dbops)
-setPassword(app, logger, dbops)
-reassignInvoiceNo(app, logger, dbops)
-authorize(app, logger, dbops)
+initv1(app, logger, dbops)
 
 /*
 TODO: Add Repair products endpoint
