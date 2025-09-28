@@ -9,6 +9,13 @@ export enum UpdateStatus {
   success,
 }
 
+export enum AuthenticateStatus {
+  AUTHSUCCESS,
+  AUTHFAILED,
+  USERNOTFOUND
+}
+
+
 export class Utils {
   supabase: SupabaseClient;
   logger: AppLogger;
@@ -48,4 +55,7 @@ export class Utils {
       return UpdateStatus.failed;
     }
   }
+
 }
+
+

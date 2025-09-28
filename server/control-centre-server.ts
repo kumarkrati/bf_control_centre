@@ -50,6 +50,23 @@ app.post("/v1/set-password", async (context: Context) => {
   }
 });
 
+
+app.post("/v1/reassing-invoice" , async (context: Context)=>{
+  const {id} = await context.req.json();
+  const {error} = await supabase.rpc("reassign_invoice_no" , {
+    p_userid : id
+  })
+  if (error) {
+    logger.log(`"Error occurred in setting invoice no.: ${error}`);
+    return context.json({
+      message: "Internal Server Error",
+    }, 500);
+  }
+
+  return context.json({message:"updated invoice number"})
+})
+
+
 Deno.serve({
   port: 8001,
   // disable ssl for localhost
@@ -60,3 +77,4 @@ Deno.serve({
   //   "/etc/letsencrypt/live/apis.billingfast.com/privkey.pem",
   // ),
 }, app.fetch);
+
