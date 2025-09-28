@@ -9,12 +9,6 @@ export enum UpdateStatus {
   success,
 }
 
-export enum AuthenticateStatus {
-  AUTHSUCCESS,
-  AUTHFAILED,
-  USERNOTFOUND,
-}
-
 export class DbOps {
   supabase: SupabaseClient;
   logger: AppLogger;
