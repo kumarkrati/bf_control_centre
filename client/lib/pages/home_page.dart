@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
   void _showPasswordManagement() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       builder: (context) => const PasswordManagementSheet(),
     );
   }
@@ -64,6 +65,7 @@ class _HomePageState extends State<HomePage> {
   void _showSubscriptionManagement() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       isScrollControlled: true,
       builder: (context) => const SubscriptionManagementSheet(),
     );
@@ -72,6 +74,7 @@ class _HomePageState extends State<HomePage> {
   void _showShopManagement() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       builder: (context) => const ShopManagementSheet(),
     );
   }
@@ -79,7 +82,45 @@ class _HomePageState extends State<HomePage> {
   void _showCustomerRetention() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       builder: (context) => const CustomerRetentionSheet(),
+    );
+  }
+
+  void _showFeaturesList() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) => Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(
+              "BillingFast Control Centre",
+              style: GoogleFonts.poppins(fontSize: 20),
+            ),
+            Text("v1.0", style: GoogleFonts.poppins(fontSize: 14)),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Here's a list of active features:",
+                style: GoogleFonts.poppins(fontSize: 15),
+              ),
+            ),
+            SizedBox(
+              height: 300,
+              child: ListView(
+                children: [
+                  ListTile(title: Text("• View Password.")),
+                  ListTile(title: Text("• Reset Password.")),
+                  ListTile(title: Text("• Restore Products.")),
+                  ListTile(title: Text("• Repair Orders.")),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -90,6 +131,11 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('BillingFast Control Centre'),
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.help_outline),
+          tooltip: 'Help',
+          onPressed: _showFeaturesList,
+        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(12),
           child: Text(
@@ -1141,11 +1187,7 @@ class ShopManagementSheet extends StatelessWidget {
                         children: [
                           Icon(Icons.info_outline, color: Colors.white),
                           SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              'User not registered.',
-                            ),
-                          ),
+                          Expanded(child: Text('User not registered.')),
                         ],
                       ),
                       backgroundColor: Color(0xFFF59E0B),
@@ -1457,11 +1499,7 @@ class ShopManagementSheet extends StatelessWidget {
                         children: [
                           Icon(Icons.info_outline, color: Colors.white),
                           SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              'User not registered.',
-                            ),
-                          ),
+                          Expanded(child: Text('User not registered.')),
                         ],
                       ),
                       backgroundColor: Color(0xFFF59E0B),

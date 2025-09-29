@@ -10,7 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'pages/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const Splash());
 }
 
@@ -47,10 +48,7 @@ class _SplashState extends State<Splash> {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF172a43),
           brightness: Brightness.light,
-        ).copyWith(
-          surface: Colors.white,
-          background: Colors.white,
-        ),
+        ).copyWith(surface: Colors.white, background: Colors.white),
         scaffoldBackgroundColor: const Color(0xFFF8F9FA),
         textTheme: GoogleFonts.poppinsTextTheme(),
         appBarTheme: AppBarTheme(
@@ -66,14 +64,18 @@ class _SplashState extends State<Splash> {
         ),
         cardTheme: CardThemeData(
           elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           color: Colors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             elevation: 0,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
             textStyle: GoogleFonts.poppins(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -95,7 +97,10 @@ class _SplashState extends State<Splash> {
           ),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 14,
+          ),
         ),
         useMaterial3: true,
       ),
@@ -106,24 +111,28 @@ class _SplashState extends State<Splash> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 20,
-                      offset: const Offset(0, 8),
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(AppIcons.appIcon, width: 120),
-                ),
-              ).animate(onComplete: (e) => e.repeat())
-               .shimmer(duration: const Duration(seconds: 2)),
+                    child: SizedBox.square(
+                      dimension: 120,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(AppIcons.appIcon, width: 120),
+                      ),
+                    ),
+                  )
+                  .animate(onComplete: (e) => e.repeat())
+                  .shimmer(duration: const Duration(seconds: 2)),
               const Gap(24),
               Text(
                 "BillingFast Control Centre",
