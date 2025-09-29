@@ -1,4 +1,5 @@
 
+import 'package:bf_control_centre/core/enums.dart';
 import 'package:bf_control_centre/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bf_control_centre/core/server_utils.dart';

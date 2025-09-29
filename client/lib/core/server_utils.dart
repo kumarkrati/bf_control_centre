@@ -1,18 +1,9 @@
 import 'dart:convert';
 import 'package:bf_control_centre/core/app_storage.dart';
 import 'package:bf_control_centre/core/encryption/key_compiler.dart';
+import 'package:bf_control_centre/core/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-enum LoginStatus { error, invalid, denied, success }
-
-enum InvoiceNumberStatus { success, fail, noRef }
-
-enum RestoreProdStatus { restored, failed, noRef }
-
-enum ViewPasswordStatus { success, noRef, noPasswordSet, failed }
-
-enum SetPasswordStatus { success, failed, noRef }
 
 class ViewPasswordResult {
   final ViewPasswordStatus status;
@@ -91,9 +82,7 @@ class ServerUtils {
     }
   }
 
-  static Future<RestoreProdStatus> restoreProducts(
-    String id,
-  ) async {
+  static Future<RestoreProdStatus> restoreProducts(String id) async {
     try {
       final Map<String, dynamic> reqBody = {
         "key": _key,
@@ -116,9 +105,7 @@ class ServerUtils {
     }
   }
 
-  static Future<ViewPasswordResult> viewPassword(
-    String mobile,
-  ) async {
+  static Future<ViewPasswordResult> viewPassword(String mobile) async {
     try {
       final Map<String, dynamic> reqBody = {
         "id": mobile,
@@ -140,7 +127,11 @@ class ServerUtils {
         } else {
           return ViewPasswordResult(
             ViewPasswordStatus.success,
-            responseData['password'].toString().split("\$").map((e) => String.fromCharCode(int.parse(e))).join(),
+            responseData['password']
+                .toString()
+                .split("\$")
+                .map((e) => String.fromCharCode(int.parse(e)))
+                .join(),
           );
         }
       }
@@ -151,9 +142,7 @@ class ServerUtils {
     }
   }
 
-  static Future<SetPasswordStatus> setPassword(
-    String mobile,
-  ) async {
+  static Future<SetPasswordStatus> setPassword(String mobile) async {
     try {
       final Map<String, dynamic> reqBody = {
         "id": mobile,
@@ -165,20 +154,16 @@ class ServerUtils {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
-
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        final message = responseData['message']?.toString().toLowerCase();
-        // Server returns "true" or "false" as string
-        if (message == 'true') {
-          return SetPasswordStatus.success;
-        } else {
-          debugPrint("[setPassword] Server returned: $message");
-          return SetPasswordStatus.failed;
-        }
+      final responseData = jsonDecode(response.body);
+      final message = responseData['message'];
+      if (message == SetPasswordStatus.success.toString()) {
+        return SetPasswordStatus.success;
+      } else if (message == SetPasswordStatus.noRef.toString()) {
+        return SetPasswordStatus.noRef;
+      } else {
+        debugPrint("[setPassword] Server returned: $message");
+        return SetPasswordStatus.failed;
       }
-      debugPrint("[setPassword] HTTP Status: ${response.statusCode}");
-      return SetPasswordStatus.failed;
     } catch (e) {
       debugPrint("[setPassword] Error: $e ");
       return SetPasswordStatus.failed;
