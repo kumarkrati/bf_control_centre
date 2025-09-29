@@ -10,6 +10,17 @@ enum InvoiceNumberStatus { success, fail }
 
 enum RestoreProdStatus { restored, failed }
 
+enum ViewPasswordStatus { success, userNotRegistered, noPasswordSet, failed }
+
+enum SetPasswordStatus { success, failed }
+
+class ViewPasswordResult {
+  final ViewPasswordStatus status;
+  final String? password;
+
+  ViewPasswordResult(this.status, this.password);
+}
+
 class ServerUtils {
   ServerUtils._();
 
@@ -103,6 +114,77 @@ class ServerUtils {
     } catch (e) {
       debugPrint("[login] Error: $e ");
       return RestoreProdStatus.failed;
+    }
+  }
+
+  static Future<ViewPasswordResult> viewPassword(
+    String username,
+    String customerId,
+  ) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        "id": customerId,
+        "key": "",
+        "credentials": {"username": username, "token": _accessToken},
+      };
+      final response = await http.post(
+        Uri.parse('${_api}view-password'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData['messsage'] == "User is not registered") {
+          return ViewPasswordResult(ViewPasswordStatus.userNotRegistered, null);
+        } else if (responseData['messsage'] == "No password has been set yet") {
+          return ViewPasswordResult(ViewPasswordStatus.noPasswordSet, null);
+        } else {
+          return ViewPasswordResult(
+            ViewPasswordStatus.success,
+            responseData['password'],
+          );
+        }
+      }
+      return ViewPasswordResult(ViewPasswordStatus.failed, null);
+    } catch (e) {
+      debugPrint("[viewPassword] Error: $e ");
+      return ViewPasswordResult(ViewPasswordStatus.failed, null);
+    }
+  }
+
+  static Future<SetPasswordStatus> setPassword(
+    String username,
+    String customerId,
+  ) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        "id": customerId,
+        "key": "",
+        "credentials": {"username": username, "token": _accessToken},
+      };
+      final response = await http.post(
+        Uri.parse('${_api}set-password'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final message = responseData['message']?.toString().toLowerCase();
+        // Server returns "true" or "false" as string
+        if (message == 'true') {
+          return SetPasswordStatus.success;
+        } else {
+          debugPrint("[setPassword] Server returned: $message");
+          return SetPasswordStatus.failed;
+        }
+      }
+      debugPrint("[setPassword] HTTP Status: ${response.statusCode}");
+      return SetPasswordStatus.failed;
+    } catch (e) {
+      debugPrint("[setPassword] Error: $e ");
+      return SetPasswordStatus.failed;
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:bf_control_centre/core/app_storage.dart';
 import 'package:bf_control_centre/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bf_control_centre/core/server_utils.dart';
@@ -50,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
   void _handleLoginStatus(LoginStatus status) {
     switch (status) {
       case LoginStatus.success:
+        AppStorage.set('user', _usernameController.text);
         _showSnackBar('Login successful!', Colors.green);
         Get.off(() => HomePage());
         break;

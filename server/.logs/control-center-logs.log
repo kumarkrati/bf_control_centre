@@ -1,5 +1,17 @@
+<<<<<<< HEAD
 control-center-logs.log logger initialized on 29/9/2025 at 14:3:20 (1759134800680 mse)
 [29/9/2025 (14:4:36)] processing stage-1-request request ...
 [29/9/2025 (14:4:36)] [undefined] Decompiled time: 1759134876652000
 [29/9/2025 (14:4:36)] [undefined] Key is valid. Created at 1759134876652 current time is 1759134876976 diff is 324 ms.
 [29/9/2025 (14:4:36)] Access Granted: ashish : 2c7461f4-11ea-4a9a-bcf6-91c6ab93e75b
+=======
+control-center-logs.log logger initialized on 29/9/2025 at 13:43:34 (1759133614684 mse)
+[29/9/2025 (13:43:58)] processing stage-1-request request ...
+[29/9/2025 (13:43:58)] Access Granted: arham : 3eddbb42-c155-4205-9db3-9d9737150067
+[29/9/2025 (13:44:14)] processing stage-2-request request ...
+[29/9/2025 (13:44:14)] Request received ...
+[29/9/2025 (13:44:14)] Fetching user: +917526004070
+[29/9/2025 (13:44:19)] processing stage-2-request request ...
+[29/9/2025 (13:44:19)] Fetching user: +917526004070
+[29/9/2025 (13:44:19)] Success updating user id=+917526004070 with data={"password":"115$104$111$112$64$49$50$51"}
+>>>>>>> 8d77dc3 (reset password)

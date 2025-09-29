@@ -1,4 +1,5 @@
 import 'package:bf_control_centre/core/app_storage.dart';
+import 'package:bf_control_centre/core/server_utils.dart';
 import 'package:bf_control_centre/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -99,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(12),
           child: Text(
-            "Logged in as ${AppStorage.get('name') ?? 'Relogin'}",
+            "Logged in as ${AppStorage.get('user')}",
             style: GoogleFonts.poppins(fontSize: 12),
           ),
         ),
@@ -348,8 +349,22 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class PasswordManagementSheet extends StatelessWidget {
+class PasswordManagementSheet extends StatefulWidget {
   const PasswordManagementSheet({super.key});
+
+  @override
+  State<PasswordManagementSheet> createState() =>
+      _PasswordManagementSheetState();
+}
+
+class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
+  final TextEditingController _customerIdController = TextEditingController();
+
+  @override
+  void dispose() {
+    _customerIdController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -397,13 +412,76 @@ class PasswordManagementSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
+
+          // Customer ID input field
+          TextField(
+            controller: _customerIdController,
+            decoration: const InputDecoration(
+              labelText: 'Customer ID / Phone Number',
+              prefixIcon: Icon(Icons.person_outline),
+              hintText: 'Enter customer phone number',
+              border: OutlineInputBorder(),
+            ),
+            keyboardType: TextInputType.phone,
+          ),
+          const SizedBox(height: 24),
+
           _buildPasswordOption(
             icon: Icons.visibility_outlined,
             title: 'View Current Password',
             subtitle: 'Display the current password',
             color: const Color(0xFF3B82F6),
-            onTap: () {
-              // TODO: Implement view current password
+            onTap: () async {
+              final customerId = _customerIdController.text.trim();
+              if (customerId.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please enter customer ID')),
+                );
+                return;
+              }
+
+              final username = AppStorage.get('user');
+              final result = await ServerUtils.viewPassword(
+                username,
+                customerId,
+              );
+
+              if (result.status == ViewPasswordStatus.success) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Customer Password'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Customer: $customerId'),
+                        const SizedBox(height: 8),
+                        Text('Password: ${result.password}'),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
+              } else if (result.status ==
+                  ViewPasswordStatus.userNotRegistered) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('User is not registered')),
+                );
+              } else if (result.status == ViewPasswordStatus.noPasswordSet) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('No password has been set yet')),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Failed to retrieve password')),
+                );
+              }
             },
           ),
           const SizedBox(height: 12),
@@ -412,8 +490,85 @@ class PasswordManagementSheet extends StatelessWidget {
             title: 'Reset Password',
             subtitle: 'Generate a new password',
             color: const Color(0xFFEF4444),
-            onTap: () {
-              // TODO: Implement reset password
+            onTap: () async {
+              final customerId = _customerIdController.text.trim();
+              if (customerId.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please enter customer ID')),
+                );
+                return;
+              }
+
+              // Show confirmation dialog
+              final confirmed = await showDialog<bool>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Confirm Password Reset'),
+                  content: Text(
+                    'Are you sure you want to reset password for customer $customerId?',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('Reset'),
+                    ),
+                  ],
+                ),
+              );
+
+              if (confirmed != true) return;
+
+              final username = AppStorage.get('user');
+              final result = await ServerUtils.setPassword(
+                username,
+                customerId,
+              );
+
+              if (result == SetPasswordStatus.success) {
+                // Show success dialog with new password info
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Password Reset Complete'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Password has been reset for customer: $customerId',
+                        ),
+                        const SizedBox(height: 8),
+                        const Text('New password: shop@123'),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Please share this password with the customer.',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Failed to reset password'),
+                    backgroundColor: Color(0xFFEF4444),
+                  ),
+                );
+              }
             },
           ),
         ],
