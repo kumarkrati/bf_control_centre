@@ -6,6 +6,8 @@ enum LoginStatus { error, invalid, denied, success }
 
 enum InvoiceNumberStatus { success, fail }
 
+enum RestoreProdStatus { restored, failed }
+
 class ServerUtils {
   ServerUtils._();
 
@@ -52,7 +54,7 @@ class ServerUtils {
         "credentials": {"username": username, "token": _accessToken},
       };
       final response = await http.post(
-        Uri.parse('$_api/reassing-invoice'),
+        Uri.parse('${_api}reassing-invoice'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
@@ -65,6 +67,32 @@ class ServerUtils {
     } catch (e) {
       debugPrint("[login] Error: $e ");
       return InvoiceNumberStatus.fail;
+    }
+  }
+
+  static Future<RestoreProdStatus> restoreProducts(
+    String username,
+    String id,
+  ) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        "id": id,
+        "key": "",
+        "credentials": {"username": username, "token": _accessToken},
+      };
+      final response = await http.post(
+        Uri.parse('${_api}restore-product'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+
+      if (response.statusCode == 201) {
+        return RestoreProdStatus.restored;
+      }
+      return RestoreProdStatus.failed;
+    } catch (e) {
+      debugPrint("[login] Error: $e ");
+      return RestoreProdStatus.failed;
     }
   }
 }
