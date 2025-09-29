@@ -7,6 +7,7 @@ import { health } from "./health.ts";
 import { reassignInvoiceNo } from "./reassign-invoice-no.ts";
 import { setPassword } from "./set-password.ts";
 import { viewPassword } from "./view-password.ts";
+import { restoreProduct } from "./restore-products.ts";
 
 export function initV1(app: Hono, logger: AppLogger, dbops: DbOps) {
   app.use("/v1/*", cors());
@@ -14,5 +15,6 @@ export function initV1(app: Hono, logger: AppLogger, dbops: DbOps) {
   viewPassword(app, logger, dbops);
   setPassword(app, logger, dbops);
   reassignInvoiceNo(app, logger, dbops);
+  restoreProduct(app, logger, dbops);
   authorize(app, logger, dbops);
 }

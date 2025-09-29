@@ -19,7 +19,7 @@ export function encrypted(
     const json = await context.req.json();
     const request: BaseRequestPayload = json;
     if (!KeyValidator.validate(request.key, request.id, logger)) {
-      return context.json({ messsage: "Invalid request" }, 200);
+      return context.json({ messsage: "Invalid request" }, 401);
     }
     if (tag === "stage-2-request") {
       const username = request.credentials["username"];

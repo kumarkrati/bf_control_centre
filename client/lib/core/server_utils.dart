@@ -55,10 +55,7 @@ class ServerUtils {
     }
   }
 
-  static Future<InvoiceNumberStatus> reassignInvoice(
-    String username,
-    String id,
-  ) async {
+  static Future<InvoiceNumberStatus> reassignInvoice(String id) async {
     try {
       final Map<String, dynamic> reqBody = {
         "key": _key,
@@ -70,9 +67,7 @@ class ServerUtils {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
-      if (response.statusCode == 401) {
-        return InvoiceNumberStatus.fail;
-      } else if (response.statusCode == 400) {
+      if (response.statusCode == 400) {
         return InvoiceNumberStatus.fail;
       }
       return InvoiceNumberStatus.success;

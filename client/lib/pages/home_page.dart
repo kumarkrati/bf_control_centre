@@ -108,6 +108,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
             onPressed: () {
               AppStorage.set('accessToken', '');
               Get.off(LoginPage());
@@ -524,14 +525,6 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                         Text('Password has been reset for customer: $mobile'),
                         const SizedBox(height: 8),
                         const Text('New password: shop@123'),
-                        const SizedBox(height: 8),
-                        const Text(
-                          'Please share this password with the customer.',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
                       ],
                     ),
                     actions: [
@@ -921,8 +914,8 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'Recover deleted products',
               color: const Color(0xFFF59E0B),
               onTap: () async {
-                final customerId = _mobileController.text.trim();
-                if (customerId.isEmpty) {
+                final mobile = _mobileController.text.trim();
+                if (mobile.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Row(
@@ -945,9 +938,12 @@ class ShopManagementSheet extends StatelessWidget {
                   return;
                 }
 
+                // Close loading dialog
+                Navigator.pop(context);
+
                 // Beautiful confirmation dialog
                 final confirmed = await showDialog<bool>(
-                  context: context,
+                  context: Get.context!,
                   builder: (context) => AlertDialog(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -989,7 +985,7 @@ class ShopManagementSheet extends StatelessWidget {
                               ),
                               SizedBox(width: 8),
                               Text(
-                                customerId,
+                                mobile,
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -1008,10 +1004,10 @@ class ShopManagementSheet extends StatelessWidget {
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
-                        child: Text('Cancel'),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.grey.shade600,
                         ),
+                        child: Text('Cancel'),
                       ),
                       ElevatedButton.icon(
                         onPressed: () => Navigator.pop(context, true),
@@ -1033,7 +1029,7 @@ class ShopManagementSheet extends StatelessWidget {
 
                 // Beautiful loading dialog with animation
                 showDialog(
-                  context: context,
+                  context: Get.context!,
                   barrierDismissible: false,
                   builder: (context) => AlertDialog(
                     shape: RoundedRectangleBorder(
@@ -1073,17 +1069,17 @@ class ShopManagementSheet extends StatelessWidget {
                     ),
                   ),
                 );
+                await Future.delayed(Duration(seconds: 2));
 
-                final result = await ServerUtils.restoreProducts(customerId);
-
-                // Close loading dialog
-                Navigator.pop(context);
+                final result = await ServerUtils.restoreProducts(mobile);
+                Navigator.pop(Get.context!);
+                await Future.delayed(Duration(milliseconds: 500));
 
                 // Beautiful success/error messages
                 if (result == RestoreProdStatus.restored) {
                   // Success animation dialog
                   showDialog(
-                    context: context,
+                    context: Get.context!,
                     builder: (context) => AlertDialog(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -1115,7 +1111,7 @@ class ShopManagementSheet extends StatelessWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Products have been successfully restored for customer $customerId',
+                            'Products have been successfully restored for customer $mobile',
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.grey.shade600),
                           ),
@@ -1124,7 +1120,6 @@ class ShopManagementSheet extends StatelessWidget {
                       actions: [
                         ElevatedButton(
                           onPressed: () => Navigator.pop(context),
-                          child: Text('Done'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFF10B981),
                             foregroundColor: Colors.white,
@@ -1132,12 +1127,13 @@ class ShopManagementSheet extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
+                          child: Text('Done'),
                         ),
                       ],
                     ),
                   );
                 } else if (result == RestoreProdStatus.noRef) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
                     SnackBar(
                       content: Row(
                         children: [
@@ -1145,7 +1141,7 @@ class ShopManagementSheet extends StatelessWidget {
                           SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'No deleted products found for this customer',
+                              'User not registered.',
                             ),
                           ),
                         ],
@@ -1158,7 +1154,7 @@ class ShopManagementSheet extends StatelessWidget {
                     ),
                   );
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
                     SnackBar(
                       content: Row(
                         children: [
@@ -1171,13 +1167,6 @@ class ShopManagementSheet extends StatelessWidget {
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-                      ),
-                      action: SnackBarAction(
-                        label: 'Retry',
-                        textColor: Colors.white,
-                        onPressed: () {
-                          // Retry logic could be added here
-                        },
                       ),
                     ),
                   );
@@ -1224,8 +1213,265 @@ class ShopManagementSheet extends StatelessWidget {
               title: 'Repair Order Invoices',
               subtitle: 'Click to fix invoice nos of this shop',
               color: const Color(0xFFEF4444),
-              onTap: () {
-                // TODO: Implement repair order invoices fix
+              onTap: () async {
+                final mobile = _mobileController.text.trim();
+                if (mobile.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(
+                            Icons.warning_amber_rounded,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 8),
+                          Text('Please enter customer mobile number first'),
+                        ],
+                      ),
+                      backgroundColor: Color(0xFFEF4444),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  );
+                  return;
+                }
+
+                Navigator.pop(Get.context!);
+
+                // Beautiful confirmation dialog
+                final confirmed = await showDialog<bool>(
+                  context: Get.context!,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    title: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF59E0B).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(Icons.restore, color: Color(0xFFF59E0B)),
+                        ),
+                        SizedBox(width: 12),
+                        Text('Repair Orders'),
+                      ],
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Are you sure you want to repair invoice nos for:',
+                        ),
+                        SizedBox(height: 8),
+                        Container(
+                          padding: EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.person,
+                                color: Color(0xFFF59E0B),
+                                size: 18,
+                              ),
+                              SizedBox(width: 8),
+                              Text(
+                                mobile,
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        Text(
+                          'This will realign invoice no for all orders of this customer.',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.grey.shade600,
+                        ),
+                        child: Text('Cancel'),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () => Navigator.pop(context, true),
+                        icon: Icon(Icons.restore, size: 18),
+                        label: Text('Repair'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFF59E0B),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (confirmed != true) return;
+
+                // Beautiful loading dialog with animation
+                showDialog(
+                  context: Get.context!,
+                  barrierDismissible: false,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Color(0xFFF59E0B),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Repair Products...',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Please wait while we repair orders',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+                await Future.delayed(Duration(seconds: 2));
+
+                final result = await ServerUtils.reassignInvoice(mobile);
+
+                // Close loading dialog
+                Navigator.pop(Get.context!);
+                await Future.delayed(Duration(milliseconds: 500));
+
+                // Beautiful success/error messages
+                if (result == InvoiceNumberStatus.success) {
+                  // Success animation dialog
+                  showDialog(
+                    context: Get.context!,
+                    builder: (context) => AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF10B981).withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.check_circle,
+                              color: Color(0xFF10B981),
+                              size: 30,
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            'Success!',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF10B981),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'Orders have been successfully processed for customer $mobile',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.grey.shade600),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF10B981),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text('Done'),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (result == InvoiceNumberStatus.noRef) {
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(Icons.info_outline, color: Colors.white),
+                          SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'User not registered.',
+                            ),
+                          ),
+                        ],
+                      ),
+                      backgroundColor: Color(0xFFF59E0B),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(Icons.error_outline, color: Colors.white),
+                          SizedBox(width: 8),
+                          Text('Failed to repair orders. Please try again.'),
+                        ],
+                      ),
+                      backgroundColor: Color(0xFFEF4444),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  );
+                }
               },
             ),
           ],

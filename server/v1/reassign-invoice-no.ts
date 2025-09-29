@@ -18,7 +18,7 @@ export function reassignInvoiceNo(app: Hono, logger: AppLogger, dbops: DbOps) {
           message: "Internal Server Error",
         }, 500);
       }
-      return context.json({ message: "updated invoice number" }, 200);
+      return context.json({ message: "Updated Invoice Numbers" }, 200);
     }, logger),
   );
 }
