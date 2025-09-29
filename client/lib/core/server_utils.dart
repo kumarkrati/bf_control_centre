@@ -40,4 +40,31 @@ class ServerUtils {
       return LoginStatus.error;
     }
   }
+
+  static Future<InvoiceNumberStatus> reassignInvoice(
+    String username,
+    String id,
+  ) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        "id": id,
+        "key": "",
+        "credentials": {"username": username, "token": _accessToken},
+      };
+      final response = await http.post(
+        Uri.parse('$_api/reassing-invoice'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 401) {
+        return InvoiceNumberStatus.fail;
+      } else if (response.statusCode == 400) {
+        return InvoiceNumberStatus.fail;
+      }
+      return InvoiceNumberStatus.success;
+    } catch (e) {
+      debugPrint("[login] Error: $e ");
+      return InvoiceNumberStatus.fail;
+    }
+  }
 }
