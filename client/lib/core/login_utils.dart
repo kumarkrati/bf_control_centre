@@ -5,6 +5,6 @@ class LoginUtils {
 
   static bool get isLoggedIn {
     final token = AppStorage.get<String>('accessToken');
-    return token != null;
+    return token != null && token.length > 10;
   }
 }

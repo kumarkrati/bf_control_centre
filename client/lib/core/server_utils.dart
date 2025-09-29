@@ -36,6 +36,7 @@ class ServerUtils {
       debugPrint("[login]StatusCode: ${response.statusCode}");
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
+        await AppStorage.set('name', responseData['name']);
         await AppStorage.set('username', username);
         await AppStorage.set('accessToken', responseData['token']);
         await AppStorage.set('roles', responseData['role']);

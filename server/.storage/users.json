@@ -1,15 +1,18 @@
 [
     {
+        "name": "Arham (Dev Team)",
         "username": "arham",
         "password": "Abcd1234",
         "role": "ADMIN"
     },
     {
+        "name": "Sankalp (Dev Team)",
         "username": "sankalp",
         "password": "Abcd1233",
         "role": "ADMIN"
     },
     {
+        "name": "Ashish (Sales Team)",
         "username": "ashish",
         "password": "Abcd1232",
         "role": "STAFF"

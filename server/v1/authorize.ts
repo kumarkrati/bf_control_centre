@@ -15,6 +15,7 @@ export function authorize(app: Hono, logger: AppLogger, _: DbOps) {
           Deno.readTextFileSync("./.storage/users.json"),
         );
         let isCredentialCorrect: boolean = false;
+        let name = "";
         let role = "";
         for (const user of users) {
           if (user["username"] === username) {
@@ -23,6 +24,7 @@ export function authorize(app: Hono, logger: AppLogger, _: DbOps) {
             } else {
               isCredentialCorrect = true;
               role = user['role'];
+              name = user['name'];
               break;
             }
           }
@@ -42,7 +44,7 @@ export function authorize(app: Hono, logger: AppLogger, _: DbOps) {
             JSON.stringify(tokens),
           );
           logger.log(`Access Granted: ${username} : ${token}`);
-          return context.json({ "token": token, "role": role }, 200);
+          return context.json({ "token": token, "role": role, "name": name }, 200);
         }
       },
       logger,

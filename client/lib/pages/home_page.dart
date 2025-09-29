@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('BillingFast Control Centre'),
         automaticallyImplyLeading: false,
         bottom: PreferredSize(preferredSize: Size.fromHeight(12), child: Text(
-          "Logged in as ${AppStorage.get('user') ?? 'Arham'}",
+          "Logged in as ${AppStorage.get('name') ?? 'Relogin'}",
           style: GoogleFonts.poppins(
             fontSize: 12,
           ),
@@ -106,6 +106,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
+              AppStorage.set('accessToken', '');
               Get.off(LoginPage());
             },
           ),
