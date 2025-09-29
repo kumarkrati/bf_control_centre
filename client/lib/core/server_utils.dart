@@ -95,8 +95,8 @@ class ServerUtils {
         body: jsonEncode(reqBody),
       );
 
-      if (response.statusCode == 201) {
-        return RestoreProdStatus.restored;
+      if (response.statusCode == 200) {
+        return RestoreProdStatus.values[jsonDecode(response.body)['message']];
       }
       return RestoreProdStatus.failed;
     } catch (e) {
@@ -154,14 +154,11 @@ class ServerUtils {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
-      final responseData = jsonDecode(response.body);
-      final message = responseData['message'];
-      if (message == 'UpdateStatus.success') {
-        return SetPasswordStatus.success;
-      } else if (message == 'UpdateStatus.noRef') {
-        return SetPasswordStatus.noRef;
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final message = responseData['message'];
+        return SetPasswordStatus.values[message];
       } else {
-        debugPrint("[setPassword] Server returned: $message");
         return SetPasswordStatus.failed;
       }
     } catch (e) {

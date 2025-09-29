@@ -11,7 +11,7 @@ export function restoreProduct(logger: AppLogger, app: Hono, dbops: DbOps) {
     encrypted(async (json: any, context: Context) => {
       const { id } = json;
       const status = await dbops.restoreProduct(id);
-      return context.json({ message: status.toString() }, 201);
+      return context.json({ message: status }, 200);
     }, logger),
   );
 }

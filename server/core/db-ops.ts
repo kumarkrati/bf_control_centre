@@ -3,15 +3,15 @@
 import { SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { AppLogger } from "./app_logger.ts";
 
-export enum UpdateStatus {
+export enum QueryExecutionStatus {
   failed,
   noRef,
   success,
 }
 
 export enum RestoreProductStatus {
-  RESTORED,
-  FAILED,
+  restored,
+  failed,
   noRef,
 }
 
@@ -30,11 +30,11 @@ export class DbOps {
       .maybeSingle())?.data;
   }
 
-  async updateUser(id: string, data: any): Promise<UpdateStatus> {
+  async updateUser(id: string, data: any): Promise<QueryExecutionStatus> {
     try {
       if (!(await this.fetchUser(id))) {
         this.logger.warning(`No user with id: ${id}`);
-        return UpdateStatus.noRef;
+        return QueryExecutionStatus.noRef;
       }
       const { error } = await this.supabase.from("users").update(data).eq(
         "id",
@@ -42,16 +42,17 @@ export class DbOps {
       );
       if (error) {
         this.logger.error(`Failed to update data for user: ${id}`);
-        return UpdateStatus.failed;
+        return QueryExecutionStatus.failed;
       } else {
         this.logger.log(
           `Success updating user id=${id} with data=${JSON.stringify(data)}`,
         );
-        return UpdateStatus.success;
+        console.log(QueryExecutionStatus.failed.toString());
+        return QueryExecutionStatus.success;
       }
     } catch (error) {
       this.logger.error(`Exception updateUser(): ${error}`);
-      return UpdateStatus.failed;
+      return QueryExecutionStatus.failed;
     }
   }
 
@@ -70,12 +71,12 @@ export class DbOps {
         status: "Unverified",
       }).eq("userid", id).eq("status", "Deleted");
       if (error) {
-        return RestoreProductStatus.FAILED;
+        return RestoreProductStatus.failed;
       }
-      return RestoreProductStatus.RESTORED;
+      return RestoreProductStatus.restored;
     } catch (error) {
       this.logger.error(`Exception restoreProduct(): ${error}`);
-      return RestoreProductStatus.FAILED;
+      return RestoreProductStatus.failed;
     }
   }
 }

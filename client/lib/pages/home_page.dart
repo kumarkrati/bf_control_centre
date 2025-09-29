@@ -455,15 +455,15 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                   ),
                 );
               } else if (result.status == ViewPasswordStatus.noRef) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(content: Text('User is not registered')),
                 );
               } else if (result.status == ViewPasswordStatus.noPasswordSet) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(content: Text('No password has been set yet')),
                 );
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(content: Text('Failed to retrieve password')),
                 );
               }
@@ -483,6 +483,8 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                 );
                 return;
               }
+
+              Navigator.pop(context);
 
               // Show confirmation dialog
               final confirmed = await showDialog<bool>(
@@ -512,7 +514,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
               if (result == SetPasswordStatus.success) {
                 // Show success dialog with new password info
                 showDialog(
-                  context: context,
+                  context: Get.context!,
                   builder: (context) => AlertDialog(
                     title: const Text('Password Reset Complete'),
                     content: Column(
@@ -541,7 +543,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                   ),
                 );
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Failed to reset password'),
                     backgroundColor: Color(0xFFEF4444),
