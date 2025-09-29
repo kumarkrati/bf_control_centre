@@ -27,7 +27,7 @@ export function authorize(app: Hono, logger: AppLogger, _: DbOps) {
         }
         if (!isCredentialCorrect) {
           logger.warning(`Invalid credentials: ${username} : ${password}`);
-          return context.json({ "message": "Invalid credentials." }, 200);
+          return context.json({ "message": "Invalid credentials." }, 401);
         } else {
           // assign access token
           const token = randomUUID();

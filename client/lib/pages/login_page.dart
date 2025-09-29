@@ -1,4 +1,3 @@
-
 import 'package:bf_control_centre/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bf_control_centre/core/server_utils.dart';
@@ -35,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
           _usernameController.text,
           _passwordController.text,
         );
+        debugPrint("[login] $loginStatus");
 
         _handleLoginStatus(loginStatus);
       } catch (e) {
@@ -66,12 +66,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showSnackBar(String message, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: color,
-      ),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message), backgroundColor: color));
   }
 
   @override
@@ -204,7 +201,9 @@ class _LoginPageState extends State<LoginPage> {
                                   height: 20,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
+                                    ),
                                   ),
                                 )
                               : const Text('Sign In'),

@@ -19,7 +19,7 @@ export function encrypted(
     const json = await context.req.json();
     const request: BaseRequestPayload = json;
     if (!KeyValidator.validate(request.key, request.id, logger)) {
-      return context.json({ messsage: "Invalid request" }, 401);
+      return context.json({ messsage: "Invalid request" }, 200);
     }
     if (tag === "stage-2-request") {
       const username = request.credentials["username"];
@@ -29,7 +29,7 @@ export function encrypted(
       );
       if (tokens[username] !== token) {
         logger.error(`Invalid token ${token} by ${username}`);
-        return context.json({ messsage: "Unauthorized" }, 401);
+        return context.json({ messsage: "Unauthorized" }, 400);
       }
       // TODO: Validate phone number [id]
     }

@@ -1,6 +1,6 @@
 name: bf_control_centre
 description: "Control Centre of BillingFast"
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -16,6 +16,7 @@ dependencies:
   shared_preferences: ^2.5.3
   flutter_animate: ^4.5.2
   google_fonts: ^6.2.1
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:

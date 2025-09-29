@@ -3,7 +3,7 @@ import * as KeyDecompiler from "./key_decompiler.ts";
 
 export function validate(key: string, id: string, logger: AppLogger): boolean {
   try {
-    return true
+    return true;
     const time = KeyDecompiler.decompile(key);
     logger.log(`[${id}] Decompiled time: ${time}`);
     const keyCreationTime = new Date(Number(time) / 1000);
@@ -11,7 +11,9 @@ export function validate(key: string, id: string, logger: AppLogger): boolean {
     const differenceMs = currentTime.getTime() - keyCreationTime.getTime();
     if (differenceMs < 0) {
       logger.log(
-        `[${id}] Future key encountered ${differenceMs} ms difference, client clock is ${Math.abs(differenceMs) / 1000}s ahead of the server clock.`,
+        `[${id}] Future key encountered ${differenceMs} ms difference, client clock is ${
+          Math.abs(differenceMs) / 1000
+        }s ahead of the server clock.`,
       );
       // allow only if the difference is not too big
       // allow upto a minute
