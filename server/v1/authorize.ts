@@ -15,12 +15,14 @@ export function authorize(app: Hono, logger: AppLogger, _: DbOps) {
           Deno.readTextFileSync("./.storage/users.json"),
         );
         let isCredentialCorrect: boolean = false;
+        let role = "";
         for (const user of users) {
           if (user["username"] === username) {
             if (user["password"] !== password) {
               break;
             } else {
               isCredentialCorrect = true;
+              role = user['role'];
               break;
             }
           }
@@ -40,7 +42,7 @@ export function authorize(app: Hono, logger: AppLogger, _: DbOps) {
             JSON.stringify(tokens),
           );
           logger.log(`Access Granted: ${username} : ${token}`);
-          return context.json({ "token": token }, 200);
+          return context.json({ "token": token, "role": role }, 200);
         }
       },
       logger,

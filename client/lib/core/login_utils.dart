@@ -4,8 +4,7 @@ class LoginUtils {
   LoginUtils._();
 
   static bool get isLoggedIn {
-    final credentials = AppStorage.get<Map>('credentials');
-    if (credentials == null) return false;
-    return credentials['token'] != null;
+    final token = AppStorage.get<String>('accessToken');
+    return token != null;
   }
 }

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:bf_control_centre/core/app_storage.dart';
+import 'package:bf_control_centre/core/encryption/key_compiler.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,12 +13,18 @@ enum RestoreProdStatus { restored, failed }
 class ServerUtils {
   ServerUtils._();
 
-  static const _api = 'http://0.0.0.0:8001/v1/';
-  static String? _accessToken;
+  static const _api = 'http://localhost:8001/v1/';
+  static String get _key => createKey().value;
+  static String get _accessToken => AppStorage.get<String>('accessToken')!;
+  static get _credentials => {
+    "username": AppStorage.get<String>('username'),
+    "token": _accessToken,
+  };
 
   static Future<LoginStatus> login(String username, String password) async {
     try {
       final Map<String, dynamic> reqBody = {
+        "key": _key,
         "username": username,
         "password": password,
       };
@@ -28,8 +36,9 @@ class ServerUtils {
       debugPrint("[login]StatusCode: ${response.statusCode}");
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        _accessToken = responseData['token'];
-        debugPrint("[login] $_accessToken");
+        await AppStorage.set('username', username);
+        await AppStorage.set('accessToken', responseData['token']);
+        await AppStorage.set('roles', responseData['role']);
         return LoginStatus.success;
       } else if (response.statusCode == 401) {
         return LoginStatus.invalid;
@@ -49,9 +58,9 @@ class ServerUtils {
   ) async {
     try {
       final Map<String, dynamic> reqBody = {
+        "key": _key,
+        "credentials": _credentials,
         "id": id,
-        "key": "",
-        "credentials": {"username": username, "token": _accessToken},
       };
       final response = await http.post(
         Uri.parse('${_api}reassing-invoice'),
@@ -76,9 +85,9 @@ class ServerUtils {
   ) async {
     try {
       final Map<String, dynamic> reqBody = {
+        "key": _key,
+        "credentials": _credentials,
         "id": id,
-        "key": "",
-        "credentials": {"username": username, "token": _accessToken},
       };
       final response = await http.post(
         Uri.parse('${_api}restore-product'),

@@ -3,7 +3,6 @@ import * as KeyDecompiler from "./key_decompiler.ts";
 
 export function validate(key: string, id: string, logger: AppLogger): boolean {
   try {
-    return true;
     const time = KeyDecompiler.decompile(key);
     logger.log(`[${id}] Decompiled time: ${time}`);
     const keyCreationTime = new Date(Number(time) / 1000);

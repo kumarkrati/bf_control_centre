@@ -12,6 +12,7 @@ export enum UpdateStatus {
 export enum RestoreProductStatus {
   RESTORED,
   FAILED,
+  noRef,
 }
 
 export class DbOps {
@@ -62,7 +63,7 @@ export class DbOps {
     try {
       if (!(await this.fetchUser(id))) {
         this.logger.warning(`No user with id: ${id}`);
-        return RestoreProductStatus.FAILED;
+        return RestoreProductStatus.noRef;
       }
 
       const { error } = await this.supabase.from("inventory").update({
