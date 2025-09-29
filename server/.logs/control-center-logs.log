@@ -1,17 +1,21 @@
-control-center-logs.log logger initialized on 29/9/2025 at 15:58:10 (1759141690545 mse)
-[29/9/2025 (15:58:18)] processing stage-2-request request ...
-[29/9/2025 (15:58:18)] [+918858493997] Decompiled time: 1759141698199000
-[29/9/2025 (15:58:18)] [+918858493997] Key is valid. Created at 1759141698199 current time is 1759141698560 diff is 361 ms.
-[29/9/2025 (15:58:18)] 
+control-center-logs.log logger initialized on 29/9/2025 at 10:58:29 (1759143509516 mse)
+[29/9/2025 (11:14:8)] processing stage-1-request request ...
+[29/9/2025 (11:14:8)] [undefined] Decompiled time: 1759144450356000
+[29/9/2025 (11:14:8)] [undefined] Future key encountered -2005 ms difference, client clock is 2.005s ahead of the server clock.
+(WARNING)[29/9/2025 (11:14:8)] Invalid credentials: arham : Abcd12334
+[29/9/2025 (11:14:13)] processing stage-1-request request ...
+[29/9/2025 (11:14:13)] [undefined] Decompiled time: 1759144456180000
+[29/9/2025 (11:14:13)] [undefined] Future key encountered -2474 ms difference, client clock is 2.474s ahead of the server clock.
+[29/9/2025 (11:14:13)] Access Granted: arham : 521fa1b9-8e5c-4c6a-b957-9a23ebca55a3
+[29/9/2025 (11:14:26)] processing stage-2-request request ...
+[29/9/2025 (11:14:26)] [+918858493997] Decompiled time: 1759144469359000
+[29/9/2025 (11:14:26)] [+918858493997] Future key encountered -2376 ms difference, client clock is 2.376s ahead of the server clock.
+[29/9/2025 (11:14:26)] 
 --------------------
-Request initiated by: ashish
-[29/9/2025 (15:58:18)] Request received ...
-[29/9/2025 (15:58:18)] Fetching user: +918858493997
-[29/9/2025 (16:2:20)] processing stage-2-request request ...
-[29/9/2025 (16:2:20)] [+918858493997] Decompiled time: 1759141940726000
-[29/9/2025 (16:2:20)] [+918858493997] Key is valid. Created at 1759141940726 current time is 1759141940732 diff is 6 ms.
-[29/9/2025 (16:2:20)] 
---------------------
-Request initiated by: ashish
-[29/9/2025 (16:2:20)] Request received ...
-[29/9/2025 (16:2:20)] Fetching user: +918858493997
+Request initiated by: arham
+[29/9/2025 (11:14:26)] Request received ...
+[29/9/2025 (11:14:26)] Fetching user: +918858493997
+[29/9/2025 (11:15:4)] processing stage-1-request request ...
+[29/9/2025 (11:15:4)] [undefined] Decompiled time: 1759144503441000
+[29/9/2025 (11:15:4)] [undefined] Key is valid. Created at 1759144503441 current time is 1759144504326 diff is 885 ms.
+[29/9/2025 (11:15:4)] Access Granted: arham : 30010598-79c6-4561-969a-cc90dc80529c

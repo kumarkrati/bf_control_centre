@@ -8,13 +8,13 @@
     {
         "name": "Sankalp (Dev Team)",
         "username": "sankalp",
-        "password": "Abcd1233",
+        "password": "sankalp+123",
         "role": "ADMIN"
     },
     {
-        "name": "Ashish (Sales Team)",
-        "username": "ashish",
-        "password": "Abcd1232",
-        "role": "STAFF"
+        "name": "Kumar Krati Gupta (Head)",
+        "username": "kumar",
+        "password": "BillingFast.22",
+        "role": "ADMIN"
     }
 ]
