@@ -156,9 +156,9 @@ class ServerUtils {
       );
       final responseData = jsonDecode(response.body);
       final message = responseData['message'];
-      if (message == SetPasswordStatus.success.toString()) {
+      if (message == 'UpdateStatus.success') {
         return SetPasswordStatus.success;
-      } else if (message == SetPasswordStatus.noRef.toString()) {
+      } else if (message == 'UpdateStatus.noRef') {
         return SetPasswordStatus.noRef;
       } else {
         debugPrint("[setPassword] Server returned: $message");

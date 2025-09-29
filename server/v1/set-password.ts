@@ -13,7 +13,7 @@ export function setPassword(app: Hono, logger: AppLogger, dbops: DbOps) {
         "password": "115$104$111$112$64$49$50$51",
       });
       return context.json({
-        message: status,
+        message: status.toString(),
       }, 200);
     }, logger),
   );
