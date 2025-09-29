@@ -6,13 +6,13 @@ import 'package:http/http.dart' as http;
 
 enum LoginStatus { error, invalid, denied, success }
 
-enum InvoiceNumberStatus { success, fail }
+enum InvoiceNumberStatus { success, fail, noRef }
 
-enum RestoreProdStatus { restored, failed }
+enum RestoreProdStatus { restored, failed, noRef }
 
-enum ViewPasswordStatus { success, userNotRegistered, noPasswordSet, failed }
+enum ViewPasswordStatus { success, noRef, noPasswordSet, failed }
 
-enum SetPasswordStatus { success, failed }
+enum SetPasswordStatus { success, failed, noRef }
 
 class ViewPasswordResult {
   final ViewPasswordStatus status;
@@ -50,7 +50,7 @@ class ServerUtils {
         await AppStorage.set('name', responseData['name']);
         await AppStorage.set('username', username);
         await AppStorage.set('accessToken', responseData['token']);
-        await AppStorage.set('roles', responseData['role']);
+        await AppStorage.set('role', responseData['role']);
         return LoginStatus.success;
       } else if (response.statusCode == 401) {
         return LoginStatus.invalid;
@@ -92,7 +92,6 @@ class ServerUtils {
   }
 
   static Future<RestoreProdStatus> restoreProducts(
-    String username,
     String id,
   ) async {
     try {
@@ -118,14 +117,13 @@ class ServerUtils {
   }
 
   static Future<ViewPasswordResult> viewPassword(
-    String username,
-    String customerId,
+    String mobile,
   ) async {
     try {
       final Map<String, dynamic> reqBody = {
-        "id": customerId,
-        "key": "",
-        "credentials": {"username": username, "token": _accessToken},
+        "id": mobile,
+        "key": _key,
+        "credentials": _credentials,
       };
       final response = await http.post(
         Uri.parse('${_api}view-password'),
@@ -136,13 +134,13 @@ class ServerUtils {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         if (responseData['messsage'] == "User is not registered") {
-          return ViewPasswordResult(ViewPasswordStatus.userNotRegistered, null);
+          return ViewPasswordResult(ViewPasswordStatus.noRef, null);
         } else if (responseData['messsage'] == "No password has been set yet") {
           return ViewPasswordResult(ViewPasswordStatus.noPasswordSet, null);
         } else {
           return ViewPasswordResult(
             ViewPasswordStatus.success,
-            responseData['password'],
+            responseData['password'].toString().split("\$").map((e) => String.fromCharCode(int.parse(e))).join(),
           );
         }
       }
@@ -154,14 +152,13 @@ class ServerUtils {
   }
 
   static Future<SetPasswordStatus> setPassword(
-    String username,
-    String customerId,
+    String mobile,
   ) async {
     try {
       final Map<String, dynamic> reqBody = {
-        "id": customerId,
-        "key": "",
-        "credentials": {"username": username, "token": _accessToken},
+        "id": mobile,
+        "key": _key,
+        "credentials": _credentials,
       };
       final response = await http.post(
         Uri.parse('${_api}set-password'),
