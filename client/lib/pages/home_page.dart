@@ -96,12 +96,13 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('BillingFast Control Centre'),
         automaticallyImplyLeading: false,
-        bottom: PreferredSize(preferredSize: Size.fromHeight(12), child: Text(
-          "Logged in as ${AppStorage.get('name') ?? 'Relogin'}",
-          style: GoogleFonts.poppins(
-            fontSize: 12,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(12),
+          child: Text(
+            "Logged in as ${AppStorage.get('name') ?? 'Relogin'}",
+            style: GoogleFonts.poppins(fontSize: 12),
           ),
-        )),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -188,22 +189,26 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: _createNewAccount,
-                            icon: const Icon(Icons.person_add, size: 18),
-                            label: const Text('Create Account'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF3B82F6),
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                        if (AppStorage.get<String>('role') == 'ADMIN') ...[
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: _createNewAccount,
+                              icon: const Icon(Icons.person_add, size: 18),
+                              label: const Text('Create Account'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF3B82F6),
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
                   ],
@@ -250,7 +255,8 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 16),
             _buildManagementCard(
               title: 'Customer Retention',
-              subtitle: 'See new unsubscribed customers from last 5 days or expiring plans',
+              subtitle:
+                  'See new unsubscribed customers from last 5 days or expiring plans',
               icon: Icons.people_alt,
               color: const Color(0xFFF59E0B),
               onTap: _showCustomerRetention,
@@ -295,11 +301,7 @@ class _HomePageState extends State<HomePage> {
                     color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(
-                    icon,
-                    color: color,
-                    size: 24,
-                  ),
+                  child: Icon(icon, color: color, size: 24),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -471,7 +473,11 @@ class PasswordManagementSheet extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey.shade400),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Colors.grey.shade400,
+                ),
               ],
             ),
           ),
@@ -485,18 +491,32 @@ class SubscriptionManagementSheet extends StatefulWidget {
   const SubscriptionManagementSheet({super.key});
 
   @override
-  State<SubscriptionManagementSheet> createState() => _SubscriptionManagementSheetState();
+  State<SubscriptionManagementSheet> createState() =>
+      _SubscriptionManagementSheetState();
 }
 
-class _SubscriptionManagementSheetState extends State<SubscriptionManagementSheet> {
+class _SubscriptionManagementSheetState
+    extends State<SubscriptionManagementSheet> {
   String _selectedPlan = 'PREMIUM';
   String _selectedDuration = '1 month';
   DateTime _startDate = DateTime.now();
 
   final List<String> _planTypes = ['PREMIUM', 'ULTRA', 'LITE'];
   final List<String> _durations = [
-    '1 day', '2 day', '3 days', '4 days', '5 days', '6 days', '7 days',
-    '14 days', '15 days', '1 month', '1 year', '13 months', '2 years', '5 years'
+    '1 day',
+    '2 day',
+    '3 days',
+    '4 days',
+    '5 days',
+    '6 days',
+    '7 days',
+    '14 days',
+    '15 days',
+    '1 month',
+    '1 year',
+    '13 months',
+    '2 years',
+    '5 years',
   ];
 
   @override
@@ -560,13 +580,21 @@ class _SubscriptionManagementSheetState extends State<SubscriptionManagementShee
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                       ),
-                      items: _planTypes.map((plan) => DropdownMenuItem(
-                        value: plan,
-                        child: Text(plan),
-                      )).toList(),
-                      onChanged: (value) => setState(() => _selectedPlan = value!),
+                      items: _planTypes
+                          .map(
+                            (plan) => DropdownMenuItem(
+                              value: plan,
+                              child: Text(plan),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) =>
+                          setState(() => _selectedPlan = value!),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -580,13 +608,21 @@ class _SubscriptionManagementSheetState extends State<SubscriptionManagementShee
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                       ),
-                      items: _durations.map((duration) => DropdownMenuItem(
-                        value: duration,
-                        child: Text(duration),
-                      )).toList(),
-                      onChanged: (value) => setState(() => _selectedDuration = value!),
+                      items: _durations
+                          .map(
+                            (duration) => DropdownMenuItem(
+                              value: duration,
+                              child: Text(duration),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) =>
+                          setState(() => _selectedDuration = value!),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -600,7 +636,9 @@ class _SubscriptionManagementSheetState extends State<SubscriptionManagementShee
                           context: context,
                           initialDate: _startDate,
                           firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(const Duration(days: 365)),
+                          lastDate: DateTime.now().add(
+                            const Duration(days: 365),
+                          ),
                         );
                         if (date != null) setState(() => _startDate = date);
                       },
@@ -617,7 +655,10 @@ class _SubscriptionManagementSheetState extends State<SubscriptionManagementShee
                               _startDate.toString().split(' ')[0],
                               style: const TextStyle(fontSize: 16),
                             ),
-                            const Icon(Icons.calendar_today, color: Color(0xFF10B981)),
+                            const Icon(
+                              Icons.calendar_today,
+                              color: Color(0xFF10B981),
+                            ),
                           ],
                         ),
                       ),
@@ -849,7 +890,11 @@ class ShopManagementSheet extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey.shade400),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Colors.grey.shade400,
+                ),
               ],
             ),
           ),
@@ -984,7 +1029,11 @@ class CustomerRetentionSheet extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey.shade400),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Colors.grey.shade400,
+                ),
               ],
             ),
           ),
