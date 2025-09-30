@@ -184,11 +184,11 @@ class ServerUtils {
         body: jsonEncode(reqBody),
       );
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
         return UpdateSubscriptionStatus.success;
-      } else {
-        return UpdateSubscriptionStatus.failed;
+      } else if (response.statusCode == 404) {
+        return UpdateSubscriptionStatus.noRef;
       }
+      return UpdateSubscriptionStatus.failed;
     } catch (e) {
       debugPrint("[updateSubscription] Error: $e ");
       return UpdateSubscriptionStatus.failed;

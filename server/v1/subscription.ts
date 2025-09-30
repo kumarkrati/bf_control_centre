@@ -16,6 +16,11 @@ export function subscription(app: Hono, logger: AppLogger, dbops: DbOps) {
         updatedBy,
         subStartedDate,
       );
+      if (status == 1) {
+        return context.json({ message: status }, 401);
+      } else if (status == 2) {
+        return context.json({ message: status }, 404);
+      }
       return context.json({ message: status }, 200);
     }, logger),
   );

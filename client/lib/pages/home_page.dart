@@ -1,6 +1,7 @@
 import 'package:bf_control_centre/core/app_storage.dart';
 import 'package:bf_control_centre/core/enums.dart';
 import 'package:bf_control_centre/core/server_utils.dart';
+import 'package:bf_control_centre/core/utils/convert_to_days.dart';
 import 'package:bf_control_centre/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -953,7 +954,10 @@ class _SubscriptionManagementSheetState
                 final result = await ServerUtils.updateSubscription(
                   id: mobile,
                   planType: _selectedPlan,
-                  planDuration: _selectedDuration,
+                  planDuration: convertToDays(
+                    int.parse(_selectedDuration.split(" ")[0]),
+                    _selectedDuration.split(" ")[1],
+                  ).toString(),
                   startDate: _startDate,
                 );
 
