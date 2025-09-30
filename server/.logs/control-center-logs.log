@@ -1,35 +1,18 @@
-
-control-center-logs.log logger initialized on 30/9/2025 at 14:1:1 (1759221061910 mse)
-[30/9/2025 (14:1:53)] processing stage-2-request request ...
-[30/9/2025 (14:1:53)] [+918858493997] Decompiled time: 1759221113699000
-[30/9/2025 (14:1:53)] [+918858493997] Key is valid. Created at 1759221113699 current time is 1759221113723 diff is 24 ms.
-[30/9/2025 (14:1:53)] Updating subscription ...
-[30/9/2025 (14:1:53)] Fetching user: +918858493997
-[30/9/2025 (14:1:55)] Success updating subscription for id=+918858493997 by sankalp
-
-
-[29/9/2025 (11:33:56)] processing stage-2-request request ...
-[29/9/2025 (11:33:56)] [+918858493997] Decompiled time: 1759145638601000
-[29/9/2025 (11:33:56)] [+918858493997] Future key encountered -2361 ms difference, client clock is 2.361s ahead of the server clock.
-[29/9/2025 (11:33:56)] 
+control-center-logs.log logger initialized on 30/9/2025 at 15:42:18 (1759227138737 mse)
+[30/9/2025 (15:42:34)] processing stage-2-request request ...
+[30/9/2025 (15:42:34)] [+918858493997] Decompiled time: 1759227154305000
+[30/9/2025 (15:42:34)] [+918858493997] Key is valid. Created at 1759227154305 current time is 1759227154324 diff is 19 ms.
+(ERROR)[30/9/2025 (15:42:34)] Invalid token f5fb9743-34b8-4b16-b586-800faa47fb14 by sankalp
+[30/9/2025 (15:43:13)] processing stage-1-request request ...
+[30/9/2025 (15:43:13)] [undefined] Decompiled time: 1759227193859000
+[30/9/2025 (15:43:13)] [undefined] Key is valid. Created at 1759227193859 current time is 1759227193866 diff is 7 ms.
+[30/9/2025 (15:43:13)] Access Granted: sankalp : e2f67925-722d-440b-8092-60730153b6f9
+[30/9/2025 (15:43:34)] processing stage-2-request request ...
+[30/9/2025 (15:43:34)] [+918858493997] Decompiled time: 1759227214691000
+[30/9/2025 (15:43:34)] [+918858493997] Key is valid. Created at 1759227214691 current time is 1759227214697 diff is 6 ms.
+[30/9/2025 (15:43:34)] 
 --------------------
-Request initiated by: +919999999992
-[29/9/2025 (11:33:56)] Request received ...
-[29/9/2025 (11:33:56)] Fetching user: +918858493997
-[29/9/2025 (11:34:26)] processing stage-2-request request ...
-[29/9/2025 (11:34:26)] [+918858493997] Decompiled time: 1759145668460000
-[29/9/2025 (11:34:26)] [+918858493997] Future key encountered -2355 ms difference, client clock is 2.355s ahead of the server clock.
-[29/9/2025 (11:34:26)] 
---------------------
-Request initiated by: +919999999992
-[29/9/2025 (11:34:26)] Request received ...
-[29/9/2025 (11:34:26)] Fetching user: +918858493997
-[29/9/2025 (11:34:53)] processing stage-2-request request ...
-[29/9/2025 (11:34:53)] [+918858493997] Decompiled time: 1759145695485000
-[29/9/2025 (11:34:53)] [+918858493997] Future key encountered -2355 ms difference, client clock is 2.355s ahead of the server clock.
-[29/9/2025 (11:34:53)] 
---------------------
-Request initiated by: +919999999992
-[29/9/2025 (11:34:53)] Fetching user: +918858493997
-[29/9/2025 (11:34:53)] Success updating user id=+918858493997 with data={"password":"115$104$111$112$64$49$50$51"}
-
+Request initiated by: sankalp
+[30/9/2025 (15:43:34)] Updating subscription ...
+[30/9/2025 (15:43:34)] Fetching user: +918858493997
+[30/9/2025 (15:43:35)] Success updating subscription for id=+918858493997 by sankalp

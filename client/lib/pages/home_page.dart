@@ -842,7 +842,6 @@ class _SubscriptionManagementSheetState
             width: double.infinity,
             height: 48,
             child: ElevatedButton(
-
               onPressed: () async {
                 final mobile = _mobileController.text.trim();
                 if (mobile.isEmpty) {
@@ -989,14 +988,16 @@ class _SubscriptionManagementSheetState
                     ),
                   ),
                 );
-
+                debugPrint(
+                  'sub plan days ${convertToDays(int.parse(_selectedDuration.split(" ")[0]), _selectedDuration.split(" ")[1])}',
+                );
                 final result = await ServerUtils.updateSubscription(
                   id: mobile,
                   planType: _selectedPlan,
                   planDuration: convertToDays(
                     int.parse(_selectedDuration.split(" ")[0]),
                     _selectedDuration.split(" ")[1],
-                  ).toString(),
+                  ),
                   startDate: _startDate,
                 );
 
@@ -1095,7 +1096,6 @@ class _SubscriptionManagementSheetState
                     ),
                   );
                 }
-
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF10B981),
