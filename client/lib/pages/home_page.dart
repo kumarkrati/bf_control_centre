@@ -1,5 +1,6 @@
 import 'package:bf_control_centre/core/app_storage.dart';
 import 'package:bf_control_centre/core/enums.dart';
+import 'package:bf_control_centre/core/login_utils.dart';
 import 'package:bf_control_centre/core/server_utils.dart';
 import 'package:bf_control_centre/core/utils/convert_to_days.dart';
 import 'package:bf_control_centre/pages/login_page.dart';
@@ -301,7 +302,7 @@ class _HomePageState extends State<HomePage> {
               "BillingFast Control Centre",
               style: GoogleFonts.poppins(fontSize: 20),
             ),
-            Text("v1.0", style: GoogleFonts.poppins(fontSize: 14)),
+            Text("v1.0.2+2", style: GoogleFonts.poppins(fontSize: 14)),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -317,6 +318,10 @@ class _HomePageState extends State<HomePage> {
                   ListTile(title: Text("• Reset Password.")),
                   ListTile(title: Text("• Restore Products.")),
                   ListTile(title: Text("• Repair Orders.")),
+                  ListTile(title: Text("• Create New Account for ADMIN role.")),
+                  ListTile(
+                    title: Text("• Activate Subscriptions for ADMIN role."),
+                  ),
                 ],
               ),
             ),
@@ -432,7 +437,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        if (AppStorage.get<String>('role') == 'ADMIN') ...[
+                        if (LoginUtils.isAdmin) ...[
                           const SizedBox(width: 12),
                           Expanded(
                             child: ElevatedButton.icon(
@@ -488,15 +493,15 @@ class _HomePageState extends State<HomePage> {
                 color: const Color(0xFF10B981),
                 onTap: _showSubscriptionManagement,
               ),
+              const SizedBox(height: 16),
+              _buildManagementCard(
+                title: 'Shop Management',
+                subtitle: 'Configure stores and products',
+                icon: Icons.storefront,
+                color: const Color(0xFF8B5CF6),
+                onTap: _showShopManagement,
+              ),
             ],
-            const SizedBox(height: 16),
-            _buildManagementCard(
-              title: 'Shop Management',
-              subtitle: 'Configure stores and products',
-              icon: Icons.storefront,
-              color: const Color(0xFF8B5CF6),
-              onTap: _showShopManagement,
-            ),
             const SizedBox(height: 16),
             _buildManagementCard(
               title: 'Customer Retention',

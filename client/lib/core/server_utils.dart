@@ -15,7 +15,7 @@ class ViewPasswordResult {
 class ServerUtils {
   ServerUtils._();
 
-  static const _api = 'http://0.0.0.0:8001/v1/';
+  static const _api = 'http://localhost:8001/v1/';
   static String get _key => createKey().value;
   static String get _accessToken => AppStorage.get<String>('accessToken')!;
   static get _credentials => {

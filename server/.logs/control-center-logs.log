@@ -1,49 +1,32 @@
-control-center-logs.log logger initialized on 30/9/2025 at 16:33:36 (1759230216652 mse)
-[30/9/2025 (16:34:9)] processing stage-1-request request ...
-[30/9/2025 (16:34:9)] [undefined] Decompiled time: 1759230249540000
-[30/9/2025 (16:34:9)] [undefined] Key is valid. Created at 1759230249540 current time is 1759230249560 diff is 20 ms.
-[30/9/2025 (16:34:9)] Access Granted: sankalp : cbe4a043-4f86-4833-8f61-ad63dc597759
-[30/9/2025 (16:34:19)] processing stage-2-request request ...
-[30/9/2025 (16:34:19)] [+919999911111] Decompiled time: 1759230259705000
-[30/9/2025 (16:34:19)] [+919999911111] Key is valid. Created at 1759230259705 current time is 1759230259716 diff is 11 ms.
-[30/9/2025 (16:34:19)] 
+control-center-logs.log logger initialized on 30/9/2025 at 17:3:37 (1759232017159 mse)
+[30/9/2025 (17:3:41)] processing stage-2-request request ...
+[30/9/2025 (17:3:41)] [+919999911111] Decompiled time: 1759232020771000
+[30/9/2025 (17:3:41)] [+919999911111] Key is valid. Created at 1759232020771 current time is 1759232021094 diff is 323 ms.
+[30/9/2025 (17:3:41)] 
 --------------------
-Request initiated by: sankalp
-[30/9/2025 (16:34:19)] Updating subscription ...
-[30/9/2025 (16:34:19)] Fetching user: +919999911111
-[30/9/2025 (16:34:20)] Success creating user id=+919999911111
-[30/9/2025 (16:34:30)] processing stage-2-request request ...
-[30/9/2025 (16:34:30)] [+919999911111] Decompiled time: 1759230270020000
-[30/9/2025 (16:34:30)] [+919999911111] Key is valid. Created at 1759230270020 current time is 1759230270025 diff is 5 ms.
-[30/9/2025 (16:34:30)] 
+Request initiated by: arham : 7d0cae89-c10d-42f5-a27c-e355f846bd2b
+[30/9/2025 (17:3:41)] Request received ...
+[30/9/2025 (17:3:41)] Fetching user: +919999911111
+[30/9/2025 (17:3:41)] No password has been set yet
+[30/9/2025 (17:5:0)] processing stage-2-request request ...
+[30/9/2025 (17:5:0)] [+919999911112] Decompiled time: 1759232100379000
+[30/9/2025 (17:5:0)] [+919999911112] Key is valid. Created at 1759232100379 current time is 1759232100391 diff is 12 ms.
+[30/9/2025 (17:5:0)] 
 --------------------
-Request initiated by: sankalp
-[30/9/2025 (16:34:30)] Updating subscription ...
-[30/9/2025 (16:34:30)] Fetching user: +919999911111
-(WARNING)[30/9/2025 (16:34:30)] User already with id: +919999911111
-[30/9/2025 (16:35:27)] processing stage-2-request request ...
-[30/9/2025 (16:35:27)] [+919999911111] Decompiled time: 1759230327113000
-[30/9/2025 (16:35:27)] [+919999911111] Key is valid. Created at 1759230327113 current time is 1759230327121 diff is 8 ms.
-[30/9/2025 (16:35:27)] 
+Request initiated by: arham : 7d0cae89-c10d-42f5-a27c-e355f846bd2b
+[30/9/2025 (17:5:0)] Updating subscription ...
+[30/9/2025 (17:5:0)] Fetching user: +919999911112
+(WARNING)[30/9/2025 (17:5:0)] No user with id: +919999911112
+[30/9/2025 (17:5:27)] processing stage-1-request request ...
+[30/9/2025 (17:5:27)] [undefined] Decompiled time: 1759232127320000
+[30/9/2025 (17:5:27)] [undefined] Key is valid. Created at 1759232127320 current time is 1759232127326 diff is 6 ms.
+[30/9/2025 (17:5:27)] Access Granted: +919999999992 : ca3670c7-b6a1-42df-80df-aefe081d232a
+[30/9/2025 (17:5:31)] processing stage-2-request request ...
+[30/9/2025 (17:5:31)] [+919999911112] Decompiled time: 1759232131830000
+[30/9/2025 (17:5:31)] [+919999911112] Key is valid. Created at 1759232131830 current time is 1759232131835 diff is 5 ms.
+[30/9/2025 (17:5:31)] 
 --------------------
-Request initiated by: sankalp
-[30/9/2025 (16:35:27)] Updating subscription ...
-[30/9/2025 (16:35:27)] Fetching user: +919999911111
-[30/9/2025 (16:35:27)] Success updating subscription for id=+919999911111 by sankalp
-[30/9/2025 (16:39:57)] processing stage-2-request request ...
-[30/9/2025 (16:39:57)] [+919999911111] Decompiled time: 1759230597576000
-[30/9/2025 (16:39:57)] [+919999911111] Key is valid. Created at 1759230597576 current time is 1759230597581 diff is 5 ms.
-[30/9/2025 (16:39:57)] 
---------------------
-Request initiated by: sankalp
-[30/9/2025 (16:39:57)] Updating subscription ...
-[30/9/2025 (16:39:57)] Fetching user: +919999911111
-[30/9/2025 (16:39:58)] Success updating subscription for id=+919999911111 by sankalp
-[30/9/2025 (16:44:42)] processing stage-1-request request ...
-[30/9/2025 (16:44:42)] [undefined] Decompiled time: 1759230882894000
-[30/9/2025 (16:44:42)] [undefined] Key is valid. Created at 1759230882894 current time is 1759230882900 diff is 6 ms.
-[30/9/2025 (16:44:42)] Access Granted: sankalp : c82effd9-b626-4ef8-a795-f778f16e0a6d
-[30/9/2025 (16:44:53)] processing stage-1-request request ...
-[30/9/2025 (16:44:53)] [undefined] Decompiled time: 1759230893132000
-[30/9/2025 (16:44:53)] [undefined] Key is valid. Created at 1759230893132 current time is 1759230893138 diff is 6 ms.
-[30/9/2025 (16:44:53)] Access Granted: sankalp : 567bbb7d-b857-464a-b314-f8957b02d0e1
+Request initiated by: +919999999992 : ca3670c7-b6a1-42df-80df-aefe081d232a
+[30/9/2025 (17:5:31)] Request received ...
+[30/9/2025 (17:5:31)] Fetching user: +919999911112
+[30/9/2025 (17:5:31)] User is not registered
