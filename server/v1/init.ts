@@ -8,6 +8,7 @@ import { reassignInvoiceNo } from "./reassign-invoice-no.ts";
 import { setPassword } from "./set-password.ts";
 import { viewPassword } from "./view-password.ts";
 import { restoreProduct } from "./restore-products.ts";
+import { subscription } from "./subscription.ts";
 
 export function initV1(app: Hono, logger: AppLogger, dbops: DbOps) {
   app.use("/v1/*", cors());
@@ -17,4 +18,5 @@ export function initV1(app: Hono, logger: AppLogger, dbops: DbOps) {
   reassignInvoiceNo(app, logger, dbops);
   restoreProduct(app, logger, dbops);
   authorize(app, logger, dbops);
+  subscription(app, logger, dbops);
 }

@@ -15,6 +15,12 @@ export enum RestoreProductStatus {
   noRef,
 }
 
+export enum SubscriptionStatus {
+  success,
+  failed,
+  noRef,
+}
+
 export class DbOps {
   supabase: SupabaseClient;
   logger: AppLogger;
@@ -53,6 +59,41 @@ export class DbOps {
     } catch (error) {
       this.logger.error(`Exception updateUser(): ${error}`);
       return QueryExecutionStatus.failed;
+    }
+  }
+
+  async updateSubscription(
+    id: string,
+    subdays: number,
+    isultra: boolean,
+    isontrail: boolean,
+    subplan: string,
+    updatedBy: string,
+  ): Promise<SubscriptionStatus> {
+    try {
+      if (!(await this.fetchUser(id))) {
+        this.logger.warning(`No user with id: ${id}`);
+        return SubscriptionStatus.noRef;
+      }
+      const { data, error } = await this.supabase.from("subscriptions").update({
+        subdays: subdays,
+        subplan: subplan,
+        isultra: isultra,
+        substartedat: new Date().toISOString(),
+        isontrail: isontrail,
+      }).eq("id", `${id}-subscriptions`);
+      if (error) {
+        this.logger.error(`Failed to update subscription for id: ${id}`);
+        return SubscriptionStatus.failed;
+      } else {
+        this.logger.log(
+          `Success updating subscription for id=${id} by ${updatedBy}`,
+        );
+        return SubscriptionStatus.success;
+      }
+    } catch (error) {
+      this.logger.error(`Exception updateSubscription(): ${error}`);
+      return SubscriptionStatus.failed;
     }
   }
 
