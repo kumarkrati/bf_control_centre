@@ -65,22 +65,21 @@ export class DbOps {
   async updateSubscription(
     id: string,
     subdays: number,
-    isultra: boolean,
-    isontrail: boolean,
     subplan: string,
     updatedBy: string,
+    subStartedDate: string,
   ): Promise<SubscriptionStatus> {
     try {
       if (!(await this.fetchUser(id))) {
         this.logger.warning(`No user with id: ${id}`);
         return SubscriptionStatus.noRef;
       }
-      const { data, error } = await this.supabase.from("subscriptions").update({
+      const { error } = await this.supabase.from("subscriptions").update({
         subdays: subdays,
-        subplan: subplan,
-        isultra: isultra,
-        substartedat: new Date().toISOString(),
-        isontrail: isontrail,
+        subplan: subplan === "LITE" ? "LITE" : "PREMIUM",
+        isultra: subplan === "ULTRA",
+        substartedat: subStartedDate,
+        isontrail: false,
       }).eq("id", `${id}-subscriptions`);
       if (error) {
         this.logger.error(`Failed to update subscription for id: ${id}`);

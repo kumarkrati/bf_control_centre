@@ -803,8 +803,255 @@ class _SubscriptionManagementSheetState
             width: double.infinity,
             height: 48,
             child: ElevatedButton(
-              onPressed: () {
-                // TODO: Implement subscription update
+              onPressed: () async {
+                final mobile = _mobileController.text.trim();
+                if (mobile.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please enter customer mobile number'),
+                    ),
+                  );
+                  return;
+                }
+
+                Navigator.pop(context);
+
+                // Show confirmation dialog
+                final confirmed = await showDialog<bool>(
+                  context: Get.context!,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    title: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF10B981).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.credit_card,
+                            color: Color(0xFF10B981),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Text('Update Subscription'),
+                      ],
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Are you sure you want to update subscription for:',
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.person,
+                                color: Color(0xFF10B981),
+                                size: 18,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                mobile,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Plan: $_selectedPlan\nDuration: $_selectedDuration\nStart Date: ${_startDate.toString().split(' ')[0]}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.grey.shade600,
+                        ),
+                        child: const Text('Cancel'),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () => Navigator.pop(context, true),
+                        icon: const Icon(Icons.check, size: 18),
+                        label: const Text('Confirm'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF10B981),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+
+                if (confirmed != true) return;
+
+                // Show loading dialog
+                showDialog(
+                  context: Get.context!,
+                  barrierDismissible: false,
+                  builder: (context) => AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Color(0xFF10B981),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Updating Subscription...',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Please wait while we update the subscription',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+
+                final result = await ServerUtils.updateSubscription(
+                  id: mobile,
+                  planType: _selectedPlan,
+                  planDuration: _selectedDuration,
+                  startDate: _startDate,
+                );
+
+                Navigator.pop(Get.context!);
+                await Future.delayed(const Duration(milliseconds: 500));
+
+                if (result == UpdateSubscriptionStatus.success) {
+                  showDialog(
+                    context: Get.context!,
+                    builder: (context) => AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF10B981).withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.check_circle,
+                              color: Color(0xFF10B981),
+                              size: 30,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Success!',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF10B981),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Subscription has been successfully updated for customer $mobile',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.grey.shade600),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF10B981),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const Text('Done'),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (result == UpdateSubscriptionStatus.noRef) {
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          const Icon(Icons.info_outline, color: Colors.white),
+                          const SizedBox(width: 8),
+                          const Expanded(child: Text('User not registered.')),
+                        ],
+                      ),
+                      backgroundColor: const Color(0xFFF59E0B),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          const Icon(Icons.error_outline, color: Colors.white),
+                          const SizedBox(width: 8),
+                          const Text(
+                            'Failed to update subscription. Please try again.',
+                          ),
+                        ],
+                      ),
+                      backgroundColor: const Color(0xFFEF4444),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF10B981),
@@ -1139,11 +1386,7 @@ class ShopManagementSheet extends StatelessWidget {
                         children: [
                           Icon(Icons.info_outline, color: Colors.white),
                           SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              'User not registered.',
-                            ),
-                          ),
+                          Expanded(child: Text('User not registered.')),
                         ],
                       ),
                       backgroundColor: Color(0xFFF59E0B),
@@ -1440,11 +1683,7 @@ class ShopManagementSheet extends StatelessWidget {
                         children: [
                           Icon(Icons.info_outline, color: Colors.white),
                           SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              'User not registered.',
-                            ),
-                          ),
+                          Expanded(child: Text('User not registered.')),
                         ],
                       ),
                       backgroundColor: Color(0xFFF59E0B),

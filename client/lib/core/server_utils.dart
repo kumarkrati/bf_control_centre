@@ -161,4 +161,37 @@ class ServerUtils {
       return SetPasswordStatus.failed;
     }
   }
+
+  static Future<UpdateSubscriptionStatus> updateSubscription({
+    required String id,
+    required String planType,
+    required String planDuration,
+    required DateTime startDate,
+  }) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        "key": _key,
+        "credentials": _credentials,
+        "id": id,
+        "subPlan": planType,
+        "subDays": planDuration,
+        "updatedBy": AppStorage.get<String>('username'),
+        "subStartedDate": startDate.toIso8601String(),
+      };
+      final response = await http.post(
+        Uri.parse('${_api}subscription'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        return UpdateSubscriptionStatus.success;
+      } else {
+        return UpdateSubscriptionStatus.failed;
+      }
+    } catch (e) {
+      debugPrint("[updateSubscription] Error: $e ");
+      return UpdateSubscriptionStatus.failed;
+    }
+  }
 }

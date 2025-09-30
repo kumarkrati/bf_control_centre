@@ -1,9 +1,7 @@
-control-center-logs.log logger initialized on 30/9/2025 at 12:23:12 (1759215192154 mse)
-[30/9/2025 (12:24:7)] processing stage-1-request request ...
-[30/9/2025 (12:24:7)] [undefined] Decompiled time: 1759215247558000
-[30/9/2025 (12:24:7)] [undefined] Key is valid. Created at 1759215247558 current time is 1759215247591 diff is 33 ms.
-(WARNING)[30/9/2025 (12:24:7)] Invalid credentials: sankalp : sankalp+123
-[30/9/2025 (12:24:42)] processing stage-1-request request ...
-[30/9/2025 (12:24:42)] [undefined] Decompiled time: 1759215282644000
-[30/9/2025 (12:24:42)] [undefined] Key is valid. Created at 1759215282644 current time is 1759215282651 diff is 7 ms.
-[30/9/2025 (12:24:42)] Access Granted: sankalp : beb8cf9d-4d85-4000-82c6-b774a9ea3c8c
+control-center-logs.log logger initialized on 30/9/2025 at 13:21:18 (1759218678473 mse)
+[30/9/2025 (13:21:37)] processing stage-2-request request ...
+[30/9/2025 (13:21:37)] [+918858493997] Decompiled time: 1759218697514000
+[30/9/2025 (13:21:37)] [+918858493997] Key is valid. Created at 1759218697514 current time is 1759218697534 diff is 20 ms.
+[30/9/2025 (13:21:37)] Updating subscription ...
+[30/9/2025 (13:21:37)] Fetching user: +918858493997
+(ERROR)[30/9/2025 (13:21:37)] Failed to update subscription for id: +918858493997
