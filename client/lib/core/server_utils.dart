@@ -15,7 +15,7 @@ class ViewPasswordResult {
 class ServerUtils {
   ServerUtils._();
 
-  static const _api = 'https://apis.billingfast.com:8001/v1/';
+  static const _api = 'http://0.0.0.0:8001/v1/';
   static String get _key => createKey().value;
   static String get _accessToken => AppStorage.get<String>('accessToken')!;
   static get _credentials => {
@@ -159,6 +159,68 @@ class ServerUtils {
     } catch (e) {
       debugPrint("[setPassword] Error: $e ");
       return SetPasswordStatus.failed;
+    }
+  }
+
+  static Future<UpdateSubscriptionStatus> updateSubscription({
+    required String id,
+    required String planType,
+    required int planDuration,
+    required DateTime startDate,
+  }) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+        'id': id,
+        'subPlan': planType,
+        'subDays': planDuration,
+        'updatedBy': AppStorage.get<String>('username'),
+        'subStartedDate': startDate.toIso8601String(),
+      };
+      final response = await http.post(
+        Uri.parse('${_api}subscription'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        return UpdateSubscriptionStatus.success;
+      } else if (response.statusCode == 404) {
+        return UpdateSubscriptionStatus.noRef;
+      }
+      return UpdateSubscriptionStatus.failed;
+    } catch (e) {
+      debugPrint("[updateSubscription] Error: $e ");
+      return UpdateSubscriptionStatus.failed;
+    }
+  }
+
+  static Future<CreateAccountStatus> createAccount({
+    required String id,
+    required String mobile,
+  }) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+        'id': id,
+        'mobile': mobile,
+      };
+      final response = await http.post(
+        Uri.parse('${_api}create-account'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      debugPrint("status code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        return CreateAccountStatus.success;
+      } else if (response.statusCode == 404) {
+        return CreateAccountStatus.alreadyRegistered;
+      }
+      return CreateAccountStatus.failed;
+    } catch (e) {
+      debugPrint("[updateSubscription] Error: $e ");
+      return CreateAccountStatus.failed;
     }
   }
 }

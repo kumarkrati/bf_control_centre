@@ -9,15 +9,15 @@ const logger = new AppLogger("control-center-logs.log");
 const dbops = new DbOps(supabase, logger);
 
 // end-points initialization
-initv1(app, logger, dbops)
+initv1(app, logger, dbops);
 
 // start serve at this point
 Deno.serve({
   port: 8001,
-  cert: Deno.readTextFileSync(
-    "/etc/letsencrypt/live/apis.billingfast.com/fullchain.pem",
-  ),
-  key: Deno.readTextFileSync(
-    "/etc/letsencrypt/live/apis.billingfast.com/privkey.pem",
-  ),
+  // cert: Deno.readTextFileSync(
+  //   "/etc/letsencrypt/live/apis.billingfast.com/fullchain.pem",
+  // ),
+  // key: Deno.readTextFileSync(
+  //   "/etc/letsencrypt/live/apis.billingfast.com/privkey.pem",
+  // ),
 }, app.fetch);

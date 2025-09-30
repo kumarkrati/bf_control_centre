@@ -1,4 +1,3 @@
-
 import 'package:bf_control_centre/core/enums.dart';
 import 'package:bf_control_centre/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -185,6 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                           return null;
                         },
+                        onFieldSubmitted: (_) => _submit(),
                       ),
                       const SizedBox(height: 32),
                       SizedBox(

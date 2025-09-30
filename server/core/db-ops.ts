@@ -15,6 +15,18 @@ export enum RestoreProductStatus {
   noRef,
 }
 
+export enum SubscriptionStatus {
+  success,
+  failed,
+  noRef,
+}
+
+export enum CreateAccountStatus {
+  success,
+  failed,
+  alreadyRegistered,
+}
+
 export class DbOps {
   supabase: SupabaseClient;
   logger: AppLogger;
@@ -53,6 +65,70 @@ export class DbOps {
     } catch (error) {
       this.logger.error(`Exception updateUser(): ${error}`);
       return QueryExecutionStatus.failed;
+    }
+  }
+
+  async createAccount(
+    id: string,
+    mobile: string,
+  ): Promise<CreateAccountStatus> {
+    try {
+      if ((await this.fetchUser(id))) {
+        this.logger.warning(`User already with id: ${id}`);
+        return CreateAccountStatus.alreadyRegistered;
+      }
+      const { error } = await this.supabase.from("users").insert({
+        id: id,
+        mobile: mobile,
+        active: 1,
+        password: "115$104$111$112$64$49$50$51",
+      });
+      if (error) {
+        this.logger.error(`Failed to create account: ${id}`);
+        return CreateAccountStatus.failed;
+      } else {
+        this.logger.log(
+          `Success creating user id=${id}`,
+        );
+        return CreateAccountStatus.success;
+      }
+    } catch (error) {
+      this.logger.error(`Exception createAccount(): ${error}`);
+      return CreateAccountStatus.failed;
+    }
+  }
+
+  async updateSubscription(
+    id: string,
+    subdays: number,
+    subplan: string,
+    updatedBy: string,
+    subStartedDate: string,
+  ): Promise<SubscriptionStatus> {
+    try {
+      if (!(await this.fetchUser(id))) {
+        this.logger.warning(`No user with id: ${id}`);
+        return SubscriptionStatus.noRef;
+      }
+      const { error } = await this.supabase.from("subscriptions").update({
+        subdays: subdays,
+        subplan: subplan === "LITE" ? "LITE" : "PREMIUM",
+        isultra: subplan === "ULTRA",
+        substartedat: subStartedDate,
+        isontrail: false,
+      }).eq("id", `${id}-subscriptions`);
+      if (error) {
+        this.logger.error(`Failed to update subscription for id: ${id}`);
+        return SubscriptionStatus.failed;
+      } else {
+        this.logger.log(
+          `Success updating subscription for id=${id} by ${updatedBy}`,
+        );
+        return SubscriptionStatus.success;
+      }
+    } catch (error) {
+      this.logger.error(`Exception updateSubscription(): ${error}`);
+      return SubscriptionStatus.failed;
     }
   }
 
