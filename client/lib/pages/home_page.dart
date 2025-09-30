@@ -38,34 +38,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loginToBillingFast() {
-    final phoneNumber = _mobileController.text.trim();
-    if (phoneNumber.isNotEmpty) {
-      // TODO: Implement BillingFast login with phone number
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Logging into BillingFast with $phoneNumber'),
-          backgroundColor: const Color(0xFF10B981),
-        ),
-      );
-    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Coming soon'),
+        backgroundColor: Color(0xFF3B82F6),
+      ),
+    );
   }
 
   void _createNewAccount() {
-    final phoneNumber = _mobileController.text.trim();
-    if (phoneNumber.isNotEmpty) {
-      // TODO: Implement BillingFast account creation with phone number
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Creating new account for $phoneNumber'),
-          backgroundColor: const Color(0xFF3B82F6),
-        ),
-      );
-    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Coming soon'),
+        backgroundColor: Color(0xFF3B82F6),
+      ),
+    );
   }
 
   void _showPasswordManagement() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       builder: (context) => const PasswordManagementSheet(),
     );
   }
@@ -73,6 +66,7 @@ class _HomePageState extends State<HomePage> {
   void _showSubscriptionManagement() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       isScrollControlled: true,
       builder: (context) => const SubscriptionManagementSheet(),
     );
@@ -81,6 +75,7 @@ class _HomePageState extends State<HomePage> {
   void _showShopManagement() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       builder: (context) => const ShopManagementSheet(),
     );
   }
@@ -88,7 +83,45 @@ class _HomePageState extends State<HomePage> {
   void _showCustomerRetention() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.white,
       builder: (context) => const CustomerRetentionSheet(),
+    );
+  }
+
+  void _showFeaturesList() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) => Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(
+              "BillingFast Control Centre",
+              style: GoogleFonts.poppins(fontSize: 20),
+            ),
+            Text("v1.0", style: GoogleFonts.poppins(fontSize: 14)),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Here's a list of active features:",
+                style: GoogleFonts.poppins(fontSize: 15),
+              ),
+            ),
+            SizedBox(
+              height: 300,
+              child: ListView(
+                children: [
+                  ListTile(title: Text("• View Password.")),
+                  ListTile(title: Text("• Reset Password.")),
+                  ListTile(title: Text("• Restore Products.")),
+                  ListTile(title: Text("• Repair Orders.")),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -99,6 +132,11 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('BillingFast Control Centre'),
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.help_outline),
+          tooltip: 'Help',
+          onPressed: _showFeaturesList,
+        ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(12),
           child: Text(
@@ -804,6 +842,7 @@ class _SubscriptionManagementSheetState
             width: double.infinity,
             height: 48,
             child: ElevatedButton(
+
               onPressed: () async {
                 final mobile = _mobileController.text.trim();
                 if (mobile.isEmpty) {
@@ -1056,6 +1095,7 @@ class _SubscriptionManagementSheetState
                     ),
                   );
                 }
+
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF10B981),
@@ -1154,7 +1194,12 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'See store listings',
               color: const Color(0xFF3B82F6),
               onTap: () {
-                // TODO: Implement view shops
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Coming soon'),
+                    backgroundColor: Color(0xFF3B82F6),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 12),
@@ -1428,7 +1473,12 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'Configure shop preferences',
               color: const Color(0xFF6B7280),
               onTap: () {
-                // TODO: Implement change settings
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Coming soon'),
+                    backgroundColor: Color(0xFF3B82F6),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 12),
@@ -1439,7 +1489,12 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'Test connection status',
               color: const Color(0xFF10B981),
               onTap: () {
-                // TODO: Implement connectivity check
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Coming soon'),
+                    backgroundColor: Color(0xFF3B82F6),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 12),
@@ -1450,7 +1505,12 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'View app information',
               color: const Color(0xFF8B5CF6),
               onTap: () {
-                // TODO: Implement app versions view
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Coming soon'),
+                    backgroundColor: Color(0xFF3B82F6),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 12),
@@ -1844,7 +1904,12 @@ class CustomerRetentionSheet extends StatelessWidget {
             subtitle: 'See recently joined customers',
             color: const Color(0xFF10B981),
             onTap: () {
-              // TODO: Implement view new customers
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Coming soon'),
+                  backgroundColor: Color(0xFF3B82F6),
+                ),
+              );
             },
           ),
           const SizedBox(height: 12),
@@ -1854,7 +1919,12 @@ class CustomerRetentionSheet extends StatelessWidget {
             subtitle: 'Check subscriptions ending soon',
             color: const Color(0xFFEF4444),
             onTap: () {
-              // TODO: Implement see expiring subscriptions
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Coming soon'),
+                  backgroundColor: Color(0xFF3B82F6),
+                ),
+              );
             },
           ),
         ],

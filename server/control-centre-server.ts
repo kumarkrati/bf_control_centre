@@ -11,21 +11,13 @@ const dbops = new DbOps(supabase, logger);
 // end-points initialization
 initv1(app, logger, dbops)
 
-/*
-TODO: Add Repair products endpoint
-update inventory
-set status = 'Unverified'
-where userid = ${id} and status = 'Deleted'
-*/
-
 // start serve at this point
 Deno.serve({
   port: 8001,
-  // disable ssl for localhost
-  // cert: Deno.readTextFileSync(
-  //   "/etc/letsencrypt/live/apis.billingfast.com/fullchain.pem",
-  // ),
-  // key: Deno.readTextFileSync(
-  //   "/etc/letsencrypt/live/apis.billingfast.com/privkey.pem",
-  // ),
+  cert: Deno.readTextFileSync(
+    "/etc/letsencrypt/live/apis.billingfast.com/fullchain.pem",
+  ),
+  key: Deno.readTextFileSync(
+    "/etc/letsencrypt/live/apis.billingfast.com/privkey.pem",
+  ),
 }, app.fetch);
