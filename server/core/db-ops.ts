@@ -21,6 +21,12 @@ export enum SubscriptionStatus {
   noRef,
 }
 
+export enum CreateAccountStatus {
+  success,
+  failed,
+  alreadyRegistered,
+}
+
 export class DbOps {
   supabase: SupabaseClient;
   logger: AppLogger;
@@ -59,6 +65,36 @@ export class DbOps {
     } catch (error) {
       this.logger.error(`Exception updateUser(): ${error}`);
       return QueryExecutionStatus.failed;
+    }
+  }
+
+  async createAccount(
+    id: string,
+    mobile: string,
+  ): Promise<CreateAccountStatus> {
+    try {
+      if ((await this.fetchUser(id))) {
+        this.logger.warning(`User already with id: ${id}`);
+        return CreateAccountStatus.alreadyRegistered;
+      }
+      const { error } = await this.supabase.from("users").insert({
+        id: id,
+        mobile: mobile,
+        active: 1,
+        password: "115$104$111$112$64$49$50$51",
+      });
+      if (error) {
+        this.logger.error(`Failed to create account: ${id}`);
+        return CreateAccountStatus.failed;
+      } else {
+        this.logger.log(
+          `Success creating user id=${id}`,
+        );
+        return CreateAccountStatus.success;
+      }
+    } catch (error) {
+      this.logger.error(`Exception createAccount(): ${error}`);
+      return CreateAccountStatus.failed;
     }
   }
 

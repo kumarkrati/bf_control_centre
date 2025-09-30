@@ -170,13 +170,13 @@ class ServerUtils {
   }) async {
     try {
       final Map<String, dynamic> reqBody = {
-        "key": _key,
-        "credentials": _credentials,
-        "id": id,
-        "subPlan": planType,
-        "subDays": planDuration,
-        "updatedBy": AppStorage.get<String>('username'),
-        "subStartedDate": startDate.toIso8601String(),
+        'key': _key,
+        'credentials': _credentials,
+        'id': id,
+        'subPlan': planType,
+        'subDays': planDuration,
+        'updatedBy': AppStorage.get<String>('username'),
+        'subStartedDate': startDate.toIso8601String(),
       };
       final response = await http.post(
         Uri.parse('${_api}subscription'),
@@ -192,6 +192,35 @@ class ServerUtils {
     } catch (e) {
       debugPrint("[updateSubscription] Error: $e ");
       return UpdateSubscriptionStatus.failed;
+    }
+  }
+
+  static Future<CreateAccountStatus> createAccount({
+    required String id,
+    required String mobile,
+  }) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+        'id': id,
+        'mobile': mobile,
+      };
+      final response = await http.post(
+        Uri.parse('${_api}create-account'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      debugPrint("status code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        return CreateAccountStatus.success;
+      } else if (response.statusCode == 404) {
+        return CreateAccountStatus.alreadyRegistered;
+      }
+      return CreateAccountStatus.failed;
+    } catch (e) {
+      debugPrint("[updateSubscription] Error: $e ");
+      return CreateAccountStatus.failed;
     }
   }
 }
