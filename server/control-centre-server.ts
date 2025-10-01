@@ -14,10 +14,10 @@ initv1(app, logger, dbops);
 // start serve at this point
 Deno.serve({
   port: 8001,
-  // cert: Deno.readTextFileSync(
-  //   "/etc/letsencrypt/live/apis.billingfast.com/fullchain.pem",
-  // ),
-  // key: Deno.readTextFileSync(
-  //   "/etc/letsencrypt/live/apis.billingfast.com/privkey.pem",
-  // ),
+  cert: Deno.readTextFileSync(
+    "/etc/letsencrypt/live/apis.billingfast.com/fullchain.pem",
+  ),
+  key: Deno.readTextFileSync(
+    "/etc/letsencrypt/live/apis.billingfast.com/privkey.pem",
+  ),
 }, app.fetch);
