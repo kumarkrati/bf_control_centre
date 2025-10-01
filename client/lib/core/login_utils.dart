@@ -7,4 +7,6 @@ class LoginUtils {
     final token = AppStorage.get<String>('accessToken');
     return token != null && token.length > 10;
   }
+
+  static bool get isAdmin => AppStorage.get<String>('role') == 'ADMIN';
 }

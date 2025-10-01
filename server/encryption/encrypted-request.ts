@@ -32,7 +32,7 @@ export function encrypted(
         return context.json({ messsage: "Unauthorized" }, 400);
       }
       // TODO: Validate phone number [id]
-      logger.log(`\n--------------------\nRequest initiated by: ${username}`);
+      logger.log(`\n--------------------\nRequest initiated by: ${username} : ${token}`);
     }
     try {
       return await handler(json, context);

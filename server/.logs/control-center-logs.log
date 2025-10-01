@@ -1,1 +1,36 @@
+
+control-center-logs.log logger initialized on 1/10/2025 at 11:8:59 (1759297139792 mse)
+[1/10/2025 (11:10:4)] processing stage-1-request request ...
+[1/10/2025 (11:10:4)] [undefined] Decompiled time: 1759297204100000
+[1/10/2025 (11:10:4)] [undefined] Key is valid. Created at 1759297204100 current time is 1759297204113 diff is 13 ms.
+[1/10/2025 (11:10:4)] Access Granted: sankalp : 2fc7a502-d756-4b09-9f66-9ffbeb85362f
+[1/10/2025 (11:23:9)] processing stage-2-request request ...
+[1/10/2025 (11:23:9)] [+918858493997] Decompiled time: 1759297989137000
+[1/10/2025 (11:23:9)] [+918858493997] Key is valid. Created at 1759297989137 current time is 1759297989146 diff is 9 ms.
+[1/10/2025 (11:23:9)] 
+--------------------
+Request initiated by: sankalp : 2fc7a502-d756-4b09-9f66-9ffbeb85362f
+[1/10/2025 (11:23:9)] Request received ...
+[1/10/2025 (11:23:9)] Fetching user: +918858493997
+[1/10/2025 (11:23:9)] Sending encrypted password ...
+[1/10/2025 (11:29:10)] processing stage-2-request request ...
+[1/10/2025 (11:29:10)] [+918858493997] Decompiled time: 1759298350686000
+[1/10/2025 (11:29:10)] [+918858493997] Key is valid. Created at 1759298350686 current time is 1759298350692 diff is 6 ms.
+[1/10/2025 (11:29:10)] 
+--------------------
+Request initiated by: sankalp : 2fc7a502-d756-4b09-9f66-9ffbeb85362f
+[1/10/2025 (11:29:10)] Request received ...
+[1/10/2025 (11:29:10)] Fetching user: +918858493997
+[1/10/2025 (11:29:10)] Sending encrypted password ...
+[1/10/2025 (11:32:12)] processing stage-2-request request ...
+[1/10/2025 (11:32:12)] [+918858493997] Decompiled time: 1759298532712000
+[1/10/2025 (11:32:12)] [+918858493997] Key is valid. Created at 1759298532712 current time is 1759298532723 diff is 11 ms.
+[1/10/2025 (11:32:12)] 
+--------------------
+Request initiated by: sankalp : 2fc7a502-d756-4b09-9f66-9ffbeb85362f
+[1/10/2025 (11:32:12)] Updating subscription ...
+[1/10/2025 (11:32:12)] Fetching user: +918858493997
+(WARNING)[1/10/2025 (11:32:12)] User already with id: +918858493997
+
 control-center-logs.log logger initialized on 30/9/2025 at 11:38:22 (1759232302327 mse)
+

@@ -116,6 +116,7 @@ export class DbOps {
         isultra: subplan === "ULTRA",
         substartedat: subStartedDate,
         isontrail: false,
+        trailsheetshown: true,
       }).eq("id", `${id}-subscriptions`);
       if (error) {
         this.logger.error(`Failed to update subscription for id: ${id}`);

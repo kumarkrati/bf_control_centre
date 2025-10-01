@@ -12,14 +12,17 @@ export function viewPassword(app: Hono, logger: AppLogger, dbops: DbOps) {
       const { id } = json;
       const data = await dbops.fetchUser(id);
       if (data === null) {
+        logger.log("User is not registered");
         return context.json({ messsage: "User is not registered" }, 200);
       }
-      if (data?.password === null) {
+      if (!data?.password) {
+        logger.log("No password has been set yet");
         return context.json(
           { messsage: "No password has been set yet" },
           200,
         );
       }
+      logger.log("Sending encrypted password ...");
       return context.json({
         password: data?.password,
       }, 200);
