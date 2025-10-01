@@ -353,7 +353,7 @@ class _HomePageState extends State<HomePage> {
               "BillingFast Control Centre",
               style: GoogleFonts.poppins(fontSize: 20),
             ),
-            Text("v1.0.2+2", style: GoogleFonts.poppins(fontSize: 14)),
+            Text("v1.0.3+13", style: GoogleFonts.poppins(fontSize: 14)),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
