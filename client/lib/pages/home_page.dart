@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bf_control_centre/core/app_storage.dart';
 import 'package:bf_control_centre/core/enums.dart';
 import 'package:bf_control_centre/core/login_utils.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,11 +23,20 @@ final _mobileController = TextEditingController();
 
 class _HomePageState extends State<HomePage> {
   bool _showLoginButton = false;
+  bool _showRecentMobiles = false;
+  List<String> _recentMobiles = [];
+  late SharedPreferences _prefs;
 
   @override
   void initState() {
     super.initState();
     _mobileController.addListener(_onMobileNumberChanged);
+    _initPrefs();
+  }
+
+  Future<void> _initPrefs() async {
+    _prefs = await SharedPreferences.getInstance();
+    _loadRecentMobiles();
   }
 
   @override
@@ -32,10 +44,23 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  void _loadRecentMobiles() {
+    setState(() {
+      _recentMobiles = AppStorage.getRecentMobiles();
+    });
+  }
+
   void _onMobileNumberChanged() {
     setState(() {
       _showLoginButton = _mobileController.text.trim().isNotEmpty;
     });
+  }
+
+  Future<void> _saveMobileNumber(String mobile) async {
+    if (mobile.trim().isNotEmpty) {
+      await AppStorage.addRecentMobile(mobile);
+      _loadRecentMobiles();
+    }
   }
 
   void _loginToBillingFast() {
@@ -49,6 +74,12 @@ class _HomePageState extends State<HomePage> {
 
   void _createNewAccount() async {
     final mobile = _mobileController.text.trim();
+
+    // Save to recent entries
+    if (mobile.isNotEmpty) {
+      await _saveMobileNumber(mobile);
+    }
+
     if (mobile.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -257,7 +288,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _showPasswordManagement() {
+  void _showPasswordManagement() async {
+    final mobile = _mobileController.text.trim();
+    if (mobile.isNotEmpty) {
+      await _saveMobileNumber(mobile);
+    }
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -265,7 +301,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showSubscriptionManagement() {
+  void _showSubscriptionManagement() async {
+    final mobile = _mobileController.text.trim();
+    if (mobile.isNotEmpty) {
+      await _saveMobileNumber(mobile);
+    }
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -274,7 +315,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showShopManagement() {
+  void _showShopManagement() async {
+    final mobile = _mobileController.text.trim();
+    if (mobile.isNotEmpty) {
+      await _saveMobileNumber(mobile);
+    }
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -282,7 +328,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showCustomerRetention() {
+  void _showCustomerRetention() async {
+    final mobile = _mobileController.text.trim();
+    if (mobile.isNotEmpty) {
+      await _saveMobileNumber(mobile);
+    }
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -418,6 +469,140 @@ class _HomePageState extends State<HomePage> {
                     ),
                     keyboardType: TextInputType.phone,
                   ),
+                  if (_recentMobiles.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          _showRecentMobiles = !_showRecentMobiles;
+                        });
+                      },
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade50,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey.shade200),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.history,
+                              size: 18,
+                              color: Colors.grey.shade600,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Recent mobile numbers (${_recentMobiles.length})',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey.shade700,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const Spacer(),
+                            Icon(
+                              _showRecentMobiles
+                                  ? Icons.keyboard_arrow_up
+                                  : Icons.keyboard_arrow_down,
+                              size: 20,
+                              color: Colors.grey.shade600,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                  if (_showRecentMobiles && _recentMobiles.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Container(
+                      constraints: const BoxConstraints(maxHeight: 200),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade200),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: _recentMobiles.length,
+                        separatorBuilder: (context, index) =>
+                            Divider(height: 1, color: Colors.grey.shade200),
+                        itemBuilder: (context, index) {
+                          final mobile = _recentMobiles[index];
+                          return ListTile(
+                            dense: true,
+                            leading: Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF3B82F6).withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: const Icon(
+                                Icons.phone,
+                                size: 16,
+                                color: Color(0xFF3B82F6),
+                              ),
+                            ),
+                            title: Text(
+                              mobile,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.copy, size: 18),
+                                  color: Colors.grey.shade600,
+                                  tooltip: 'Copy',
+                                  onPressed: () async {
+                                    await Clipboard.setData(
+                                      ClipboardData(text: mobile),
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Copied: $mobile'),
+                                        duration: const Duration(seconds: 1),
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete, size: 18),
+                                  color: Colors.red.shade400,
+                                  tooltip: 'Delete',
+                                  onPressed: () async {
+                                    setState(() {
+                                      _recentMobiles.removeAt(index);
+                                    });
+                                    await _prefs.setString(
+                                      'recent_mobile_numbers',
+                                      jsonEncode(_recentMobiles),
+                                    );
+                                    _loadRecentMobiles();
+                                  },
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              _mobileController.text = mobile;
+                              setState(() {
+                                _showRecentMobiles = false;
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                   if (_showLoginButton) ...[
                     const SizedBox(height: 16),
                     Row(

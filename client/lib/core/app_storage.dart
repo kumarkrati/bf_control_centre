@@ -38,4 +38,44 @@ class AppStorage {
     }
     return value as T;
   }
+
+  // Recent mobile numbers management
+  static const String _recentMobilesKey = 'recent_mobile_numbers';
+  static const int _maxRecentEntries = 10;
+
+  static Future<void> addRecentMobile(String mobile) async {
+    if (mobile.trim().isEmpty) return;
+
+    final recentMobiles = getRecentMobiles();
+
+    // Remove if already exists
+    recentMobiles.remove(mobile);
+
+    // Add to the beginning
+    recentMobiles.insert(0, mobile);
+
+    // Keep only last 10 entries
+    if (recentMobiles.length > _maxRecentEntries) {
+      recentMobiles.removeRange(_maxRecentEntries, recentMobiles.length);
+    }
+
+    await _prefs.setString(_recentMobilesKey, jsonEncode(recentMobiles));
+  }
+
+  static List<String> getRecentMobiles() {
+    final value = _prefs.getString(_recentMobilesKey);
+    if (value == null) return [];
+
+    try {
+      final List<dynamic> decoded = jsonDecode(value);
+      return decoded.map((e) => e.toString()).toList();
+    } catch (e) {
+      print("[AppStorage] Error decoding recent mobiles: $e");
+      return [];
+    }
+  }
+
+  static Future<void> clearRecentMobiles() async {
+    await _prefs.remove(_recentMobilesKey);
+  }
 }
