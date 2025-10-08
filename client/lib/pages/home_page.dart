@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loginToBillingFast() {
-    ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
       const SnackBar(
         content: Text('Coming soon'),
         backgroundColor: Color(0xFF3B82F6),
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (mobile.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
         const SnackBar(
           content: Text('Please enter customer mobile number'),
           backgroundColor: Color(0xFFEF4444),
@@ -251,8 +251,27 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       );
+    } else if (result == CreateAccountStatus.unauthorized) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              const Icon(Icons.security, color: Colors.white),
+              const SizedBox(width: 8),
+              const Expanded(
+                child: Text('Your session has expired, relogin is required.'),
+              ),
+            ],
+          ),
+          backgroundColor: const Color(0xFF660011),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
     } else if (result == CreateAccountStatus.alreadyRegistered) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(
           content: Row(
             children: [
@@ -269,7 +288,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(
           content: Row(
             children: [
@@ -561,7 +580,7 @@ class _HomePageState extends State<HomePage> {
                                     await Clipboard.setData(
                                       ClipboardData(text: mobile),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(
+                                    ScaffoldMessenger.of(Get.context!).showSnackBar(
                                       SnackBar(
                                         content: Text('Copied: $mobile'),
                                         duration: const Duration(seconds: 1),
@@ -847,7 +866,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
             onTap: () async {
               final mobile = _mobileController.text.trim();
               if (mobile.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(content: Text('Please enter customer ID')),
                 );
                 return;
@@ -887,6 +906,27 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                     ],
                   ),
                 );
+              } else if (result.status == ViewPasswordStatus.unauthorized) {
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
+                  SnackBar(
+                    content: Row(
+                      children: [
+                        const Icon(Icons.security, color: Colors.white),
+                        const SizedBox(width: 8),
+                        const Expanded(
+                          child: Text(
+                            'Your session has expired, relogin is required.',
+                          ),
+                        ),
+                      ],
+                    ),
+                    backgroundColor: const Color(0xFF660011),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                );
               } else if (result.status == ViewPasswordStatus.noRef) {
                 ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(content: Text('User is not registered')),
@@ -911,7 +951,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
             onTap: () async {
               final mobile = _mobileController.text.trim();
               if (mobile.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(content: Text('Please enter customer ID')),
                 );
                 return;
@@ -945,7 +985,6 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
               final result = await ServerUtils.setPassword(mobile);
 
               if (result == SetPasswordStatus.success) {
-                // Show success dialog with new password info
                 showDialog(
                   context: Get.context!,
                   builder: (context) => AlertDialog(
@@ -965,6 +1004,27 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                         child: const Text('Close'),
                       ),
                     ],
+                  ),
+                );
+              } else if (result == SetPasswordStatus.unauthorized) {
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
+                  SnackBar(
+                    content: Row(
+                      children: [
+                        const Icon(Icons.security, color: Colors.white),
+                        const SizedBox(width: 8),
+                        const Expanded(
+                          child: Text(
+                            'Your session has expired, relogin is required.',
+                          ),
+                        ),
+                      ],
+                    ),
+                    backgroundColor: const Color(0xFF660011),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 );
               } else {
@@ -1238,7 +1298,7 @@ class _SubscriptionManagementSheetState
               onPressed: () async {
                 final mobile = _mobileController.text.trim();
                 if (mobile.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
                     const SnackBar(
                       content: Text('Please enter customer mobile number'),
                     ),
@@ -1452,6 +1512,27 @@ class _SubscriptionManagementSheetState
                       ],
                     ),
                   );
+                } else if (result == UpdateSubscriptionStatus.unauthorized) {
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          const Icon(Icons.security, color: Colors.white),
+                          const SizedBox(width: 8),
+                          const Expanded(
+                            child: Text(
+                              'Your session has expired, relogin is required.',
+                            ),
+                          ),
+                        ],
+                      ),
+                      backgroundColor: const Color(0xFF660011),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  );
                 } else if (result == UpdateSubscriptionStatus.noRef) {
                   ScaffoldMessenger.of(Get.context!).showSnackBar(
                     SnackBar(
@@ -1587,7 +1668,7 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'See store listings',
               color: const Color(0xFF3B82F6),
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Coming soon'),
                     backgroundColor: Color(0xFF3B82F6),
@@ -1605,7 +1686,7 @@ class ShopManagementSheet extends StatelessWidget {
               onTap: () async {
                 final mobile = _mobileController.text.trim();
                 if (mobile.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
                     SnackBar(
                       content: Row(
                         children: [
@@ -1766,7 +1847,6 @@ class ShopManagementSheet extends StatelessWidget {
 
                 // Beautiful success/error messages
                 if (result == RestoreProdStatus.restored) {
-                  // Success animation dialog
                   showDialog(
                     context: Get.context!,
                     builder: (context) => AlertDialog(
@@ -1821,6 +1901,27 @@ class ShopManagementSheet extends StatelessWidget {
                       ],
                     ),
                   );
+                } else if (result == RestoreProdStatus.unauthorized) {
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          const Icon(Icons.security, color: Colors.white),
+                          const SizedBox(width: 8),
+                          const Expanded(
+                            child: Text(
+                              'Your session has expired, relogin is required.',
+                            ),
+                          ),
+                        ],
+                      ),
+                      backgroundColor: const Color(0xFF660011),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  );
                 } else if (result == RestoreProdStatus.noRef) {
                   ScaffoldMessenger.of(Get.context!).showSnackBar(
                     SnackBar(
@@ -1866,7 +1967,7 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'Configure shop preferences',
               color: const Color(0xFF6B7280),
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Coming soon'),
                     backgroundColor: Color(0xFF3B82F6),
@@ -1882,7 +1983,7 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'Test connection status',
               color: const Color(0xFF10B981),
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Coming soon'),
                     backgroundColor: Color(0xFF3B82F6),
@@ -1898,7 +1999,7 @@ class ShopManagementSheet extends StatelessWidget {
               subtitle: 'View app information',
               color: const Color(0xFF8B5CF6),
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Coming soon'),
                     backgroundColor: Color(0xFF3B82F6),
@@ -1916,7 +2017,7 @@ class ShopManagementSheet extends StatelessWidget {
               onTap: () async {
                 final mobile = _mobileController.text.trim();
                 if (mobile.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
                     SnackBar(
                       content: Row(
                         children: [
@@ -2078,7 +2179,6 @@ class ShopManagementSheet extends StatelessWidget {
 
                 // Beautiful success/error messages
                 if (result == InvoiceNumberStatus.success) {
-                  // Success animation dialog
                   showDialog(
                     context: Get.context!,
                     builder: (context) => AlertDialog(
@@ -2131,6 +2231,27 @@ class ShopManagementSheet extends StatelessWidget {
                           child: Text('Done'),
                         ),
                       ],
+                    ),
+                  );
+                } else if (result == InvoiceNumberStatus.unauthorized) {
+                  ScaffoldMessenger.of(Get.context!).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          const Icon(Icons.security, color: Colors.white),
+                          const SizedBox(width: 8),
+                          const Expanded(
+                            child: Text(
+                              'Your session has expired, relogin is required.',
+                            ),
+                          ),
+                        ],
+                      ),
+                      backgroundColor: const Color(0xFF660011),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   );
                 } else if (result == InvoiceNumberStatus.noRef) {
@@ -2297,7 +2418,7 @@ class CustomerRetentionSheet extends StatelessWidget {
             subtitle: 'See recently joined customers',
             color: const Color(0xFF10B981),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
+              ScaffoldMessenger.of(Get.context!).showSnackBar(
                 const SnackBar(
                   content: Text('Coming soon'),
                   backgroundColor: Color(0xFF3B82F6),
@@ -2312,7 +2433,7 @@ class CustomerRetentionSheet extends StatelessWidget {
             subtitle: 'Check subscriptions ending soon',
             color: const Color(0xFFEF4444),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
+              ScaffoldMessenger.of(Get.context!).showSnackBar(
                 const SnackBar(
                   content: Text('Coming soon'),
                   backgroundColor: Color(0xFF3B82F6),

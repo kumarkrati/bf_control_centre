@@ -1,13 +1,13 @@
 enum LoginStatus { error, invalid, denied, success }
 
-enum InvoiceNumberStatus { success, fail, noRef }
+enum InvoiceNumberStatus { success, fail, noRef, unauthorized }
 
-enum RestoreProdStatus { restored, failed, noRef }
+enum RestoreProdStatus { restored, failed, noRef, unauthorized }
 
-enum ViewPasswordStatus { success, noRef, noPasswordSet, failed }
+enum ViewPasswordStatus { success, noRef, noPasswordSet, failed, unauthorized }
 
-enum SetPasswordStatus { failed, noRef, success }
+enum SetPasswordStatus { failed, noRef, success, unauthorized }
 
-enum UpdateSubscriptionStatus { success, failed, noRef }
+enum UpdateSubscriptionStatus { success, failed, noRef, unauthorized }
 
-enum CreateAccountStatus { success, failed, alreadyRegistered }
+enum CreateAccountStatus { success, failed, alreadyRegistered, unauthorized }

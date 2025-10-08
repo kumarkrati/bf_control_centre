@@ -68,7 +68,7 @@ class ServerUtils {
         body: jsonEncode(reqBody),
       );
       if (response.statusCode == 400) {
-        return InvoiceNumberStatus.fail;
+        return InvoiceNumberStatus.unauthorized;
       }
       return InvoiceNumberStatus.success;
     } catch (e) {
@@ -89,8 +89,9 @@ class ServerUtils {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
-
-      if (response.statusCode == 200) {
+      if (response.statusCode == 400) {
+        return RestoreProdStatus.unauthorized;
+      } else if (response.statusCode == 200) {
         return RestoreProdStatus.values[jsonDecode(response.body)['message']];
       }
       return RestoreProdStatus.failed;
@@ -112,8 +113,9 @@ class ServerUtils {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
-
-      if (response.statusCode == 200) {
+      if (response.statusCode == 400) {
+        return ViewPasswordResult(ViewPasswordStatus.unauthorized, null);
+      } else if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         if (responseData['messsage'] == "User is not registered") {
           return ViewPasswordResult(ViewPasswordStatus.noRef, null);
@@ -149,7 +151,9 @@ class ServerUtils {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 400) {
+        return SetPasswordStatus.unauthorized;
+      } else if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final message = responseData['message'];
         return SetPasswordStatus.values[message];
@@ -183,7 +187,9 @@ class ServerUtils {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 400) {
+        return UpdateSubscriptionStatus.unauthorized;
+      } else if (response.statusCode == 200) {
         return UpdateSubscriptionStatus.success;
       } else if (response.statusCode == 404) {
         return UpdateSubscriptionStatus.noRef;
@@ -211,8 +217,9 @@ class ServerUtils {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody),
       );
-      debugPrint("status code: ${response.statusCode}");
-      if (response.statusCode == 200) {
+      if (response.statusCode == 400) {
+        return CreateAccountStatus.unauthorized;
+      } else if (response.statusCode == 200) {
         return CreateAccountStatus.success;
       } else if (response.statusCode == 404) {
         return CreateAccountStatus.alreadyRegistered;
