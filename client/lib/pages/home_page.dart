@@ -5,6 +5,7 @@ import 'package:bf_control_centre/core/enums.dart';
 import 'package:bf_control_centre/core/login_utils.dart';
 import 'package:bf_control_centre/core/server_utils.dart';
 import 'package:bf_control_centre/core/utils/convert_to_days.dart';
+import 'package:bf_control_centre/pages/home_page_downloaded_users.dart';
 import 'package:bf_control_centre/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -364,39 +365,123 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      builder: (context) => Padding(
-        padding: EdgeInsets.all(16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(24),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              "BillingFast Control Centre",
-              style: GoogleFonts.poppins(fontSize: 20),
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
+              ),
             ),
-            Text("v1.0.3+13", style: GoogleFonts.poppins(fontSize: 14)),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF3B82F6).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.info_outline,
+                    color: Color(0xFF3B82F6),
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'BillingFast Control Centre',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF172a43),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'v1.0.5+15',
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: Colors.grey.shade600,
+              ),
+            ),
+            const SizedBox(height: 24),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "Here's a list of active features:",
-                style: GoogleFonts.poppins(fontSize: 15),
+                style: GoogleFonts.poppins(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF172a43),
+                ),
               ),
             ),
-            SizedBox(
-              height: 300,
-              child: ListView(
-                children: [
-                  ListTile(title: Text("• View Password.")),
-                  ListTile(title: Text("• Reset Password.")),
-                  ListTile(title: Text("• Restore Products.")),
-                  ListTile(title: Text("• Repair Orders.")),
-                  ListTile(title: Text("• Create New Account for ADMIN role.")),
-                  ListTile(
-                    title: Text("• Activate Subscriptions for ADMIN role."),
-                  ),
-                ],
+            const SizedBox(height: 16),
+            Flexible(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildFeatureItem('View Password'),
+                    _buildFeatureItem('Reset Password'),
+                    _buildFeatureItem('Restore Products'),
+                    _buildFeatureItem('Repair Orders'),
+                    _buildFeatureItem('Create New Account for ADMIN role'),
+                    _buildFeatureItem('Activate Subscriptions for ADMIN role'),
+                  ],
+                ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildFeatureItem(String feature) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 6,
+            height: 6,
+            decoration: const BoxDecoration(
+              color: Color(0xFF3B82F6),
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              feature,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Color(0xFF172a43),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -2438,6 +2523,22 @@ class CustomerRetentionSheet extends StatelessWidget {
                   content: Text('Coming soon'),
                   backgroundColor: Color(0xFF3B82F6),
                 ),
+              );
+            },
+          ),
+          const SizedBox(height: 12),
+          _buildRetentionOption(
+            icon: Icons.cloud_download_outlined,
+            title: 'Get a list of download users',
+            subtitle: 'View users who downloaded the app',
+            color: const Color(0xFF3B82F6),
+            onTap: () {
+              Navigator.pop(context);
+              showModalBottomSheet(
+                context: Get.context!,
+                backgroundColor: Colors.white,
+                isScrollControlled: true,
+                builder: (context) => const DownloadedUsersSheet(),
               );
             },
           ),

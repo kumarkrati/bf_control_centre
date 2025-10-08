@@ -230,4 +230,16 @@ class ServerUtils {
       return CreateAccountStatus.failed;
     }
   }
+
+  static Future<List<dynamic>?> getDownloadedUsers(
+    DateTime start,
+    DateTime end,
+  ) async {
+    // dummy
+    return [
+      {"name": "Arham", "shop": "Arham's Shop", "phone": "+918858493997"},
+      {"name": "Sankalp", "shop": "Sankalp's Shop", "phone": "+918858493999"},
+      {"name": "Viral", "shop": "Viral's Shop", "phone": "+918858493990"},
+    ];
+  }
 }

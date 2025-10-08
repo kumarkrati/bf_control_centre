@@ -2,7 +2,7 @@ name: bf_control_centre
 description: "Control Centre of BillingFast"
 publish_to: "none"
 
-version: 1.0.3+13
+version: 1.0.5+15
 
 environment:
   sdk: ^3.9.2
