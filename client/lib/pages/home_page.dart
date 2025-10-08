@@ -52,8 +52,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onMobileNumberChanged() {
-    setState(() {
-      _showLoginButton = _mobileController.text.trim().isNotEmpty;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (mounted) {
+        setState(() {
+          _showLoginButton = _mobileController.text.trim().isNotEmpty;
+        });
+      }
     });
   }
 
@@ -401,13 +405,31 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  'BillingFast Control Centre',
-                  style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF172a43),
-                  ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'BillingFast Control Centre',
+                      style: GoogleFonts.poppins(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF172a43),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 300,
+                      child: Text(
+                        'All requests are being recorded under name "${AppStorage.get('name')}", keep your login secure.',
+                        maxLines: 2,
+                        style: GoogleFonts.poppins(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF172a43),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -436,12 +458,12 @@ class _HomePageState extends State<HomePage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    _buildFeatureItem('View Password'),
-                    _buildFeatureItem('Reset Password'),
-                    _buildFeatureItem('Restore Products'),
-                    _buildFeatureItem('Repair Orders'),
-                    _buildFeatureItem('Create New Account for ADMIN role'),
-                    _buildFeatureItem('Activate Subscriptions for ADMIN role'),
+                    _buildFeatureItem('Password Management'),
+                    _buildFeatureItem('Shop Management > Restore Products'),
+                    _buildFeatureItem('Shop Management > Repair Orders'),
+                    _buildFeatureItem('Customer Retention > Download users'),
+                    _buildFeatureItem('Create New Account (Admin)'),
+                    _buildFeatureItem('Update Subscription (Admin)'),
                   ],
                 ),
               ),
@@ -475,10 +497,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Text(
               feature,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color(0xFF172a43),
-              ),
+              style: const TextStyle(fontSize: 14, color: Color(0xFF172a43)),
             ),
           ),
         ],
@@ -494,8 +513,8 @@ class _HomePageState extends State<HomePage> {
         title: const Text('BillingFast Control Centre'),
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: const Icon(Icons.help_outline),
-          tooltip: 'Help',
+          icon: const Icon(Icons.info_outline),
+          tooltip: 'Info',
           onPressed: _showFeaturesList,
         ),
         bottom: PreferredSize(
@@ -665,7 +684,9 @@ class _HomePageState extends State<HomePage> {
                                     await Clipboard.setData(
                                       ClipboardData(text: mobile),
                                     );
-                                    ScaffoldMessenger.of(Get.context!).showSnackBar(
+                                    ScaffoldMessenger.of(
+                                      Get.context!,
+                                    ).showSnackBar(
                                       SnackBar(
                                         content: Text('Copied: $mobile'),
                                         duration: const Duration(seconds: 1),
