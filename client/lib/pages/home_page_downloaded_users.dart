@@ -65,7 +65,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
       csvData.writeln('Name,Shop,Phone');
 
       for (var user in _users!) {
-        csvData.writeln('${user['name']},${user['shop']},${user['phone']}');
+        csvData.writeln('${user['name']},${user['shop']},${user['mobile']}');
       }
 
       // Generate filename with timestamp
@@ -316,7 +316,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          '${_users!.length} user${_users!.length == 1 ? '' : 's'} found',
+                          '${_users!.length} user${_users!.length == 1 ? '' : 's'} found (${_users?.where((e) => !e['mobile']!.toString().startsWith('+91')).length} international users)',
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -333,10 +333,16 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                             const SizedBox(height: 8),
                         itemBuilder: (context, index) {
                           final user = _users![index];
+                          if (user['name'] == null || user['name'] == "") {
+                            user['name'] = 'Not Provided';
+                          }
+                          if (user['shop'] == null || user['shop'] == "") {
+                            user['shop'] = 'Unnamed';
+                          }
                           return _buildUserTile(
-                            name: user['name'] ?? 'Unknown',
-                            shop: user['shop'] ?? 'N/A',
-                            phone: user['phone'] ?? 'N/A',
+                            name: user['name'],
+                            shop: user['shop'],
+                            phone: user['mobile'] ?? 'N/A',
                           );
                         },
                       ),
@@ -411,121 +417,90 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
     required String phone,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF3B82F6).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: const Color(0xFF3B82F6).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: const Icon(
+              Icons.person,
+              color: Color(0xFF3B82F6),
+              size: 16,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF172a43),
+                  ),
                 ),
-                child: const Icon(
-                  Icons.person,
-                  color: Color(0xFF3B82F6),
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                const SizedBox(height: 2),
+                Row(
                   children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF172a43),
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.store,
-                          size: 14,
+                    Icon(Icons.store, size: 12, color: Colors.grey.shade600),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        shop,
+                        style: TextStyle(
+                          fontSize: 12,
                           color: Colors.grey.shade600,
                         ),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            shop,
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey.shade600,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade50,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              children: [
-                const Icon(Icons.phone, size: 16, color: Color(0xFF10B981)),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    phone,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF172a43),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    await Clipboard.setData(ClipboardData(text: phone));
-                    if (mounted) {
-                      ScaffoldMessenger.of(Get.context!).showSnackBar(
-                        SnackBar(
-                          content: Text('Copied: $phone'),
-                          duration: const Duration(seconds: 1),
-                          behavior: SnackBarBehavior.floating,
-                          backgroundColor: const Color(0xFF10B981),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  icon: const Icon(Icons.copy, size: 18),
-                  tooltip: 'Copy phone number',
-                  color: const Color(0xFF3B82F6),
-                  padding: const EdgeInsets.all(8),
-                  constraints: const BoxConstraints(),
-                ),
               ],
             ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            "${phone} (${phone.substring(1).length} digits)",
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF172a43),
+            ),
+          ),
+          IconButton(
+            onPressed: () async {
+              await Clipboard.setData(ClipboardData(text: phone));
+              if (mounted) {
+                ScaffoldMessenger.of(Get.context!).showSnackBar(
+                  SnackBar(
+                    content: Text('Copied: $phone'),
+                    duration: const Duration(seconds: 1),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: const Color(0xFF10B981),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                );
+              }
+            },
+            icon: const Icon(Icons.copy, size: 16),
+            tooltip: 'Copy phone number',
+            color: const Color(0xFF3B82F6),
+            padding: const EdgeInsets.all(6),
+            constraints: const BoxConstraints(),
           ),
         ],
       ),

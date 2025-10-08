@@ -235,11 +235,32 @@ class ServerUtils {
     DateTime start,
     DateTime end,
   ) async {
-    // dummy
-    return [
-      {"name": "Arham", "shop": "Arham's Shop", "phone": "+918858493997"},
-      {"name": "Sankalp", "shop": "Sankalp's Shop", "phone": "+918858493999"},
-      {"name": "Viral", "shop": "Viral's Shop", "phone": "+918858493990"},
-    ];
+    try {
+      start = DateTime(start.year, start.month, start.day, 0, 0, 0);
+      end = DateTime(end.year, end.month, end.day, 23, 59, 59);
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+        'start': start.toIso8601String(),
+        'end': end.toIso8601String(),
+      };
+      final response = await http.post(
+        Uri.parse('${_api}download-users'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 400) {
+        return null;
+      } else if (response.statusCode == 500) {
+        return [];
+      } else if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['message'];
+      }
+      return null;
+    } catch (e) {
+      debugPrint("[updateSubscription] Error: $e ");
+      return null;
+    }
   }
 }
