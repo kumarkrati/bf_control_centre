@@ -156,4 +156,32 @@ export class DbOps {
       return RestoreProductStatus.failed;
     }
   }
+
+  async getDownloadedUsers(start: string, end: string): Promise<any> {
+    try {
+      const timeGapInMs = Date.parse(end) - Date.parse(start);
+      const timeGapInHours = ((timeGapInMs / 1000) / 60) / 60;
+      const timeGapInDays = timeGapInHours / 24;
+      this.logger.log(`Duration: ${timeGapInDays} days`)
+      if (timeGapInDays >= 32) {
+        this.logger.warning(
+          `User attempted to download list of ${timeGapInDays} days, request denied.`,
+        );
+        return null;
+      }
+      this.logger.log(`timeline: ${start} - ${end}`)
+      const { data, error } = await this.supabase.from("users").select(
+        "mobile, name, shop",
+      ).gte("created_at", start).lte("created_at", end);
+      if (error) {
+        this.logger.error(`${error}`);
+        return null;
+      }
+      this.logger.log(`Got user count: ${data.length}`)
+      return data;
+    } catch (error) {
+      this.logger.error(`Exception getDownloadedUsers(): ${error}`);
+      return RestoreProductStatus.failed;
+    }
+  }
 }
