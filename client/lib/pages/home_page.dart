@@ -7,6 +7,7 @@ import 'package:bf_control_centre/core/server_utils.dart';
 import 'package:bf_control_centre/core/utils/convert_to_days.dart';
 import 'package:bf_control_centre/pages/home_page_downloaded_users.dart';
 import 'package:bf_control_centre/pages/login_page.dart';
+import 'package:bf_control_centre/widgets/vm_health_fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -464,6 +465,7 @@ class _HomePageState extends State<HomePage> {
                     _buildFeatureItem('Customer Retention > Download users'),
                     _buildFeatureItem('Create New Account (Admin)'),
                     _buildFeatureItem('Update Subscription (Admin)'),
+                    _buildFeatureItem('Server Health (Admin)'),
                   ],
                 ),
               ),
@@ -509,6 +511,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
+      floatingActionButton: LoginUtils.isAdmin ? const VMHealthFAB() : null,
       appBar: AppBar(
         title: const Text('BillingFast Control Centre'),
         automaticallyImplyLeading: false,

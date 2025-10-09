@@ -1,0 +1,82 @@
+[
+    {
+      "name": "verify-user.ts",
+      "description": "Responsible for sending OTPs and password logins."
+    },
+    {
+      "name": "authorize.ts",
+      "description": "Responsible for validating OTP and preventing misuse of Identity Platform."
+    },
+    {
+      "name": "update-auth.ts",
+      "description": "Handles JWT refreshes every hour."
+    },
+    {
+      "name": "monitor-indexer.sh",
+      "description": "Restarts typesense document indexer if in case it crashes."
+    },
+    {
+      "name": "indexer.ts",
+      "description": "Resposible for backfill data into typesense, listens supabase continously."
+    },
+    {
+      "name": "pdf-server.js",
+      "description": "Responsible for Server Side Invoice Rendering"
+    },
+    {
+      "name": "subscriptions-server.ts",
+      "description": "Manages razorpay payments and app subscriptions."
+    },
+    {
+      "name": "control-centre-server.ts",
+      "description": "Powers this control centre."
+    },
+    {
+      "name": "store-server.ts",
+      "description": "Handles order checkout and product requests coming from online store"
+    },
+    {
+      "name": "sms-and-maps-server.js",
+      "description": "Serves multiple functions: fetches geographical distance using ola maps, sends otp, send online order notification to host shop and auto-adds logged in users to BillingFast."
+    },
+    {
+      "name": "integrity-server.js",
+      "description": "Prevents bot attacks does evaluation on various parameters."
+    },
+    {
+      "name": "stock-server.js",
+      "description": "Handles stock transfer requests."
+    },
+    {
+      "name": "dashboard_server.js",
+      "description": "Servers complete business tally."
+    },
+    {
+      "name": "summary-server.js",
+      "description": "Handles ledger calculations."
+    },
+    {
+      "name": "order-pooling-server.js",
+      "description": "Prevents duplicate invoices and manages concurrency."
+    },
+    {
+      "name": "gsp-server.js",
+      "description": "Serves details by GSTIN number."
+    },
+    {
+      "name": "reports-server.js",
+      "description": "Responsible for providing all sorts of reports in the app."
+    },
+    {
+      "name": "ai-server.js",
+      "description": "Handles all AI features."
+    },
+    {
+      "name": "icici-payments-server.js",
+      "description": "Currently dormant, until integration is complete."
+    },
+    {
+      "name": "health-server.js",
+      "description": "Provides this health stat."
+    }
+]

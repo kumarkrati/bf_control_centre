@@ -1,0 +1,123 @@
+{
+  "timestamp": "2025-10-09T11:08:00.058Z",
+  "status": "ok",
+  "servers": [
+    {
+      "name": "verify-user.ts",
+      "alive": true,
+      "pid": 1304110
+    },
+    {
+      "name": "authorize.ts",
+      "alive": true,
+      "pid": 4120751
+    },
+    {
+      "name": "update-auth.ts",
+      "alive": true,
+      "pid": 1303998
+    },
+    {
+      "name": "monitor-indexer.sh",
+      "alive": true,
+      "pid": 1855260
+    },
+    {
+      "name": "indexer.ts",
+      "alive": true,
+      "pid": 3356259
+    },
+    {
+      "name": "pdf-server.js",
+      "alive": true,
+      "pid": 3270896
+    },
+    {
+      "name": "subscriptions-server.ts",
+      "alive": true,
+      "pid": 1663955
+    },
+    {
+      "name": "control-centre-server.ts",
+      "alive": true,
+      "pid": 3192669
+    },
+    {
+      "name": "store-server.ts",
+      "alive": true,
+      "pid": 76512
+    },
+    {
+      "name": "sms-and-maps-server.js",
+      "alive": true,
+      "pid": 1265864
+    },
+    {
+      "name": "integrity-server.js",
+      "alive": true,
+      "pid": 355111
+    },
+    {
+      "name": "stock-server.js",
+      "alive": true,
+      "pid": 3876308
+    },
+    {
+      "name": "dashboard_server.js",
+      "alive": true,
+      "pid": 501402
+    },
+    {
+      "name": "summary-server.js",
+      "alive": true,
+      "pid": 584921
+    },
+    {
+      "name": "order-pooling-server.js",
+      "alive": true,
+      "pid": 1466105
+    },
+    {
+      "name": "gsp-server.js",
+      "alive": true,
+      "pid": 100956
+    },
+    {
+      "name": "reports-server.js",
+      "alive": true,
+      "pid": 3382899
+    },
+    {
+      "name": "ai-server.js",
+      "alive": true,
+      "pid": 2156170
+    },
+    {
+      "name": "icici-payments-server.js",
+      "alive": true,
+      "pid": 2534556
+    },
+    {
+      "name": "health-server.js",
+      "alive": true,
+      "pid": 3391143
+    }
+  ],
+  "memory": {
+    "memory": {
+      "total": "15Gi",
+      "used": "10Gi",
+      "free": "3.1Gi",
+      "shared": "168Mi",
+      "buffCache": "2.3Gi",
+      "available": "4.9Gi"
+    },
+    "swap": {
+      "total": "15Gi",
+      "used": "3.6Gi",
+      "free": "12Gi"
+    }
+  },
+  "uptime": 5888818.2,
+  "hostname": "primus"
+}

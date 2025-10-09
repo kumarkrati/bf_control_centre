@@ -263,4 +263,28 @@ class ServerUtils {
       return null;
     }
   }
+
+  static Future<dynamic> getVMHealth() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://apis.billingfast.com:9870/full-health'),
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "6vx1ATV4zV5gEX6yG2S5T74A3uE523e2fL1ibrYp6Hl96Bx2p0",
+        },
+      );
+      if (response.statusCode == 400) {
+        return null;
+      } else if (response.statusCode == 500) {
+        return "error";
+      } else if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data; // a sample response is available at client\sample-health-response.json
+      }
+      return null;
+    } catch (e) {
+      debugPrint("[getVMHealth] Error: $e ");
+      return null;
+    }
+  }
 }
