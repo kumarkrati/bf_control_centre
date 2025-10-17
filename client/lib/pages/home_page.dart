@@ -750,26 +750,22 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        if (LoginUtils.isAdmin) ...[
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: _createNewAccount,
-                              icon: const Icon(Icons.person_add, size: 18),
-                              label: const Text('Create Account'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF3B82F6),
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: _createNewAccount,
+                            icon: const Icon(Icons.person_add, size: 18),
+                            label: const Text('Create Account'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF3B82F6),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),
-                        ],
+                        ),
                       ],
                     ),
                   ],
