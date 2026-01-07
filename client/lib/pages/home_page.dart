@@ -6,7 +6,7 @@ import 'package:bf_control_centre/core/login_utils.dart';
 import 'package:bf_control_centre/core/server_utils.dart';
 import 'package:bf_control_centre/core/utils/convert_to_days.dart';
 import 'package:bf_control_centre/pages/home_page_downloaded_users.dart';
-import 'package:bf_control_centre/pages/todays_new_users_sheet.dart';
+import 'package:bf_control_centre/pages/todays_new_users_page.dart';
 import 'package:bf_control_centre/pages/login_page.dart';
 import 'package:bf_control_centre/widgets/vm_health_fab.dart';
 import 'package:flutter/material.dart';
@@ -2525,12 +2525,7 @@ class CustomerRetentionSheet extends StatelessWidget {
             color: const Color(0xFF8B5CF6),
             onTap: () {
               Navigator.pop(context);
-              showModalBottomSheet(
-                context: Get.context!,
-                backgroundColor: Colors.white,
-                isScrollControlled: true,
-                builder: (context) => const TodaysNewUsersSheet(),
-              );
+              Get.to(() => const TodaysNewUsersPage());
             },
           ),
           const SizedBox(height: 12),
