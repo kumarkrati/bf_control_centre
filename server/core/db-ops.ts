@@ -197,7 +197,9 @@ export class DbOps {
   async getTodaysNewUsers(): Promise<any[]> {
     try {
       const date = new Date();
-      const today = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      const today = `${date.getFullYear()}-${
+        String(date.getMonth() + 1).padStart(2, "0")
+      }-${String(date.getDate()).padStart(2, "0")}`;
 
       this.logger.log(`Fetching users for date: ${today}`);
 
@@ -239,11 +241,11 @@ export class DbOps {
 
           return {
             ...user,
-            assignedTo: assignment?.assignedTo || null,
+            assignedTo: assignment?.assignedto || null,
             notes: assignment?.notes || null,
             isAssigned: !!assignment,
           };
-        })
+        }),
       );
 
       this.logger.log(`Found ${usersWithAssignment.length} new users today`);
@@ -259,7 +261,7 @@ export class DbOps {
     userName: string,
     userAddress: string,
     assignedTo: string,
-    notes: string
+    notes: string,
   ): Promise<number> {
     try {
       // Check if assignment already exists
@@ -276,7 +278,7 @@ export class DbOps {
           .update({
             name: userName,
             address: userAddress,
-            assignedTo: assignedTo,
+            assignedto: assignedTo,
             notes: notes,
           })
           .eq("id", userId);
@@ -293,7 +295,7 @@ export class DbOps {
             id: userId,
             name: userName,
             address: userAddress,
-            assignedTo: assignedTo,
+            assignedto: assignedTo,
             notes: notes,
           });
 
