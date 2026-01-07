@@ -20,19 +20,13 @@
     {
         "name": "Aashish",
         "username": "aashish",
-        "password": "32CUcx",
-        "role": "STAFF"
-    },
-    {
-        "name": "Viral",
-        "username": "viral",
-        "password": "w690vG",
+        "password": "Lucifer@12",
         "role": "STAFF"
     },
     {
         "name": "Ravina",
         "username": "ravina",
-        "password": "5EYtzO",
+        "password": "ravina@8839",
         "role": "STAFF"
     }
 ]

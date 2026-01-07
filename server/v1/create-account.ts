@@ -8,7 +8,7 @@ export function createAccount(app: Hono, logger: AppLogger, dbops: DbOps) {
     "/v1/create-account",
     encrypted(async (json: any, context: Context) => {
       const { id, mobile } = json;
-      logger.log("Updating subscription ...");
+      logger.log("Updating account ...");
       const status = await dbops.createAccount(
         id,
         mobile,

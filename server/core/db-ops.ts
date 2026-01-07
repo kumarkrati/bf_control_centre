@@ -162,14 +162,14 @@ export class DbOps {
       const timeGapInMs = Date.parse(end) - Date.parse(start);
       const timeGapInHours = ((timeGapInMs / 1000) / 60) / 60;
       const timeGapInDays = timeGapInHours / 24;
-      this.logger.log(`Duration: ${timeGapInDays} days`)
+      this.logger.log(`Duration: ${timeGapInDays} days`);
       if (timeGapInDays >= 32) {
         this.logger.warning(
           `User attempted to download list of ${timeGapInDays} days, request denied.`,
         );
         return null;
       }
-      this.logger.log(`timeline: ${start} - ${end}`)
+      this.logger.log(`timeline: ${start} - ${end}`);
       const { data, error } = await this.supabase.from("users").select(
         "mobile, name, shop",
       ).gte("created_at", start).lte("created_at", end);
@@ -177,8 +177,17 @@ export class DbOps {
         this.logger.error(`${error}`);
         return null;
       }
-      this.logger.log(`Got user count: ${data.length}`)
-      return data;
+      // filter duplicate [mobile]
+      const seenMobiles: string[] = [];
+      const distinctData: any[] = [];
+      for (const doc of data) {
+        if (seenMobiles.includes(doc["mobile"])) {
+          continue;
+        }
+        distinctData.push(doc);
+      }
+      this.logger.log(`Got user count: ${distinctData.length}`);
+      return distinctData;
     } catch (error) {
       this.logger.error(`Exception getDownloadedUsers(): ${error}`);
       return RestoreProductStatus.failed;
