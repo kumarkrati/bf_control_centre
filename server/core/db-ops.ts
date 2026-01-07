@@ -193,4 +193,18 @@ export class DbOps {
       return RestoreProductStatus.failed;
     }
   }
+
+  async function fetchNewUsersToday() : Promise<any> {
+    const date = new Date();
+    const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    const users = await this.getDownloadedUsers(
+      `${today} 00:00:00`,
+      `${today} 23:59:59`
+    );
+    if (!users) {
+      return [];
+    }
+    // fetch status per user from [billingfastsalesstaffassignies] table
+    
+  }
 }
