@@ -11,6 +11,7 @@ import { restoreProduct } from "./restore-products.ts";
 import { subscription } from "./subscription.ts";
 import { createAccount } from "./create-account.ts";
 import { downloadUsers } from "./download-users.ts";
+import { liveNewUsers } from "./live_new_users.ts";
 
 export function initV1(app: Hono, logger: AppLogger, dbops: DbOps) {
   app.use("/v1/*", cors());
@@ -23,4 +24,5 @@ export function initV1(app: Hono, logger: AppLogger, dbops: DbOps) {
   subscription(app, logger, dbops);
   createAccount(app, logger, dbops);
   downloadUsers(app, logger, dbops);
+  liveNewUsers(app, logger, dbops);
 }

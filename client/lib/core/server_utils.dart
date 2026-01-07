@@ -287,4 +287,60 @@ class ServerUtils {
       return null;
     }
   }
+
+  static Future<List<dynamic>?> getTodaysNewUsers() async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+      };
+      final response = await http.post(
+        Uri.parse('${_api}live-new-users'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 400) {
+        return null; // Unauthorized
+      } else if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['message'] as List<dynamic>;
+      }
+      return [];
+    } catch (e) {
+      debugPrint("[getTodaysNewUsers] Error: $e");
+      return [];
+    }
+  }
+
+  static Future<bool> assignSalesStaff({
+    required String userId,
+    required String userName,
+    required String userAddress,
+    required String assignedTo,
+    required String notes,
+  }) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+        'userId': userId,
+        'userName': userName,
+        'userAddress': userAddress,
+        'assignedTo': assignedTo,
+        'notes': notes,
+      };
+      final response = await http.post(
+        Uri.parse('${_api}assign-sales-staff'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      debugPrint("[assignSalesStaff] Error: $e");
+      return false;
+    }
+  }
 }

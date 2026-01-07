@@ -194,17 +194,120 @@ export class DbOps {
     }
   }
 
-  async function fetchNewUsersToday() : Promise<any> {
-    const date = new Date();
-    const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    const users = await this.getDownloadedUsers(
-      `${today} 00:00:00`,
-      `${today} 23:59:59`
-    );
-    if (!users) {
+  async getTodaysNewUsers(): Promise<any[]> {
+    try {
+      const date = new Date();
+      const today = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+      this.logger.log(`Fetching users for date: ${today}`);
+
+      // Get all users created today
+      const { data: users, error } = await this.supabase
+        .from("users")
+        .select("id, mobile, name, shop, created_at")
+        .gte("created_at", `${today} 00:00:00`)
+        .lte("created_at", `${today} 23:59:59`);
+
+      if (error) {
+        this.logger.error(`Error fetching today's users: ${error.message}`);
+        return [];
+      }
+
+      if (!users || users.length === 0) {
+        return [];
+      }
+
+      // Filter duplicates by mobile
+      const seenMobiles: string[] = [];
+      const distinctUsers: any[] = [];
+      for (const user of users) {
+        if (seenMobiles.includes(user.mobile)) {
+          continue;
+        }
+        seenMobiles.push(user.mobile);
+        distinctUsers.push(user);
+      }
+
+      // Fetch assignment status for each user from billingfastsalesstaffassignies
+      const usersWithAssignment = await Promise.all(
+        distinctUsers.map(async (user) => {
+          const { data: assignment } = await this.supabase
+            .from("billingfastsalesstaffassignies")
+            .select("*")
+            .eq("id", user.id)
+            .maybeSingle();
+
+          return {
+            ...user,
+            assignedTo: assignment?.assignedTo || null,
+            notes: assignment?.notes || null,
+            isAssigned: !!assignment,
+          };
+        })
+      );
+
+      this.logger.log(`Found ${usersWithAssignment.length} new users today`);
+      return usersWithAssignment;
+    } catch (error) {
+      this.logger.error(`Exception getTodaysNewUsers(): ${error}`);
       return [];
     }
-    // fetch status per user from [billingfastsalesstaffassignies] table
-    
+  }
+
+  async assignSalesStaff(
+    userId: string,
+    userName: string,
+    userAddress: string,
+    assignedTo: string,
+    notes: string
+  ): Promise<number> {
+    try {
+      // Check if assignment already exists
+      const { data: existing } = await this.supabase
+        .from("billingfastsalesstaffassignies")
+        .select("id")
+        .eq("id", userId)
+        .maybeSingle();
+
+      if (existing) {
+        // Update existing assignment
+        const { error } = await this.supabase
+          .from("billingfastsalesstaffassignies")
+          .update({
+            name: userName,
+            address: userAddress,
+            assignedTo: assignedTo,
+            notes: notes,
+          })
+          .eq("id", userId);
+
+        if (error) {
+          this.logger.error(`Error updating assignment: ${error.message}`);
+          return 1;
+        }
+      } else {
+        // Insert new assignment
+        const { error } = await this.supabase
+          .from("billingfastsalesstaffassignies")
+          .insert({
+            id: userId,
+            name: userName,
+            address: userAddress,
+            assignedTo: assignedTo,
+            notes: notes,
+          });
+
+        if (error) {
+          this.logger.error(`Error inserting assignment: ${error.message}`);
+          return 1;
+        }
+      }
+
+      this.logger.log(`Sales staff assigned for user: ${userId}`);
+      return 0;
+    } catch (error) {
+      this.logger.error(`Exception assignSalesStaff(): ${error}`);
+      return 1;
+    }
   }
 }
