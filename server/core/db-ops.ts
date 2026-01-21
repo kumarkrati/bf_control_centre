@@ -361,12 +361,31 @@ export class DbOps {
         ? subscription.receipts
         : [];
 
-      // Calculate next invoice number based on existing receipts
-      const maxInvoiceNo = existingReceipts.reduce(
-        (max, receipt) => Math.max(max, receipt.invoiceNo || 0),
-        0
-      );
-      const nextInvoiceNo = maxInvoiceNo + 1;
+      // Read global invoice number from file
+      const invoiceCountFilePath = Deno.env.get("SUBSCRIPTION_RECEIPT_COUNT_FILE");
+      if (!invoiceCountFilePath) {
+        this.logger.error("SUBSCRIPTION_RECEIPT_COUNT_FILE env var not set");
+        return { status: 1, invoice: null };
+      }
+
+      let currentInvoiceNo = 0;
+      try {
+        const fileContent = await Deno.readTextFile(invoiceCountFilePath);
+        const data = JSON.parse(fileContent);
+        currentInvoiceNo = data.invoice || 0;
+      } catch (e) {
+        this.logger.warning(`Could not read invoice count file, starting from 0: ${e}`);
+      }
+
+      const nextInvoiceNo = currentInvoiceNo + 1;
+
+      // Update the invoice count file with the new number
+      try {
+        await Deno.writeTextFile(invoiceCountFilePath, JSON.stringify({ invoice: nextInvoiceNo }));
+      } catch (e) {
+        this.logger.error(`Failed to update invoice count file: ${e}`);
+        return { status: 1, invoice: null };
+      }
 
       // Create invoice record
       const invoice = {
