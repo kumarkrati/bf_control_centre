@@ -312,4 +312,155 @@ export class DbOps {
       return 1;
     }
   }
+
+  async generateInvoice(
+    phone: string,
+    planType: string,
+    planDuration: number,
+    invoiceDate: string,
+    gstin: string | null,
+    address: string | null,
+    businessName: string | null,
+    amount: number, // Final amount in paisa
+  ): Promise<{ status: number; invoice: any }> {
+    try {
+      // Check if user exists
+      if (!(await this.fetchUser(phone))) {
+        this.logger.warning(`No user with id: ${phone}`);
+        return { status: 2, invoice: null };
+      }
+
+      // Check if phone is an Indian number (starts with +91 or is 10 digits)
+      const isIndianNumber = phone.startsWith("+91") ||
+                             phone.startsWith("91") ||
+                             (phone.length === 10 && /^[6-9]\d{9}$/.test(phone));
+
+      // Calculate base amount
+      // For Indian numbers: baseAmount = amount / 1.18 (reverse 18% GST)
+      // For non-Indian numbers: baseAmount = amount (no tax)
+      let baseAmount: number;
+      if (isIndianNumber) {
+        // Reverse calculate base amount from final amount with 18% GST
+        baseAmount = Math.round(amount / 1.18);
+      } else {
+        baseAmount = amount;
+      }
+
+      const durationKey = planDuration >= 365 ? "year" : "month";
+      const subscriptionId = `${phone}-subscriptions`;
+
+      // Fetch existing subscription to get current receipts
+      const { data: subscription } = await this.supabase
+        .from("subscriptions")
+        .select("receipts")
+        .eq("id", subscriptionId)
+        .maybeSingle();
+
+      // Get existing receipts or empty array
+      const existingReceipts: any[] = Array.isArray(subscription?.receipts)
+        ? subscription.receipts
+        : [];
+
+      // Calculate next invoice number based on existing receipts
+      const maxInvoiceNo = existingReceipts.reduce(
+        (max, receipt) => Math.max(max, receipt.invoiceNo || 0),
+        0
+      );
+      const nextInvoiceNo = maxInvoiceNo + 1;
+
+      // Create invoice record
+      const invoice = {
+        id: `order_${Date.now()}`,
+        key: `${amount / 100}_${durationKey}`,
+        days: planDuration,
+        plan: planType,
+        time: invoiceDate,
+        amount: amount,
+        details: {
+          gstin: gstin,
+          address: address,
+          businessName: businessName,
+        },
+        isUltra: planType === "ULTRA",
+        currency: "INR",
+        invoiceNo: nextInvoiceNo,
+        baseAmount: baseAmount,
+        phone: phone,
+      };
+
+      // Add new invoice to receipts array
+      const updatedReceipts = [...existingReceipts, invoice];
+
+      // Update the subscriptions table with the new receipts array
+      const { error } = await this.supabase
+        .from("subscriptions")
+        .update({ receipts: updatedReceipts })
+        .eq("id", subscriptionId);
+
+      if (error) {
+        this.logger.error(`Failed to generate invoice: ${error.message}`);
+        return { status: 1, invoice: null };
+      }
+
+      this.logger.log(`Invoice generated for phone: ${phone}, invoiceNo: ${nextInvoiceNo}, isIndian: ${isIndianNumber}, baseAmount: ${baseAmount}, amount: ${amount}`);
+      return { status: 0, invoice: invoice };
+    } catch (error) {
+      this.logger.error(`Exception generateInvoice(): ${error}`);
+      return { status: 1, invoice: null };
+    }
+  }
+
+  async fetchInvoices(startDate: string, endDate: string): Promise<any[] | null> {
+    try {
+      this.logger.log(`Fetching invoices from ${startDate} to ${endDate}`);
+
+      // Fetch all subscriptions with receipts
+      const { data, error } = await this.supabase
+        .from("subscriptions")
+        .select("id, receipts");
+
+      if (error) {
+        this.logger.error(`Failed to fetch subscriptions: ${error.message}`);
+        return null;
+      }
+
+      // Parse dates for comparison
+      const startDateTime = new Date(startDate).getTime();
+      const endDateTime = new Date(endDate).getTime();
+
+      // Extract and filter receipts from all subscriptions
+      const allInvoices: any[] = [];
+      for (const subscription of data || []) {
+        if (!subscription.receipts) continue;
+
+        // receipts is a jsonb array
+        const receipts = Array.isArray(subscription.receipts)
+          ? subscription.receipts
+          : [];
+
+        for (const receipt of receipts) {
+          if (!receipt.time) continue;
+
+          const receiptTime = new Date(receipt.time).getTime();
+          if (receiptTime >= startDateTime && receiptTime <= endDateTime) {
+            // Extract phone from subscription id (format: phone-subscriptions)
+            const phone = subscription.id.replace("-subscriptions", "");
+            allInvoices.push({
+              ...receipt,
+              phone: receipt.phone || phone,
+            });
+          }
+        }
+      }
+
+      // Sort by invoiceNo descending
+      allInvoices.sort((a, b) => (b.invoiceNo || 0) - (a.invoiceNo || 0));
+
+      this.logger.log(`Fetched ${allInvoices.length} invoices from subscriptions`);
+      return allInvoices;
+    } catch (error) {
+      this.logger.error(`Exception fetchInvoices(): ${error}`);
+      return null;
+    }
+  }
 }

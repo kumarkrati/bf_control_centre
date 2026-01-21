@@ -343,4 +343,112 @@ class ServerUtils {
       return false;
     }
   }
+
+  static Future<GenerateInvoiceResult> generateInvoice({
+    required String phone,
+    required String planType,
+    required int planDuration,
+    required DateTime invoiceDate,
+    required int amount, // Final amount in paisa
+    String? gstin,
+    String? address,
+    String? businessName,
+  }) async {
+    try {
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+        'phone': phone,
+        'planType': planType,
+        'planDuration': planDuration,
+        'invoiceDate': invoiceDate.toIso8601String(),
+        'amount': amount,
+        'gstin': gstin,
+        'address': address,
+        'businessName': businessName,
+      };
+      final response = await http.post(
+        Uri.parse('${_api}generate-invoice'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 400) {
+        return GenerateInvoiceResult(GenerateInvoiceStatus.unauthorized, null);
+      } else if (response.statusCode == 404) {
+        return GenerateInvoiceResult(GenerateInvoiceStatus.noRef, null);
+      } else if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return GenerateInvoiceResult(
+          GenerateInvoiceStatus.success,
+          data['invoice'],
+        );
+      }
+      return GenerateInvoiceResult(GenerateInvoiceStatus.failed, null);
+    } catch (e) {
+      debugPrint("[generateInvoice] Error: $e");
+      return GenerateInvoiceResult(GenerateInvoiceStatus.failed, null);
+    }
+  }
+
+  static Future<FetchInvoicesResult> fetchInvoices({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    try {
+      final start = DateTime(
+        startDate.year,
+        startDate.month,
+        startDate.day,
+        0,
+        0,
+        0,
+      );
+      final end = DateTime(
+        endDate.year,
+        endDate.month,
+        endDate.day,
+        23,
+        59,
+        59,
+      );
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+        'startDate': start.toIso8601String(),
+        'endDate': end.toIso8601String(),
+      };
+      final response = await http.post(
+        Uri.parse('${_api}fetch-invoices'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 400) {
+        return FetchInvoicesResult(FetchInvoicesStatus.unauthorized, []);
+      } else if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return FetchInvoicesResult(
+          FetchInvoicesStatus.success,
+          List<Map<String, dynamic>>.from(data['invoices'] ?? []),
+        );
+      }
+      return FetchInvoicesResult(FetchInvoicesStatus.failed, []);
+    } catch (e) {
+      debugPrint("[fetchInvoices] Error: $e");
+      return FetchInvoicesResult(FetchInvoicesStatus.failed, []);
+    }
+  }
+}
+
+class GenerateInvoiceResult {
+  final GenerateInvoiceStatus status;
+  final Map<String, dynamic>? invoice;
+
+  GenerateInvoiceResult(this.status, this.invoice);
+}
+
+class FetchInvoicesResult {
+  final FetchInvoicesStatus status;
+  final List<Map<String, dynamic>> invoices;
+
+  FetchInvoicesResult(this.status, this.invoices);
 }
