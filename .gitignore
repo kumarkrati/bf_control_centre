@@ -2,3 +2,4 @@
 nohup.out
 deno.lock
 .storage/tokens.json
+.env

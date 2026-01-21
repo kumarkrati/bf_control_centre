@@ -1,32 +1,62 @@
 [
-    {
-        "name": "Arham (Dev Team)",
-        "username": "arham",
-        "password": "Abcd1234",
-        "role": "ADMIN"
-    },
-    {
-        "name": "Sankalp (Dev Team)",
-        "username": "sankalp",
-        "password": "sankalp+123",
-        "role": "ADMIN"
-    },
-    {
-        "name": "Kumar Krati Gupta (Head)",
-        "username": "kumar",
-        "password": "BillingFast.22",
-        "role": "ADMIN"
-    },
-    {
-        "name": "Aashish",
-        "username": "aashish",
-        "password": "Lucifer@12",
-        "role": "STAFF"
-    },
-    {
-        "name": "Ravina",
-        "username": "ravina",
-        "password": "ravina@8839",
-        "role": "STAFF"
-    }
+  {
+    "name": "Arham (Dev Team)",
+    "username": "arham",
+    "password": "Abcd1234",
+    "role": "ADMIN"
+  },
+  {
+    "name": "Sankalp (Dev Team)",
+    "username": "sankalp",
+    "password": "sankalp+123",
+    "role": "ADMIN"
+  },
+  {
+    "name": "Kumar Krati Gupta (Head)",
+    "username": "kumar",
+    "password": "BillingFast.22",
+    "role": "ADMIN"
+  },
+  {
+    "name": "Aashish",
+    "username": "aashish",
+    "password": "Lucifer@12",
+    "role": "STAFF"
+  },
+  {
+    "name": "Ravina",
+    "username": "ravina",
+    "password": "ravina@8839",
+    "role": "STAFF"
+  },
+  {
+    "name": "Kritika",
+    "username": "kritika",
+    "password": "user@123",
+    "role": "STAFF"
+  },
+  {
+    "name": "Rani",
+    "username": "rani",
+    "password": "user@123",
+    "role": "STAFF"
+  },
+  {
+    "name": "Narendra",
+    "username": "narendra",
+    "password": "user@123",
+    "role": "STAFF"
+  },
+  {
+    "name": "Jaya",
+    "username": "jaya",
+    "password": "user@123",
+    "role": "STAFF"
+  },
+  {
+    "name": "Ankit",
+    "username": "ankit",
+    "password": "user@123",
+    "role": "STAFF"
+  }
 ]
