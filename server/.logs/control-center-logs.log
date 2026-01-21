@@ -1,1 +1,425 @@
-control-center-logs.log logger initialized on 7/1/2026 at 7:23:23 (1767770603458 mse)
+control-center-logs.log logger initialized on 21/1/2026 at 6:38:45 (1768977525332 mse)
+[21/1/2026 (6:38:53)] processing stage-2-request request ...
+[21/1/2026 (6:38:53)] [undefined] Decompiled time: 1768977535747000
+[21/1/2026 (6:38:53)] [undefined] Future key encountered -2650 ms difference, client clock is 2.65s ahead of the server clock.
+(ERROR)[21/1/2026 (6:38:53)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:38:56)] processing stage-2-request request ...
+[21/1/2026 (6:38:56)] [undefined] Decompiled time: 1768977535820000
+[21/1/2026 (6:38:56)] [undefined] Key is valid. Created at 1768977535820 current time is 1768977536212 diff is 392 ms.
+(ERROR)[21/1/2026 (6:38:56)] Invalid token dcce5ee0-410f-4aa2-b2a0-d91fc3a39c9e by arham
+[21/1/2026 (6:38:59)] processing stage-2-request request ...
+[21/1/2026 (6:38:59)] [undefined] Decompiled time: 1768977538773000
+[21/1/2026 (6:38:59)] [undefined] Key is valid. Created at 1768977538773 current time is 1768977539601 diff is 828 ms.
+(ERROR)[21/1/2026 (6:38:59)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:38:59)] processing stage-2-request request ...
+[21/1/2026 (6:38:59)] [undefined] Decompiled time: 1768977540671000
+[21/1/2026 (6:38:59)] [undefined] Future key encountered -823 ms difference, client clock is 0.823s ahead of the server clock.
+(ERROR)[21/1/2026 (6:38:59)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:39:23)] processing stage-1-request request ...
+[21/1/2026 (6:39:23)] [undefined] Decompiled time: 1768977563659000
+[21/1/2026 (6:39:23)] [undefined] Key is valid. Created at 1768977563659 current time is 1768977563775 diff is 116 ms.
+[21/1/2026 (6:39:23)] Access Granted: arham : c875b11d-d725-477e-ab97-f0e7f042be6c
+[21/1/2026 (6:39:27)] processing stage-2-request request ...
+[21/1/2026 (6:39:27)] [undefined] Decompiled time: 1768977567464000
+[21/1/2026 (6:39:27)] [undefined] Key is valid. Created at 1768977567464 current time is 1768977567578 diff is 114 ms.
+[21/1/2026 (6:39:27)] 
+--------------------
+Request initiated by: arham : c875b11d-d725-477e-ab97-f0e7f042be6c
+[21/1/2026 (6:39:27)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (6:39:27)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (6:39:27)] Fetched 23 invoices from subscriptions
+[21/1/2026 (6:39:52)] processing stage-2-request request ...
+[21/1/2026 (6:39:52)] [undefined] Decompiled time: 1768977595741000
+[21/1/2026 (6:39:52)] [undefined] Future key encountered -2975 ms difference, client clock is 2.975s ahead of the server clock.
+(ERROR)[21/1/2026 (6:39:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:39:59)] processing stage-2-request request ...
+[21/1/2026 (6:39:59)] [undefined] Decompiled time: 1768977600670000
+[21/1/2026 (6:39:59)] [undefined] Future key encountered -784 ms difference, client clock is 0.784s ahead of the server clock.
+(ERROR)[21/1/2026 (6:39:59)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:40:0)] processing stage-2-request request ...
+[21/1/2026 (6:40:0)] [undefined] Decompiled time: 1768977599768000
+[21/1/2026 (6:40:0)] [undefined] Key is valid. Created at 1768977599768 current time is 1768977600283 diff is 515 ms.
+(ERROR)[21/1/2026 (6:40:0)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:40:52)] processing stage-2-request request ...
+[21/1/2026 (6:40:52)] [undefined] Decompiled time: 1768977655752000
+[21/1/2026 (6:40:52)] [undefined] Future key encountered -2869 ms difference, client clock is 2.869s ahead of the server clock.
+(ERROR)[21/1/2026 (6:40:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:40:59)] processing stage-2-request request ...
+[21/1/2026 (6:40:59)] [undefined] Decompiled time: 1768977660670000
+[21/1/2026 (6:40:59)] [undefined] Future key encountered -1109 ms difference, client clock is 1.109s ahead of the server clock.
+(ERROR)[21/1/2026 (6:40:59)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:41:1)] processing stage-2-request request ...
+[21/1/2026 (6:41:1)] [undefined] Decompiled time: 1768977660763000
+[21/1/2026 (6:41:1)] [undefined] Key is valid. Created at 1768977660763 current time is 1768977661408 diff is 645 ms.
+(ERROR)[21/1/2026 (6:41:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:41:5)] processing stage-2-request request ...
+[21/1/2026 (6:41:5)] [undefined] Decompiled time: 1768977665153000
+[21/1/2026 (6:41:5)] [undefined] Key is valid. Created at 1768977665153 current time is 1768977665267 diff is 114 ms.
+[21/1/2026 (6:41:5)] 
+--------------------
+Request initiated by: arham : c875b11d-d725-477e-ab97-f0e7f042be6c
+[21/1/2026 (6:41:5)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (6:41:5)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (6:41:5)] Fetched 23 invoices from subscriptions
+[21/1/2026 (6:41:22)] processing stage-2-request request ...
+[21/1/2026 (6:41:22)] [undefined] Decompiled time: 1768977683111000
+[21/1/2026 (6:41:22)] [undefined] Future key encountered -889 ms difference, client clock is 0.889s ahead of the server clock.
+(ERROR)[21/1/2026 (6:41:22)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:41:27)] processing stage-2-request request ...
+[21/1/2026 (6:41:27)] [+918858493997] Decompiled time: 1768977687221000
+[21/1/2026 (6:41:27)] [+918858493997] Key is valid. Created at 1768977687221 current time is 1768977687403 diff is 182 ms.
+[21/1/2026 (6:41:27)] 
+--------------------
+Request initiated by: arham : c875b11d-d725-477e-ab97-f0e7f042be6c
+[21/1/2026 (6:41:27)] Updating subscription ...
+[21/1/2026 (6:41:27)] Fetching user: +918858493997
+[21/1/2026 (6:41:27)] Success updating subscription for id=+918858493997 by arham
+[21/1/2026 (6:41:33)] processing stage-2-request request ...
+[21/1/2026 (6:41:33)] [undefined] Decompiled time: 1768977694670000
+[21/1/2026 (6:41:33)] [undefined] Future key encountered -1111 ms difference, client clock is 1.111s ahead of the server clock.
+(ERROR)[21/1/2026 (6:41:33)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:41:52)] processing stage-2-request request ...
+[21/1/2026 (6:41:52)] [undefined] Decompiled time: 1768977715744000
+[21/1/2026 (6:41:52)] [undefined] Future key encountered -2976 ms difference, client clock is 2.976s ahead of the server clock.
+(ERROR)[21/1/2026 (6:41:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:42:1)] processing stage-2-request request ...
+[21/1/2026 (6:42:1)] [undefined] Decompiled time: 1768977720774000
+[21/1/2026 (6:42:1)] [undefined] Key is valid. Created at 1768977720774 current time is 1768977721285 diff is 511 ms.
+(ERROR)[21/1/2026 (6:42:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:42:3)] processing stage-2-request request ...
+[21/1/2026 (6:42:3)] [undefined] Decompiled time: 1768977724672000
+[21/1/2026 (6:42:3)] [undefined] Future key encountered -986 ms difference, client clock is 0.986s ahead of the server clock.
+(ERROR)[21/1/2026 (6:42:3)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:42:6)] processing stage-2-request request ...
+[21/1/2026 (6:42:6)] [undefined] Decompiled time: 1768977726500000
+[21/1/2026 (6:42:6)] [undefined] Key is valid. Created at 1768977726500 current time is 1768977726712 diff is 212 ms.
+[21/1/2026 (6:42:6)] 
+--------------------
+Request initiated by: arham : c875b11d-d725-477e-ab97-f0e7f042be6c
+[21/1/2026 (6:42:6)] Generating invoice for phone: +918858493997, amount: 1000
+[21/1/2026 (6:42:6)] Fetching user: +918858493997
+[21/1/2026 (6:42:6)] Invoice generated for phone: +918858493997, invoiceNo: 39, isIndian: true, baseAmount: 847, amount: 1000
+[21/1/2026 (6:42:11)] processing stage-2-request request ...
+[21/1/2026 (6:42:11)] [undefined] Decompiled time: 1768977731295000
+[21/1/2026 (6:42:11)] [undefined] Key is valid. Created at 1768977731295 current time is 1768977731406 diff is 111 ms.
+[21/1/2026 (6:42:11)] 
+--------------------
+Request initiated by: arham : c875b11d-d725-477e-ab97-f0e7f042be6c
+[21/1/2026 (6:42:11)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (6:42:11)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (6:42:11)] Fetched 24 invoices from subscriptions
+[21/1/2026 (6:42:51)] processing stage-2-request request ...
+[21/1/2026 (6:42:51)] [undefined] Decompiled time: 1768977773052000
+[21/1/2026 (6:42:51)] [undefined] Future key encountered -1103 ms difference, client clock is 1.103s ahead of the server clock.
+(ERROR)[21/1/2026 (6:42:51)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:42:52)] processing stage-2-request request ...
+[21/1/2026 (6:42:52)] [undefined] Decompiled time: 1768977775741000
+[21/1/2026 (6:42:52)] [undefined] Future key encountered -2948 ms difference, client clock is 2.948s ahead of the server clock.
+(ERROR)[21/1/2026 (6:42:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:43:1)] processing stage-2-request request ...
+[21/1/2026 (6:43:1)] [undefined] Decompiled time: 1768977780783000
+[21/1/2026 (6:43:1)] [undefined] Key is valid. Created at 1768977780783 current time is 1768977781319 diff is 536 ms.
+(ERROR)[21/1/2026 (6:43:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:43:3)] processing stage-2-request request ...
+[21/1/2026 (6:43:3)] [undefined] Decompiled time: 1768977784670000
+[21/1/2026 (6:43:3)] [undefined] Future key encountered -1092 ms difference, client clock is 1.092s ahead of the server clock.
+(ERROR)[21/1/2026 (6:43:3)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:43:33)] processing stage-2-request request ...
+[21/1/2026 (6:43:33)] [undefined] Decompiled time: 1768977814684000
+[21/1/2026 (6:43:33)] [undefined] Future key encountered -1117 ms difference, client clock is 1.117s ahead of the server clock.
+(ERROR)[21/1/2026 (6:43:33)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:43:52)] processing stage-2-request request ...
+[21/1/2026 (6:43:52)] [undefined] Decompiled time: 1768977835744000
+[21/1/2026 (6:43:52)] [undefined] Future key encountered -2973 ms difference, client clock is 2.973s ahead of the server clock.
+(ERROR)[21/1/2026 (6:43:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:44:1)] processing stage-2-request request ...
+[21/1/2026 (6:44:1)] [undefined] Decompiled time: 1768977840766000
+[21/1/2026 (6:44:1)] [undefined] Key is valid. Created at 1768977840766 current time is 1768977841277 diff is 511 ms.
+(ERROR)[21/1/2026 (6:44:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:44:34)] processing stage-2-request request ...
+[21/1/2026 (6:44:34)] [undefined] Decompiled time: 1768977875682000
+[21/1/2026 (6:44:34)] [undefined] Future key encountered -1111 ms difference, client clock is 1.111s ahead of the server clock.
+(ERROR)[21/1/2026 (6:44:34)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:44:35)] processing stage-2-request request ...
+[21/1/2026 (6:44:35)] [+917007407732] Decompiled time: 1768977876215000
+[21/1/2026 (6:44:35)] [+917007407732] Future key encountered -409 ms difference, client clock is 0.409s ahead of the server clock.
+(ERROR)[21/1/2026 (6:44:35)] Invalid token cacbfbeb-96c6-4e71-b5e3-fecd07928877 by ravina
+[21/1/2026 (6:44:52)] processing stage-2-request request ...
+[21/1/2026 (6:44:52)] [undefined] Decompiled time: 1768977895755000
+[21/1/2026 (6:44:52)] [undefined] Future key encountered -2822 ms difference, client clock is 2.822s ahead of the server clock.
+(ERROR)[21/1/2026 (6:44:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:45:1)] processing stage-2-request request ...
+[21/1/2026 (6:45:1)] [undefined] Decompiled time: 1768977900762000
+[21/1/2026 (6:45:1)] [undefined] Key is valid. Created at 1768977900762 current time is 1768977901288 diff is 526 ms.
+(ERROR)[21/1/2026 (6:45:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:45:35)] processing stage-2-request request ...
+[21/1/2026 (6:45:35)] [undefined] Decompiled time: 1768977936678000
+[21/1/2026 (6:45:35)] [undefined] Future key encountered -1012 ms difference, client clock is 1.012s ahead of the server clock.
+(ERROR)[21/1/2026 (6:45:35)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:45:52)] processing stage-2-request request ...
+[21/1/2026 (6:45:52)] [undefined] Decompiled time: 1768977955747000
+[21/1/2026 (6:45:52)] [undefined] Future key encountered -2946 ms difference, client clock is 2.946s ahead of the server clock.
+(ERROR)[21/1/2026 (6:45:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:45:54)] processing stage-1-request request ...
+[21/1/2026 (6:45:54)] [undefined] Decompiled time: 1768977956134000
+[21/1/2026 (6:45:54)] [undefined] Future key encountered -1203 ms difference, client clock is 1.203s ahead of the server clock.
+[21/1/2026 (6:45:54)] Access Granted: ravina : 09636552-e696-4bbb-968e-977bf982cc0d
+[21/1/2026 (6:46:1)] processing stage-2-request request ...
+[21/1/2026 (6:46:1)] [undefined] Decompiled time: 1768977960768000
+[21/1/2026 (6:46:1)] [undefined] Key is valid. Created at 1768977960768 current time is 1768977961401 diff is 633 ms.
+(ERROR)[21/1/2026 (6:46:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:46:4)] processing stage-2-request request ...
+[21/1/2026 (6:46:4)] [+917007407732] Decompiled time: 1768977965957000
+[21/1/2026 (6:46:4)] [+917007407732] Future key encountered -1204 ms difference, client clock is 1.204s ahead of the server clock.
+[21/1/2026 (6:46:4)] 
+--------------------
+Request initiated by: ravina : 09636552-e696-4bbb-968e-977bf982cc0d
+[21/1/2026 (6:46:4)] Fetching user: +917007407732
+[21/1/2026 (6:46:4)] Success updating user id=+917007407732 with data={"password":"115$104$111$112$64$49$50$51"}
+[21/1/2026 (6:46:36)] processing stage-2-request request ...
+[21/1/2026 (6:46:36)] [undefined] Decompiled time: 1768977997682000
+[21/1/2026 (6:46:36)] [undefined] Future key encountered -1010 ms difference, client clock is 1.01s ahead of the server clock.
+(ERROR)[21/1/2026 (6:46:36)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:46:52)] processing stage-2-request request ...
+[21/1/2026 (6:46:52)] [undefined] Decompiled time: 1768978015754000
+[21/1/2026 (6:46:52)] [undefined] Future key encountered -2803 ms difference, client clock is 2.803s ahead of the server clock.
+(ERROR)[21/1/2026 (6:46:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:47:1)] processing stage-2-request request ...
+[21/1/2026 (6:47:1)] [undefined] Decompiled time: 1768978020764000
+[21/1/2026 (6:47:1)] [undefined] Key is valid. Created at 1768978020764 current time is 1768978021278 diff is 514 ms.
+(ERROR)[21/1/2026 (6:47:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:47:37)] processing stage-2-request request ...
+[21/1/2026 (6:47:37)] [undefined] Decompiled time: 1768978058670000
+[21/1/2026 (6:47:37)] [undefined] Future key encountered -1090 ms difference, client clock is 1.09s ahead of the server clock.
+(ERROR)[21/1/2026 (6:47:37)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:47:52)] processing stage-2-request request ...
+[21/1/2026 (6:47:52)] [undefined] Decompiled time: 1768978075745000
+[21/1/2026 (6:47:52)] [undefined] Future key encountered -2946 ms difference, client clock is 2.946s ahead of the server clock.
+(ERROR)[21/1/2026 (6:47:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:48:1)] processing stage-2-request request ...
+[21/1/2026 (6:48:1)] [undefined] Decompiled time: 1768978080768000
+[21/1/2026 (6:48:1)] [undefined] Key is valid. Created at 1768978080768 current time is 1768978081298 diff is 530 ms.
+(ERROR)[21/1/2026 (6:48:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:48:38)] processing stage-2-request request ...
+[21/1/2026 (6:48:38)] [undefined] Decompiled time: 1768978119680000
+[21/1/2026 (6:48:38)] [undefined] Future key encountered -1005 ms difference, client clock is 1.005s ahead of the server clock.
+(ERROR)[21/1/2026 (6:48:38)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:48:52)] processing stage-2-request request ...
+[21/1/2026 (6:48:52)] [undefined] Decompiled time: 1768978135742000
+[21/1/2026 (6:48:52)] [undefined] Future key encountered -2969 ms difference, client clock is 2.969s ahead of the server clock.
+(ERROR)[21/1/2026 (6:48:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:49:1)] processing stage-2-request request ...
+[21/1/2026 (6:49:1)] [undefined] Decompiled time: 1768978140766000
+[21/1/2026 (6:49:1)] [undefined] Key is valid. Created at 1768978140766 current time is 1768978141282 diff is 516 ms.
+(ERROR)[21/1/2026 (6:49:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:49:39)] processing stage-2-request request ...
+[21/1/2026 (6:49:39)] [undefined] Decompiled time: 1768978180669000
+[21/1/2026 (6:49:39)] [undefined] Future key encountered -1110 ms difference, client clock is 1.11s ahead of the server clock.
+(ERROR)[21/1/2026 (6:49:39)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:49:52)] processing stage-2-request request ...
+[21/1/2026 (6:49:52)] [undefined] Decompiled time: 1768978195753000
+[21/1/2026 (6:49:52)] [undefined] Future key encountered -2971 ms difference, client clock is 2.971s ahead of the server clock.
+(ERROR)[21/1/2026 (6:49:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:50:1)] processing stage-2-request request ...
+[21/1/2026 (6:50:1)] [undefined] Decompiled time: 1768978200759000
+[21/1/2026 (6:50:1)] [undefined] Key is valid. Created at 1768978200759 current time is 1768978201413 diff is 654 ms.
+(ERROR)[21/1/2026 (6:50:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:50:3)] processing stage-2-request request ...
+[21/1/2026 (6:50:3)] [undefined] Decompiled time: 1768978204796000
+[21/1/2026 (6:50:3)] [undefined] Future key encountered -1089 ms difference, client clock is 1.089s ahead of the server clock.
+(ERROR)[21/1/2026 (6:50:3)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:50:11)] processing stage-2-request request ...
+[21/1/2026 (6:50:11)] [undefined] Decompiled time: 1768978212566000
+[21/1/2026 (6:50:11)] [undefined] Future key encountered -1107 ms difference, client clock is 1.107s ahead of the server clock.
+(ERROR)[21/1/2026 (6:50:11)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:50:52)] processing stage-2-request request ...
+[21/1/2026 (6:50:52)] [undefined] Decompiled time: 1768978255751000
+[21/1/2026 (6:50:52)] [undefined] Future key encountered -2863 ms difference, client clock is 2.863s ahead of the server clock.
+(ERROR)[21/1/2026 (6:50:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:50:55)] processing stage-2-request request ...
+[21/1/2026 (6:50:55)] [undefined] Decompiled time: 1768978256132000
+[21/1/2026 (6:50:55)] [undefined] Future key encountered -964 ms difference, client clock is 0.964s ahead of the server clock.
+(ERROR)[21/1/2026 (6:50:55)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:51:0)] processing stage-2-request request ...
+[21/1/2026 (6:51:0)] [undefined] Decompiled time: 1768978261735000
+[21/1/2026 (6:51:0)] [undefined] Future key encountered -1114 ms difference, client clock is 1.114s ahead of the server clock.
+(ERROR)[21/1/2026 (6:51:0)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:51:1)] processing stage-2-request request ...
+[21/1/2026 (6:51:1)] [undefined] Decompiled time: 1768978260771000
+[21/1/2026 (6:51:1)] [undefined] Key is valid. Created at 1768978260771 current time is 1768978261311 diff is 540 ms.
+(ERROR)[21/1/2026 (6:51:1)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:51:15)] processing stage-2-request request ...
+[21/1/2026 (6:51:15)] [undefined] Decompiled time: 1768978275041000
+[21/1/2026 (6:51:15)] [undefined] Key is valid. Created at 1768978275041 current time is 1768978275725 diff is 684 ms.
+(ERROR)[21/1/2026 (6:51:15)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:51:25)] processing stage-2-request request ...
+[21/1/2026 (6:51:25)] [undefined] Decompiled time: 1768978286139000
+[21/1/2026 (6:51:25)] [undefined] Future key encountered -976 ms difference, client clock is 0.976s ahead of the server clock.
+(ERROR)[21/1/2026 (6:51:25)] Invalid token 8a63e3d5-f19f-425f-8f6d-4b4db1e88e79 by kritika
+[21/1/2026 (6:51:45)] processing stage-2-request request ...
+[21/1/2026 (6:51:45)] [undefined] Decompiled time: 1768978305042000
+[21/1/2026 (6:51:45)] [undefined] Key is valid. Created at 1768978305042 current time is 1768978305558 diff is 516 ms.
+(ERROR)[21/1/2026 (6:51:45)] Invalid token 7e07fde1-a610-4d20-96e3-108bf9bbd745 by jaya
+[21/1/2026 (6:51:52)] processing stage-2-request request ...
+[21/1/2026 (6:51:52)] [undefined] Decompiled time: 1768978315749000
+[21/1/2026 (6:51:52)] [undefined] Future key encountered -2972 ms difference, client clock is 2.972s ahead of the server clock.
+(ERROR)[21/1/2026 (6:51:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:52:6)] processing stage-2-request request ...
+[21/1/2026 (6:52:6)] [undefined] Decompiled time: 1768978324336000
+[21/1/2026 (6:52:6)] [undefined] Key is valid. Created at 1768978324336 current time is 1768978326317 diff is 1981 ms.
+(ERROR)[21/1/2026 (6:52:6)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:52:20)] processing stage-2-request request ...
+[21/1/2026 (6:52:20)] [undefined] Decompiled time: 1768978338948000
+[21/1/2026 (6:52:20)] [undefined] Key is valid. Created at 1768978338948 current time is 1768978340513 diff is 1565 ms.
+(ERROR)[21/1/2026 (6:52:20)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:52:50)] processing stage-2-request request ...
+[21/1/2026 (6:52:50)] [undefined] Decompiled time: 1768978368954000
+[21/1/2026 (6:52:50)] [undefined] Key is valid. Created at 1768978368954 current time is 1768978370522 diff is 1568 ms.
+(ERROR)[21/1/2026 (6:52:50)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:52:52)] processing stage-2-request request ...
+[21/1/2026 (6:52:52)] [undefined] Decompiled time: 1768978375748000
+[21/1/2026 (6:52:52)] [undefined] Future key encountered -2969 ms difference, client clock is 2.969s ahead of the server clock.
+(ERROR)[21/1/2026 (6:52:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:53:24)] processing stage-1-request request ...
+[21/1/2026 (6:53:24)] [undefined] Decompiled time: 1768978405865000
+[21/1/2026 (6:53:24)] [undefined] Future key encountered -1107 ms difference, client clock is 1.107s ahead of the server clock.
+(WARNING)[21/1/2026 (6:53:24)] Invalid credentials: kritika : user@123
+[21/1/2026 (6:53:34)] processing stage-1-request request ...
+[21/1/2026 (6:53:34)] [undefined] Decompiled time: 1768978415648000
+[21/1/2026 (6:53:34)] [undefined] Future key encountered -1110 ms difference, client clock is 1.11s ahead of the server clock.
+(WARNING)[21/1/2026 (6:53:34)] Invalid credentials: kritika : user@123
+[21/1/2026 (6:53:44)] processing stage-2-request request ...
+[21/1/2026 (6:53:44)] [undefined] Decompiled time: 1768978422960000
+[21/1/2026 (6:53:44)] [undefined] Key is valid. Created at 1768978422960 current time is 1768978424526 diff is 1566 ms.
+(ERROR)[21/1/2026 (6:53:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:53:52)] processing stage-2-request request ...
+[21/1/2026 (6:53:52)] [undefined] Decompiled time: 1768978435752000
+[21/1/2026 (6:53:52)] [undefined] Future key encountered -2969 ms difference, client clock is 2.969s ahead of the server clock.
+(ERROR)[21/1/2026 (6:53:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:54:15)] processing stage-1-request request ...
+[21/1/2026 (6:54:15)] [undefined] Decompiled time: 1768978456474000
+[21/1/2026 (6:54:15)] [undefined] Future key encountered -998 ms difference, client clock is 0.998s ahead of the server clock.
+(WARNING)[21/1/2026 (6:54:15)] Invalid credentials: kritika : user@123
+[21/1/2026 (6:54:44)] processing stage-2-request request ...
+[21/1/2026 (6:54:44)] [undefined] Decompiled time: 1768978482953000
+[21/1/2026 (6:54:44)] [undefined] Key is valid. Created at 1768978482953 current time is 1768978484530 diff is 1577 ms.
+(ERROR)[21/1/2026 (6:54:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:54:52)] processing stage-2-request request ...
+[21/1/2026 (6:54:52)] [undefined] Decompiled time: 1768978495743000
+[21/1/2026 (6:54:52)] [undefined] Future key encountered -2969 ms difference, client clock is 2.969s ahead of the server clock.
+(ERROR)[21/1/2026 (6:54:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:55:44)] processing stage-2-request request ...
+[21/1/2026 (6:55:44)] [undefined] Decompiled time: 1768978542949000
+[21/1/2026 (6:55:44)] [undefined] Key is valid. Created at 1768978542949 current time is 1768978544509 diff is 1560 ms.
+(ERROR)[21/1/2026 (6:55:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:55:52)] processing stage-2-request request ...
+[21/1/2026 (6:55:52)] [undefined] Decompiled time: 1768978555754000
+[21/1/2026 (6:55:52)] [undefined] Future key encountered -2968 ms difference, client clock is 2.968s ahead of the server clock.
+(ERROR)[21/1/2026 (6:55:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:56:44)] processing stage-2-request request ...
+[21/1/2026 (6:56:44)] [undefined] Decompiled time: 1768978602947000
+[21/1/2026 (6:56:44)] [undefined] Key is valid. Created at 1768978602947 current time is 1768978604509 diff is 1562 ms.
+(ERROR)[21/1/2026 (6:56:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:56:52)] processing stage-2-request request ...
+[21/1/2026 (6:56:52)] [undefined] Decompiled time: 1768978615742000
+[21/1/2026 (6:56:52)] [undefined] Future key encountered -2864 ms difference, client clock is 2.864s ahead of the server clock.
+(ERROR)[21/1/2026 (6:56:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:57:44)] processing stage-2-request request ...
+[21/1/2026 (6:57:44)] [undefined] Decompiled time: 1768978662953000
+[21/1/2026 (6:57:44)] [undefined] Key is valid. Created at 1768978662953 current time is 1768978664584 diff is 1631 ms.
+(ERROR)[21/1/2026 (6:57:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:57:52)] processing stage-2-request request ...
+[21/1/2026 (6:57:52)] [undefined] Decompiled time: 1768978675747000
+[21/1/2026 (6:57:52)] [undefined] Future key encountered -2972 ms difference, client clock is 2.972s ahead of the server clock.
+(ERROR)[21/1/2026 (6:57:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:58:44)] processing stage-2-request request ...
+[21/1/2026 (6:58:44)] [undefined] Decompiled time: 1768978722955000
+[21/1/2026 (6:58:44)] [undefined] Key is valid. Created at 1768978722955 current time is 1768978724596 diff is 1641 ms.
+(ERROR)[21/1/2026 (6:58:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:58:52)] processing stage-2-request request ...
+[21/1/2026 (6:58:52)] [undefined] Decompiled time: 1768978735744000
+[21/1/2026 (6:58:52)] [undefined] Future key encountered -2973 ms difference, client clock is 2.973s ahead of the server clock.
+(ERROR)[21/1/2026 (6:58:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (6:59:44)] processing stage-2-request request ...
+[21/1/2026 (6:59:44)] [undefined] Decompiled time: 1768978782961000
+[21/1/2026 (6:59:44)] [undefined] Key is valid. Created at 1768978782961 current time is 1768978784528 diff is 1567 ms.
+(ERROR)[21/1/2026 (6:59:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (6:59:52)] processing stage-2-request request ...
+[21/1/2026 (6:59:52)] [undefined] Decompiled time: 1768978795754000
+[21/1/2026 (6:59:52)] [undefined] Future key encountered -2973 ms difference, client clock is 2.973s ahead of the server clock.
+(ERROR)[21/1/2026 (6:59:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (7:0:40)] processing stage-1-request request ...
+[21/1/2026 (7:0:40)] [undefined] Decompiled time: 1768978839999000
+[21/1/2026 (7:0:40)] [undefined] Key is valid. Created at 1768978839999 current time is 1768978840369 diff is 370 ms.
+[21/1/2026 (7:0:40)] Access Granted: arham : 325d9cf2-7eaf-44cd-951f-03888f815d2a
+[21/1/2026 (7:0:44)] processing stage-2-request request ...
+[21/1/2026 (7:0:44)] [undefined] Decompiled time: 1768978842953000
+[21/1/2026 (7:0:44)] [undefined] Key is valid. Created at 1768978842953 current time is 1768978844523 diff is 1570 ms.
+(ERROR)[21/1/2026 (7:0:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (7:0:45)] processing stage-2-request request ...
+[21/1/2026 (7:0:45)] [undefined] Decompiled time: 1768978845384000
+[21/1/2026 (7:0:45)] [undefined] Key is valid. Created at 1768978845384 current time is 1768978845494 diff is 110 ms.
+[21/1/2026 (7:0:45)] 
+--------------------
+Request initiated by: arham : 325d9cf2-7eaf-44cd-951f-03888f815d2a
+[21/1/2026 (7:0:45)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (7:0:45)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (7:0:45)] Fetched 24 invoices from subscriptions
+[21/1/2026 (7:0:52)] processing stage-2-request request ...
+[21/1/2026 (7:0:52)] [undefined] Decompiled time: 1768978855755000
+[21/1/2026 (7:0:52)] [undefined] Future key encountered -2972 ms difference, client clock is 2.972s ahead of the server clock.
+(ERROR)[21/1/2026 (7:0:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (7:1:44)] processing stage-2-request request ...
+[21/1/2026 (7:1:44)] [undefined] Decompiled time: 1768978902946000
+[21/1/2026 (7:1:44)] [undefined] Key is valid. Created at 1768978902946 current time is 1768978904619 diff is 1673 ms.
+(ERROR)[21/1/2026 (7:1:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (7:1:52)] processing stage-2-request request ...
+[21/1/2026 (7:1:52)] [undefined] Decompiled time: 1768978915756000
+[21/1/2026 (7:1:52)] [undefined] Future key encountered -2862 ms difference, client clock is 2.862s ahead of the server clock.
+(ERROR)[21/1/2026 (7:1:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (7:2:44)] processing stage-1-request request ...
+[21/1/2026 (7:2:44)] [undefined] Decompiled time: 1768978964024000
+[21/1/2026 (7:2:44)] [undefined] Key is valid. Created at 1768978964024 current time is 1768978964374 diff is 350 ms.
+[21/1/2026 (7:2:44)] Access Granted: arham : 3d55ff8d-0ca3-4d73-8f0a-b069f491b5ad
+[21/1/2026 (7:2:44)] processing stage-2-request request ...
+[21/1/2026 (7:2:44)] [undefined] Decompiled time: 1768978962950000
+[21/1/2026 (7:2:44)] [undefined] Key is valid. Created at 1768978962950 current time is 1768978964520 diff is 1570 ms.
+(ERROR)[21/1/2026 (7:2:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (7:2:47)] processing stage-2-request request ...
+[21/1/2026 (7:2:47)] [undefined] Decompiled time: 1768978967781000
+[21/1/2026 (7:2:47)] [undefined] Key is valid. Created at 1768978967781 current time is 1768978967885 diff is 104 ms.
+[21/1/2026 (7:2:47)] 
+--------------------
+Request initiated by: arham : 3d55ff8d-0ca3-4d73-8f0a-b069f491b5ad
+[21/1/2026 (7:2:47)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (7:2:47)] Fetching invoices from 2025-12-22T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (7:2:48)] Fetched 24 invoices from subscriptions
+[21/1/2026 (7:2:53)] processing stage-2-request request ...
+[21/1/2026 (7:2:53)] [undefined] Decompiled time: 1768978975746000
+[21/1/2026 (7:2:53)] [undefined] Future key encountered -2681 ms difference, client clock is 2.681s ahead of the server clock.
+(ERROR)[21/1/2026 (7:2:53)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (7:3:7)] processing stage-2-request request ...
+[21/1/2026 (7:3:7)] [undefined] Decompiled time: 1768978987351000
+[21/1/2026 (7:3:7)] [undefined] Key is valid. Created at 1768978987351 current time is 1768978987504 diff is 153 ms.
+[21/1/2026 (7:3:7)] 
+--------------------
+Request initiated by: arham : 3d55ff8d-0ca3-4d73-8f0a-b069f491b5ad
+[21/1/2026 (7:3:7)] Fetching invoices from 2026-01-19T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (7:3:7)] Fetching invoices from 2026-01-19T00:00:00.000 to 2026-01-21T23:59:59.000
+[21/1/2026 (7:3:7)] Fetched 2 invoices from subscriptions
+[21/1/2026 (7:3:44)] processing stage-2-request request ...
+[21/1/2026 (7:3:44)] [undefined] Decompiled time: 1768979022960000
+[21/1/2026 (7:3:44)] [undefined] Key is valid. Created at 1768979022960 current time is 1768979024646 diff is 1686 ms.
+(ERROR)[21/1/2026 (7:3:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (7:3:52)] processing stage-2-request request ...
+[21/1/2026 (7:3:52)] [undefined] Decompiled time: 1768979035745000
+[21/1/2026 (7:3:52)] [undefined] Future key encountered -2971 ms difference, client clock is 2.971s ahead of the server clock.
+(ERROR)[21/1/2026 (7:3:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
+[21/1/2026 (7:4:44)] processing stage-2-request request ...
+[21/1/2026 (7:4:44)] [undefined] Decompiled time: 1768979082947000
+[21/1/2026 (7:4:44)] [undefined] Key is valid. Created at 1768979082947 current time is 1768979084528 diff is 1581 ms.
+(ERROR)[21/1/2026 (7:4:44)] Invalid token 722df1e4-fd3a-41ae-a631-492e5880a8ea by rani
+[21/1/2026 (7:4:52)] processing stage-2-request request ...
+[21/1/2026 (7:4:52)] [undefined] Decompiled time: 1768979095756000
+[21/1/2026 (7:4:52)] [undefined] Future key encountered -2936 ms difference, client clock is 2.936s ahead of the server clock.
+(ERROR)[21/1/2026 (7:4:52)] Invalid token e9925f49-9f03-449b-8cfe-07b4f10ef2e1 by aashish
