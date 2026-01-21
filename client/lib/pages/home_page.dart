@@ -5,6 +5,7 @@ import 'package:bf_control_centre/core/enums.dart';
 import 'package:bf_control_centre/core/login_utils.dart';
 import 'package:bf_control_centre/core/server_utils.dart';
 import 'package:bf_control_centre/core/utils/convert_to_days.dart';
+import 'package:bf_control_centre/core/utils/subscription_receipt_template_1.dart';
 import 'package:bf_control_centre/pages/home_page_downloaded_users.dart';
 import 'package:bf_control_centre/pages/todays_new_users_page.dart';
 import 'package:bf_control_centre/pages/login_page.dart';
@@ -13,6 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pdf/pdf.dart' show PdfPageFormat;
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -2641,6 +2645,25 @@ class _SubscriptionManagementSheetState
                 ),
                 child: const Icon(Icons.search, size: 20),
               ),
+              if (_invoices.isNotEmpty) ...[
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: _downloadAllReceipts,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF3B82F6),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  icon: const Icon(Icons.download, size: 18),
+                  label: const Text('Download All'),
+                ),
+              ],
             ],
           ),
         ),
@@ -2721,6 +2744,18 @@ class _SubscriptionManagementSheetState
                     color: Color(0xFF172a43),
                   ),
                   textAlign: TextAlign.right,
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Text(
+                  'Actions',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    color: Color(0xFF172a43),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
@@ -2859,6 +2894,44 @@ class _SubscriptionManagementSheetState
                                     textAlign: TextAlign.right,
                                   ),
                                 ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () =>
+                                            _showReceiptPreview(invoice),
+                                        icon: const Icon(
+                                          Icons.visibility,
+                                          size: 18,
+                                        ),
+                                        tooltip: 'Preview',
+                                        color: const Color(0xFF3B82F6),
+                                        constraints: const BoxConstraints(
+                                          minWidth: 32,
+                                          minHeight: 32,
+                                        ),
+                                        padding: EdgeInsets.zero,
+                                      ),
+                                      IconButton(
+                                        onPressed: () =>
+                                            _downloadSingleReceipt(invoice),
+                                        icon: const Icon(
+                                          Icons.download,
+                                          size: 18,
+                                        ),
+                                        tooltip: 'Download',
+                                        color: const Color(0xFF10B981),
+                                        constraints: const BoxConstraints(
+                                          minWidth: 32,
+                                          minHeight: 32,
+                                        ),
+                                        padding: EdgeInsets.zero,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           );
@@ -2913,6 +2986,174 @@ class _SubscriptionManagementSheetState
         return const Color(0xFF10B981);
       default:
         return Colors.grey;
+    }
+  }
+
+  Future<Uint8List> _generateReceiptPdf(dynamic invoice) async {
+    final pdf = pw.Document();
+    final logo = (await rootBundle.load('assets/images/logo.png'));
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(16),
+        build: (pw.Context context) => [
+          buildSubscriptionReceiptTemplate1(
+            invoice,
+            logo.buffer.asUint8List(),
+          ),
+        ],
+      ),
+    );
+    return pdf.save();
+  }
+
+  void _showReceiptPreview(dynamic invoice) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: MediaQuery.of(context).size.height * 0.85,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Invoice #${invoice['invoiceNo'] ?? '-'}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF172a43),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => _downloadSingleReceipt(invoice),
+                        icon: const Icon(Icons.download),
+                        tooltip: 'Download PDF',
+                        color: const Color(0xFF10B981),
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: const Icon(Icons.close),
+                        tooltip: 'Close',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const Divider(),
+              Expanded(
+                child: PdfPreview(
+                  initialPageFormat: PdfPageFormat.a4,
+                  allowPrinting: true,
+                  allowSharing: true,
+                  canChangePageFormat: false,
+                  canDebug: false,
+                  pdfFileName:
+                      'BillingFast Receipt ${invoice['invoiceNo'] ?? invoice['id']}.pdf',
+                  build: (format) => _generateReceiptPdf(invoice),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _downloadSingleReceipt(dynamic invoice) async {
+    try {
+      final pdfBytes = await _generateReceiptPdf(invoice);
+      await Printing.sharePdf(
+        bytes: pdfBytes,
+        filename:
+            'BillingFast Receipt ${invoice['invoiceNo'] ?? invoice['id']}.pdf',
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to download receipt: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _downloadAllReceipts() async {
+    if (_invoices.isEmpty) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Generating ${_invoices.length} receipts...',
+              style: const TextStyle(fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    try {
+      final pdf = pw.Document();
+      final logo = (await rootBundle.load('assets/images/logo.png'));
+
+      for (final invoice in _invoices) {
+        pdf.addPage(
+          pw.MultiPage(
+            pageFormat: PdfPageFormat.a4,
+            margin: const pw.EdgeInsets.all(16),
+            build: (pw.Context context) => [
+              buildSubscriptionReceiptTemplate1(
+                invoice,
+                logo.buffer.asUint8List(),
+              ),
+            ],
+          ),
+        );
+      }
+
+      final pdfBytes = await pdf.save();
+
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+
+      await Printing.sharePdf(
+        bytes: pdfBytes,
+        filename:
+            'BillingFast Receipts ${_startDate.toString().split(' ')[0]} to ${_endDate.toString().split(' ')[0]}.pdf',
+      );
+    } catch (e) {
+      if (mounted) {
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to generate receipts: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
