@@ -13326,3 +13326,57 @@ Request initiated by: aashish : 0e3a86e8-d29e-487c-8552-7e802b1dd26b
 [22/1/2026 (5:40:48)] Fetching users for date: 2026-01-22
 [22/1/2026 (5:40:48)] Found 11 new users today
 [22/1/2026 (5:40:49)] Found 11 new users today
+[22/1/2026 (5:41:28)] processing stage-2-request request ...
+[22/1/2026 (5:41:28)] [undefined] Decompiled time: 1769060485408000
+[22/1/2026 (5:41:28)] [undefined] Key is valid. Created at 1769060485408 current time is 1769060488431 diff is 3023 ms.
+[22/1/2026 (5:41:28)] 
+--------------------
+Request initiated by: rani : a63ce37a-ed15-4690-b881-47c624144961
+[22/1/2026 (5:41:28)] Fetching today's new users ...
+[22/1/2026 (5:41:28)] Fetching users for date: 2026-01-22
+[22/1/2026 (5:41:28)] Found 11 new users today
+[22/1/2026 (5:41:47)] processing stage-2-request request ...
+[22/1/2026 (5:41:47)] [undefined] Decompiled time: 1769060507132000
+[22/1/2026 (5:41:47)] [undefined] Key is valid. Created at 1769060507132 current time is 1769060507594 diff is 462 ms.
+[22/1/2026 (5:41:47)] 
+--------------------
+Request initiated by: jaya : a0f4e26e-cf6f-4263-a573-0f23ea31d6bc
+[22/1/2026 (5:41:47)] Fetching today's new users ...
+[22/1/2026 (5:41:47)] Fetching users for date: 2026-01-22
+[22/1/2026 (5:41:47)] Found 11 new users today
+[22/1/2026 (5:41:49)] processing stage-2-request request ...
+[22/1/2026 (5:41:49)] [undefined] Decompiled time: 1769060512658000
+[22/1/2026 (5:41:49)] [undefined] Future key encountered -3652 ms difference, client clock is 3.652s ahead of the server clock.
+[22/1/2026 (5:41:49)] 
+--------------------
+Request initiated by: aashish : 0e3a86e8-d29e-487c-8552-7e802b1dd26b
+[22/1/2026 (5:41:49)] Fetching today's new users ...
+[22/1/2026 (5:41:49)] Fetching users for date: 2026-01-22
+[22/1/2026 (5:41:49)] Found 11 new users today
+[22/1/2026 (5:41:49)] processing stage-2-request request ...
+[22/1/2026 (5:41:49)] [undefined] Decompiled time: 1769060512130000
+[22/1/2026 (5:41:49)] [undefined] Future key encountered -2354 ms difference, client clock is 2.354s ahead of the server clock.
+[22/1/2026 (5:41:49)] 
+--------------------
+Request initiated by: kritika : ccb931e4-8f2e-4990-9385-10f9eee46f75
+[22/1/2026 (5:41:49)] Fetching today's new users ...
+[22/1/2026 (5:41:49)] Fetching users for date: 2026-01-22
+[22/1/2026 (5:41:49)] Found 11 new users today
+[22/1/2026 (5:42:16)] processing stage-2-request request ...
+[22/1/2026 (5:42:16)] [undefined] Decompiled time: 1769060539041000
+[22/1/2026 (5:42:16)] [undefined] Future key encountered -2370 ms difference, client clock is 2.37s ahead of the server clock.
+[22/1/2026 (5:42:16)] 
+--------------------
+Request initiated by: kritika : ccb931e4-8f2e-4990-9385-10f9eee46f75
+[22/1/2026 (5:42:16)] Fetching today's new users ...
+[22/1/2026 (5:42:16)] Fetching users for date: 2026-01-22
+[22/1/2026 (5:42:16)] Found 11 new users today
+[22/1/2026 (5:42:27)] processing stage-2-request request ...
+[22/1/2026 (5:42:27)] [undefined] Decompiled time: 1769060546401000
+[22/1/2026 (5:42:27)] [undefined] Key is valid. Created at 1769060546401 current time is 1769060547643 diff is 1242 ms.
+[22/1/2026 (5:42:27)] 
+--------------------
+Request initiated by: rani : a63ce37a-ed15-4690-b881-47c624144961
+[22/1/2026 (5:42:27)] Fetching today's new users ...
+[22/1/2026 (5:42:27)] Fetching users for date: 2026-01-22
+[22/1/2026 (5:42:27)] Found 11 new users today

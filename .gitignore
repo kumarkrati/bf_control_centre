@@ -3,3 +3,5 @@ nohup.out
 deno.lock
 .storage/tokens.json
 .env
+control-centre-logs.log
+server/.logs/
