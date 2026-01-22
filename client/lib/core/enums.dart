@@ -15,3 +15,5 @@ enum CreateAccountStatus { success, failed, alreadyRegistered, unauthorized }
 enum GenerateInvoiceStatus { success, failed, noRef, unauthorized }
 
 enum FetchInvoicesStatus { success, failed, unauthorized }
+
+enum FetchPendingReceiptsStatus { success, failed, unauthorized }

@@ -482,4 +482,81 @@ export class DbOps {
       return null;
     }
   }
+
+  async fetchPendingReceipts(filterDate: string): Promise<any[] | null> {
+    try {
+      this.logger.log(`Fetching pending receipts for date: ${filterDate}`);
+
+      // Parse filter date to compare only the date part (ignoring time)
+      const filterDateTime = new Date(filterDate);
+      const filterDateStr = `${filterDateTime.getFullYear()}-${String(filterDateTime.getMonth() + 1).padStart(2, "0")}-${String(filterDateTime.getDate()).padStart(2, "0")}`;
+
+      // Fetch all subscriptions with active status where substartedat matches the filter date
+      const { data: subscriptions, error } = await this.supabase
+        .from("subscriptions")
+        .select("id, subdays, subplan, isultra, substartedat, receipts");
+
+      if (error) {
+        this.logger.error(`Failed to fetch subscriptions: ${error.message}`);
+        return null;
+      }
+
+      const pendingUsers: any[] = [];
+
+      for (const subscription of subscriptions || []) {
+        // Skip if no substartedat
+        if (!subscription.substartedat) continue;
+
+        // Parse subscription start date
+        const subStartedAt = new Date(subscription.substartedat);
+        const subStartedDateStr = `${subStartedAt.getFullYear()}-${String(subStartedAt.getMonth() + 1).padStart(2, "0")}-${String(subStartedAt.getDate()).padStart(2, "0")}`;
+
+        // Check if substartedat matches the filter date
+        if (subStartedDateStr !== filterDateStr) continue;
+
+        // Check if subscription is active (substartedat + subdays > now)
+        const subEndDate = new Date(subStartedAt);
+        subEndDate.setDate(subEndDate.getDate() + (subscription.subdays || 0));
+        if (subEndDate.getTime() < Date.now()) continue;
+
+        // Extract phone from subscription id (format: phone-subscriptions)
+        const phone = subscription.id.replace("-subscriptions", "");
+
+        // Check receipts - pending if null, empty, or no receipt matching substartedat date
+        const receipts = Array.isArray(subscription.receipts) ? subscription.receipts : [];
+
+        let hasMatchingReceipt = false;
+        for (const receipt of receipts) {
+          if (!receipt.time) continue;
+          const receiptDate = new Date(receipt.time);
+          const receiptDateStr = `${receiptDate.getFullYear()}-${String(receiptDate.getMonth() + 1).padStart(2, "0")}-${String(receiptDate.getDate()).padStart(2, "0")}`;
+          if (receiptDateStr === subStartedDateStr) {
+            hasMatchingReceipt = true;
+            break;
+          }
+        }
+
+        // If no matching receipt, add to pending list
+        if (!hasMatchingReceipt) {
+          // Fetch user details
+          const user = await this.fetchUser(phone);
+
+          pendingUsers.push({
+            phone: phone,
+            name: user?.name || "-",
+            shop: user?.shop || "-",
+            subplan: subscription.isultra ? "ULTRA" : subscription.subplan,
+            subdays: subscription.subdays,
+            substartedat: subscription.substartedat,
+          });
+        }
+      }
+
+      this.logger.log(`Found ${pendingUsers.length} users with pending receipts`);
+      return pendingUsers;
+    } catch (error) {
+      this.logger.error(`Exception fetchPendingReceipts(): ${error}`);
+      return null;
+    }
+  }
 }

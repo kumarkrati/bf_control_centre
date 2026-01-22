@@ -437,6 +437,44 @@ class ServerUtils {
       return FetchInvoicesResult(FetchInvoicesStatus.failed, []);
     }
   }
+
+  static Future<FetchPendingReceiptsResult> fetchPendingReceipts({
+    required DateTime filterDate,
+  }) async {
+    try {
+      final date = DateTime(
+        filterDate.year,
+        filterDate.month,
+        filterDate.day,
+        0,
+        0,
+        0,
+      );
+      final Map<String, dynamic> reqBody = {
+        'key': _key,
+        'credentials': _credentials,
+        'filterDate': date.toIso8601String(),
+      };
+      final response = await http.post(
+        Uri.parse('${_api}fetch-pending-receipts'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(reqBody),
+      );
+      if (response.statusCode == 400) {
+        return FetchPendingReceiptsResult(FetchPendingReceiptsStatus.unauthorized, []);
+      } else if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return FetchPendingReceiptsResult(
+          FetchPendingReceiptsStatus.success,
+          List<Map<String, dynamic>>.from(data['users'] ?? []),
+        );
+      }
+      return FetchPendingReceiptsResult(FetchPendingReceiptsStatus.failed, []);
+    } catch (e) {
+      debugPrint("[fetchPendingReceipts] Error: $e");
+      return FetchPendingReceiptsResult(FetchPendingReceiptsStatus.failed, []);
+    }
+  }
 }
 
 class GenerateInvoiceResult {
@@ -451,4 +489,11 @@ class FetchInvoicesResult {
   final List<Map<String, dynamic>> invoices;
 
   FetchInvoicesResult(this.status, this.invoices);
+}
+
+class FetchPendingReceiptsResult {
+  final FetchPendingReceiptsStatus status;
+  final List<Map<String, dynamic>> users;
+
+  FetchPendingReceiptsResult(this.status, this.users);
 }

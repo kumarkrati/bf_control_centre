@@ -14,6 +14,7 @@ import { downloadUsers } from "./download-users.ts";
 import { liveNewUsers } from "./live_new_users.ts";
 import { generateInvoice } from "./generate-invoice.ts";
 import { fetchInvoices } from "./fetch-invoices.ts";
+import { fetchPendingReceipts } from "./fetch-pending-receipts.ts";
 
 export function initV1(app: Hono, logger: AppLogger, dbops: DbOps) {
   app.use("/v1/*", cors());
@@ -29,4 +30,5 @@ export function initV1(app: Hono, logger: AppLogger, dbops: DbOps) {
   liveNewUsers(app, logger, dbops);
   generateInvoice(app, logger, dbops);
   fetchInvoices(app, logger, dbops);
+  fetchPendingReceipts(app, logger, dbops);
 }

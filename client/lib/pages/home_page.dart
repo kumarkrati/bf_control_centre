@@ -1228,7 +1228,7 @@ class SubscriptionManagementSheet extends StatefulWidget {
 
 class _SubscriptionManagementSheetState
     extends State<SubscriptionManagementSheet> {
-  int _selectedOption = 0; // 0 = Update Subscription, 1 = Generate Invoice, 2 = View Invoices
+  int _selectedOption = 0; // 0 = Update Subscription, 1 = Generate Invoice, 2 = View Invoices, 3 = Pending Receipts
 
   // Update Subscription fields
   String _subSelectedPlan = 'PREMIUM';
@@ -1250,6 +1250,11 @@ class _SubscriptionManagementSheetState
   DateTime _endDate = DateTime.now();
   List<Map<String, dynamic>> _invoices = [];
   bool _isLoadingInvoices = false;
+
+  // Pending Receipts fields
+  DateTime _pendingReceiptsFilterDate = DateTime.now();
+  List<Map<String, dynamic>> _pendingReceiptsUsers = [];
+  bool _isLoadingPendingReceipts = false;
 
   final List<String> _planTypes = ['PREMIUM', 'ULTRA', 'LITE'];
   final List<String> _durations = [
@@ -1323,6 +1328,55 @@ class _SubscriptionManagementSheetState
                 Icon(Icons.error_outline, color: Colors.white),
                 SizedBox(width: 8),
                 Text('Failed to fetch invoices.'),
+              ],
+            ),
+            backgroundColor: const Color(0xFFEF4444),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+      }
+    });
+  }
+
+  Future<void> _fetchPendingReceipts() async {
+    setState(() => _isLoadingPendingReceipts = true);
+    final result = await ServerUtils.fetchPendingReceipts(
+      filterDate: _pendingReceiptsFilterDate,
+    );
+    setState(() {
+      _isLoadingPendingReceipts = false;
+      if (result.status == FetchPendingReceiptsStatus.success) {
+        _pendingReceiptsUsers = result.users;
+      } else if (result.status == FetchPendingReceiptsStatus.unauthorized) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.security, color: Colors.white),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text('Your session has expired, relogin is required.'),
+                ),
+              ],
+            ),
+            backgroundColor: const Color(0xFF660011),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.error_outline, color: Colors.white),
+                SizedBox(width: 8),
+                Text('Failed to fetch pending receipts.'),
               ],
             ),
             backgroundColor: const Color(0xFFEF4444),
@@ -1548,6 +1602,53 @@ class _SubscriptionManagementSheetState
                     ),
                   ),
                 ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() => _selectedOption = 3);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: _selectedOption == 3
+                            ? Colors.white
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: _selectedOption == 3
+                            ? [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ]
+                            : null,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.pending_actions,
+                            size: 18,
+                            color: _selectedOption == 3
+                                ? const Color(0xFF10B981)
+                                : Colors.grey.shade600,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Pending',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: _selectedOption == 3
+                                  ? const Color(0xFF10B981)
+                                  : Colors.grey.shade600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -1558,7 +1659,9 @@ class _SubscriptionManagementSheetState
                 ? _buildUpdateSubscriptionForm()
                 : _selectedOption == 1
                 ? _buildGenerateInvoiceForm()
-                : _buildViewInvoicesTable(),
+                : _selectedOption == 2
+                ? _buildViewInvoicesTable()
+                : _buildPendingReceiptsTable(),
           ),
         ],
       ),
@@ -3155,6 +3258,324 @@ class _SubscriptionManagementSheetState
         );
       }
     }
+  }
+
+  Widget _buildPendingReceiptsTable() {
+    return Column(
+      children: [
+        // Date filter row
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey.shade200),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () async {
+                    final date = await showDatePicker(
+                      context: context,
+                      initialDate: _pendingReceiptsFilterDate,
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime.now().add(const Duration(days: 365)),
+                    );
+                    if (date != null) {
+                      setState(() => _pendingReceiptsFilterDate = date);
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.calendar_today,
+                            size: 16, color: Color(0xFF10B981)),
+                        const SizedBox(width: 8),
+                        Text(
+                          _pendingReceiptsFilterDate.toString().split(' ')[0],
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              ElevatedButton.icon(
+                onPressed: _isLoadingPendingReceipts ? null : _fetchPendingReceipts,
+                icon: _isLoadingPendingReceipts
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
+                    : const Icon(Icons.search, size: 18),
+                label: const Text('Search'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF10B981),
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // Results info
+        if (_pendingReceiptsUsers.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Row(
+              children: [
+                Icon(Icons.info_outline, size: 16, color: Colors.grey.shade600),
+                const SizedBox(width: 8),
+                Text(
+                  '${_pendingReceiptsUsers.length} user(s) with pending receipts',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+        // Table
+        Expanded(
+          child: _isLoadingPendingReceipts
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
+                  ),
+                )
+              : _pendingReceiptsUsers.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.pending_actions,
+                              size: 48, color: Colors.grey.shade400),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No pending receipts found',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Select a date and click Search',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey.shade500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade200),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          children: [
+                            // Table header
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(8)),
+                              ),
+                              child: const Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Phone',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Name',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Plan',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Days',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 80),
+                                ],
+                              ),
+                            ),
+                            // Table rows
+                            ..._pendingReceiptsUsers.map((user) {
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 10),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(color: Colors.grey.shade200),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        user['phone'] ?? '-',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        user['name'] ?? '-',
+                                        style: const TextStyle(fontSize: 12),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        user['subplan'] ?? '-',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${user['subdays'] ?? '-'}',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 80,
+                                      child: ElevatedButton(
+                                        onPressed: () => _prefillAndSwitchToGenerate(user),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color(0xFF10B981),
+                                          foregroundColor: Colors.white,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 6),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(6),
+                                          ),
+                                          minimumSize: Size.zero,
+                                          tapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                        ),
+                                        child: const Text(
+                                          'Generate',
+                                          style: TextStyle(fontSize: 11),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    ),
+        ),
+      ],
+    );
+  }
+
+  void _prefillAndSwitchToGenerate(Map<String, dynamic> user) {
+    // Prefill the Generate Invoice form fields
+    _phoneController.text = user['phone'] ?? '';
+    _selectedPlan = user['subplan'] ?? 'PREMIUM';
+
+    // Convert subdays to duration string
+    final subdays = user['subdays'] as int? ?? 30;
+    _selectedDuration = _convertDaysToDuration(subdays);
+
+    // Set invoice date to substartedat
+    if (user['substartedat'] != null) {
+      try {
+        _invoiceDate = DateTime.parse(user['substartedat']);
+      } catch (e) {
+        _invoiceDate = DateTime.now();
+      }
+    } else {
+      _invoiceDate = DateTime.now();
+    }
+
+    // Clear amount and optional fields
+    _amountController.clear();
+    _gstinController.clear();
+    _addressController.clear();
+    _businessNameController.clear();
+
+    // Switch to Generate tab
+    setState(() => _selectedOption = 1);
+  }
+
+  String _convertDaysToDuration(int days) {
+    if (days == 1) return '1 day';
+    if (days == 2) return '2 day';
+    if (days == 3) return '3 days';
+    if (days == 4) return '4 days';
+    if (days == 5) return '5 days';
+    if (days == 6) return '6 days';
+    if (days == 7) return '7 days';
+    if (days == 14) return '14 days';
+    if (days == 15) return '15 days';
+    if (days == 30 || days == 31) return '1 month';
+    if (days == 365) return '1 year';
+    if (days == 395 || days == 396) return '13 months';
+    if (days == 730) return '2 years';
+    if (days == 1825 || days == 1826) return '5 years';
+    // Default fallback
+    return '1 month';
   }
 
   Widget _buildInputSection(String label, IconData icon, Widget child) {
