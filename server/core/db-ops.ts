@@ -332,8 +332,8 @@ export class DbOps {
 
       // Check if phone is an Indian number (starts with +91 or is 10 digits)
       const isIndianNumber = phone.startsWith("+91") ||
-                             phone.startsWith("91") ||
-                             (phone.length === 10 && /^[6-9]\d{9}$/.test(phone));
+        phone.startsWith("91") ||
+        (phone.length === 10 && /^[6-9]\d{9}$/.test(phone));
 
       // Calculate base amount
       // For Indian numbers: baseAmount = amount / 1.18 (reverse 18% GST)
@@ -362,7 +362,9 @@ export class DbOps {
         : [];
 
       // Read global invoice number from file
-      const invoiceCountFilePath = Deno.env.get("SUBSCRIPTION_RECEIPT_COUNT_FILE");
+      const invoiceCountFilePath = Deno.env.get(
+        "SUBSCRIPTION_RECEIPT_COUNT_FILE",
+      );
       if (!invoiceCountFilePath) {
         this.logger.error("SUBSCRIPTION_RECEIPT_COUNT_FILE env var not set");
         return { status: 1, invoice: null };
@@ -374,14 +376,19 @@ export class DbOps {
         const data = JSON.parse(fileContent);
         currentInvoiceNo = data.invoice || 0;
       } catch (e) {
-        this.logger.warning(`Could not read invoice count file, starting from 0: ${e}`);
+        this.logger.warning(
+          `Could not read invoice count file, starting from 0: ${e}`,
+        );
       }
 
       const nextInvoiceNo = currentInvoiceNo + 1;
 
       // Update the invoice count file with the new number
       try {
-        await Deno.writeTextFile(invoiceCountFilePath, JSON.stringify({ invoice: nextInvoiceNo }));
+        await Deno.writeTextFile(
+          invoiceCountFilePath,
+          JSON.stringify({ invoice: nextInvoiceNo }),
+        );
       } catch (e) {
         this.logger.error(`Failed to update invoice count file: ${e}`);
         return { status: 1, invoice: null };
@@ -421,7 +428,9 @@ export class DbOps {
         return { status: 1, invoice: null };
       }
 
-      this.logger.log(`Invoice generated for phone: ${phone}, invoiceNo: ${nextInvoiceNo}, isIndian: ${isIndianNumber}, baseAmount: ${baseAmount}, amount: ${amount}`);
+      this.logger.log(
+        `Invoice generated for phone: ${phone}, invoiceNo: ${nextInvoiceNo}, isIndian: ${isIndianNumber}, baseAmount: ${baseAmount}, amount: ${amount}`,
+      );
       return { status: 0, invoice: invoice };
     } catch (error) {
       this.logger.error(`Exception generateInvoice(): ${error}`);
@@ -429,7 +438,10 @@ export class DbOps {
     }
   }
 
-  async fetchInvoices(startDate: string, endDate: string): Promise<any[] | null> {
+  async fetchInvoices(
+    startDate: string,
+    endDate: string,
+  ): Promise<any[] | null> {
     try {
       this.logger.log(`Fetching invoices from ${startDate} to ${endDate}`);
 
@@ -475,7 +487,9 @@ export class DbOps {
       // Sort by invoiceNo descending
       allInvoices.sort((a, b) => (b.invoiceNo || 0) - (a.invoiceNo || 0));
 
-      this.logger.log(`Fetched ${allInvoices.length} invoices from subscriptions`);
+      this.logger.log(
+        `Fetched ${allInvoices.length} invoices from subscriptions`,
+      );
       return allInvoices;
     } catch (error) {
       this.logger.error(`Exception fetchInvoices(): ${error}`);
@@ -483,9 +497,14 @@ export class DbOps {
     }
   }
 
-  async fetchPendingReceipts(startDate: string, endDate: string): Promise<any[] | null> {
+  async fetchPendingReceipts(
+    startDate: string,
+    endDate: string,
+  ): Promise<any[] | null> {
     try {
-      this.logger.log(`Fetching pending receipts from ${startDate} to ${endDate}`);
+      this.logger.log(
+        `Fetching pending receipts from ${startDate} to ${endDate}`,
+      );
 
       // Parse dates for comparison
       const startDateTime = new Date(startDate);
@@ -511,27 +530,38 @@ export class DbOps {
         const subStartedAt = new Date(subscription.substartedat);
 
         // Check if substartedat is within the date range
-        if (subStartedAt.getTime() < startDateTime.getTime() || subStartedAt.getTime() > endDateTime.getTime()) continue;
+        if (
+          subStartedAt.getTime() < startDateTime.getTime() ||
+          subStartedAt.getTime() > endDateTime.getTime()
+        ) continue;
 
         // Check if subscription is active (substartedat + subdays > now)
         const subEndDate = new Date(subStartedAt);
         subEndDate.setDate(subEndDate.getDate() + (subscription.subdays || 0));
-        if (subEndDate.getTime() < Date.now()) continue;
+        if (
+          subEndDate.getTime() < Date.now() || ((subscription.subdays || 0) <= 3)
+        ) continue;
 
         // Extract phone from subscription id (format: phone-subscriptions)
         const phone = subscription.id.replace("-subscriptions", "");
 
         // Get substartedat date string for comparison
-        const subStartedDateStr = `${subStartedAt.getFullYear()}-${String(subStartedAt.getMonth() + 1).padStart(2, "0")}-${String(subStartedAt.getDate()).padStart(2, "0")}`;
+        const subStartedDateStr = `${subStartedAt.getFullYear()}-${
+          String(subStartedAt.getMonth() + 1).padStart(2, "0")
+        }-${String(subStartedAt.getDate()).padStart(2, "0")}`;
 
         // Check receipts - pending if null, empty, or no receipt matching substartedat date
-        const receipts = Array.isArray(subscription.receipts) ? subscription.receipts : [];
+        const receipts = Array.isArray(subscription.receipts)
+          ? subscription.receipts
+          : [];
 
         let hasMatchingReceipt = false;
         for (const receipt of receipts) {
           if (!receipt.time) continue;
           const receiptDate = new Date(receipt.time);
-          const receiptDateStr = `${receiptDate.getFullYear()}-${String(receiptDate.getMonth() + 1).padStart(2, "0")}-${String(receiptDate.getDate()).padStart(2, "0")}`;
+          const receiptDateStr = `${receiptDate.getFullYear()}-${
+            String(receiptDate.getMonth() + 1).padStart(2, "0")
+          }-${String(receiptDate.getDate()).padStart(2, "0")}`;
           if (receiptDateStr === subStartedDateStr) {
             hasMatchingReceipt = true;
             break;
@@ -554,7 +584,9 @@ export class DbOps {
         }
       }
 
-      this.logger.log(`Found ${pendingUsers.length} users with pending receipts`);
+      this.logger.log(
+        `Found ${pendingUsers.length} users with pending receipts`,
+      );
       return pendingUsers;
     } catch (error) {
       this.logger.error(`Exception fetchPendingReceipts(): ${error}`);
