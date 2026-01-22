@@ -1279,8 +1279,11 @@ class _SubscriptionManagementSheetState
     '14 days',
     '15 days',
     '1 month',
+    '2 months',
+    '3 months',
     '1 year',
     '13 months',
+    '14 months',
     '2 years',
     '5 years',
   ];
@@ -4301,8 +4304,11 @@ class _SubscriptionManagementSheetState
     if (days == 14) return '14 days';
     if (days == 15) return '15 days';
     if (days == 30 || days == 31) return '1 month';
+    if (days == 60) return '2 months';
+    if (days == 90) return '3 months';
     if (days == 365) return '1 year';
     if (days == 395 || days == 396) return '13 months';
+    if (days == 425) return '14 months';
     if (days == 730) return '2 years';
     if (days == 1825 || days == 1826) return '5 years';
     // Default fallback
