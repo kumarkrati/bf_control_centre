@@ -443,7 +443,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 8),
             Text(
-              'v3.0.0+300',
+              'v4.0.0+400',
               style: GoogleFonts.poppins(
                 fontSize: 14,
                 color: Colors.grey.shade600,

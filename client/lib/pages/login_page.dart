@@ -37,12 +37,13 @@ class _LoginPageState extends State<LoginPage>
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
     );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.1),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
-    );
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeOutCubic,
+          ),
+        );
     _animationController.forward();
   }
 
@@ -345,8 +346,8 @@ class _LoginPageState extends State<LoginPage>
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: _primaryColor,
                                       foregroundColor: Colors.white,
-                                      disabledBackgroundColor:
-                                          _primaryColor.withOpacity(0.6),
+                                      disabledBackgroundColor: _primaryColor
+                                          .withOpacity(0.6),
                                       elevation: 0,
                                       shadowColor: Colors.transparent,
                                       shape: RoundedRectangleBorder(
@@ -354,8 +355,9 @@ class _LoginPageState extends State<LoginPage>
                                       ),
                                     ),
                                     child: AnimatedSwitcher(
-                                      duration:
-                                          const Duration(milliseconds: 200),
+                                      duration: const Duration(
+                                        milliseconds: 200,
+                                      ),
                                       child: _isLoading
                                           ? const SizedBox(
                                               width: 24,
@@ -364,7 +366,8 @@ class _LoginPageState extends State<LoginPage>
                                                 strokeWidth: 2.5,
                                                 valueColor:
                                                     AlwaysStoppedAnimation<
-                                                        Color>(Colors.white),
+                                                      Color
+                                                    >(Colors.white),
                                               ),
                                             )
                                           : const Row(
@@ -397,7 +400,7 @@ class _LoginPageState extends State<LoginPage>
 
                         // Footer
                         Text(
-                          'BF Control Centre',
+                          'BIllingFast Control Centre v4.0',
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.white.withOpacity(0.6),
