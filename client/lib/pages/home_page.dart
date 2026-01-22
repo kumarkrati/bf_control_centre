@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:bf_control_centre/core/app_storage.dart';
+import 'package:csv/csv.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:bf_control_centre/core/enums.dart';
 import 'package:bf_control_centre/core/login_utils.dart';
 import 'package:bf_control_centre/core/server_utils.dart';
@@ -1252,6 +1254,8 @@ class _SubscriptionManagementSheetState
   DateTime _endDate = DateTime.now();
   List<Map<String, dynamic>> _invoices = [];
   bool _isLoadingInvoices = false;
+  final TextEditingController _invoiceSearchController = TextEditingController();
+  String _invoiceSearchQuery = '';
 
   // Pending Receipts fields
   DateTime _pendingReceiptsStartDate = DateTime.now().subtract(
@@ -1260,6 +1264,8 @@ class _SubscriptionManagementSheetState
   DateTime _pendingReceiptsEndDate = DateTime.now();
   List<Map<String, dynamic>> _pendingReceiptsUsers = [];
   bool _isLoadingPendingReceipts = false;
+  final TextEditingController _pendingSearchController = TextEditingController();
+  String _pendingSearchQuery = '';
 
   final List<String> _planTypes = ['PREMIUM', 'ULTRA', 'LITE'];
   final List<String> _durations = [
@@ -1293,6 +1299,8 @@ class _SubscriptionManagementSheetState
     _gstinController.dispose();
     _addressController.dispose();
     _businessNameController.dispose();
+    _invoiceSearchController.dispose();
+    _pendingSearchController.dispose();
     super.dispose();
   }
 
@@ -3195,6 +3203,62 @@ class _SubscriptionManagementSheetState
             ],
           ),
         ),
+        const SizedBox(height: 12),
+
+        // Search by phone field and Export button
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _invoiceSearchController,
+                decoration: InputDecoration(
+                  hintText: 'Search by phone number',
+                  prefixIcon: const Icon(Icons.search, color: Color(0xFF10B981), size: 20),
+                  suffixIcon: _invoiceSearchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear, size: 18),
+                          onPressed: () {
+                            _invoiceSearchController.clear();
+                            setState(() => _invoiceSearchQuery = '');
+                          },
+                        )
+                      : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Color(0xFF10B981)),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+                onChanged: (value) => setState(() => _invoiceSearchQuery = value.trim()),
+              ),
+            ),
+            const SizedBox(width: 12),
+            ElevatedButton.icon(
+              onPressed: _invoices.isEmpty ? null : _exportInvoicesToCsv,
+              icon: const Icon(Icons.download, size: 18),
+              label: const Text('Export CSV'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF3B82F6),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                disabledBackgroundColor: Colors.grey.shade300,
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 16),
 
         // Table header
@@ -3329,19 +3393,49 @@ class _SubscriptionManagementSheetState
                     ],
                   ),
                 )
-              : Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade200),
-                    borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.circular(12),
-                    ),
-                  ),
-                  child: ListView.separated(
-                    itemCount: _invoices.length,
-                    separatorBuilder: (context, index) =>
-                        Divider(height: 1, color: Colors.grey.shade200),
-                    itemBuilder: (context, index) {
-                      final invoice = _invoices[index];
+              : Builder(
+                  builder: (context) {
+                    final filteredInvoices = _invoiceSearchQuery.isEmpty
+                        ? _invoices
+                        : _invoices.where((invoice) {
+                            final phone = (invoice['phone'] ?? '').toString().toLowerCase();
+                            return phone.contains(_invoiceSearchQuery.toLowerCase());
+                          }).toList();
+
+                    if (filteredInvoices.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.search_off, size: 48, color: Colors.grey.shade300),
+                            const SizedBox(height: 16),
+                            Text(
+                              'No matching invoices',
+                              style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Try a different phone number',
+                              style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade200),
+                        borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(12),
+                        ),
+                      ),
+                      child: ListView.separated(
+                        itemCount: filteredInvoices.length,
+                        separatorBuilder: (context, index) =>
+                            Divider(height: 1, color: Colors.grey.shade200),
+                        itemBuilder: (context, index) {
+                          final invoice = filteredInvoices[index];
                       return Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -3461,6 +3555,8 @@ class _SubscriptionManagementSheetState
                       );
                     },
                   ),
+                );
+                  },
                 ),
         ),
 
@@ -3674,6 +3770,90 @@ class _SubscriptionManagementSheetState
     }
   }
 
+  Future<void> _exportInvoicesToCsv() async {
+    if (_invoices.isEmpty) return;
+
+    try {
+      // Apply current search filter
+      final filteredInvoices = _invoiceSearchQuery.isEmpty
+          ? _invoices
+          : _invoices.where((invoice) {
+              final phone = (invoice['phone'] ?? '').toString().toLowerCase();
+              return phone.contains(_invoiceSearchQuery.toLowerCase());
+            }).toList();
+
+      if (filteredInvoices.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No invoices to export'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+        return;
+      }
+
+      // CSV Headers
+      final List<List<dynamic>> rows = [
+        ['Invoice No', 'Phone', 'Plan', 'Days', 'Amount (INR)', 'Date', 'GSTIN', 'Business Name', 'Address'],
+      ];
+
+      // Add data rows
+      for (final invoice in filteredInvoices) {
+        final amount = invoice['amount'];
+        final formattedAmount = amount != null ? (amount / 100).toStringAsFixed(2) : '0.00';
+        final date = invoice['time'] != null
+            ? DateTime.tryParse(invoice['time'].toString())?.toLocal().toString().split(' ')[0] ?? '-'
+            : '-';
+
+        rows.add([
+          invoice['invoiceNo'] ?? invoice['id'] ?? '-',
+          invoice['phone'] ?? '-',
+          invoice['plan'] ?? '-',
+          invoice['days']?.toString() ?? '-',
+          formattedAmount,
+          date,
+          invoice['gstin'] ?? '-',
+          invoice['businessName'] ?? '-',
+          invoice['address'] ?? '-',
+        ]);
+      }
+
+      // Convert to CSV
+      final csvData = const ListToCsvConverter().convert(rows);
+      final bytes = Uint8List.fromList(utf8.encode(csvData));
+
+      // Generate filename with date range
+      final startStr = _startDate.toString().split(' ')[0];
+      final endStr = _endDate.toString().split(' ')[0];
+      final filename = 'BillingFast_Invoices_${startStr}_to_$endStr.csv';
+
+      // Save file
+      await FileSaver.instance.saveFile(
+        name: filename,
+        bytes: bytes,
+        mimeType: MimeType.csv,
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Exported ${filteredInvoices.length} invoices to $filename'),
+            backgroundColor: const Color(0xFF10B981),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to export CSV: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   Widget _buildPendingReceiptsTable() {
     return Column(
       children: [
@@ -3799,6 +3979,41 @@ class _SubscriptionManagementSheetState
             ],
           ),
         ),
+        const SizedBox(height: 12),
+
+        // Search by phone field
+        TextField(
+          controller: _pendingSearchController,
+          decoration: InputDecoration(
+            hintText: 'Search by phone number',
+            prefixIcon: const Icon(Icons.search, color: Color(0xFF10B981), size: 20),
+            suffixIcon: _pendingSearchQuery.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear, size: 18),
+                    onPressed: () {
+                      _pendingSearchController.clear();
+                      setState(() => _pendingSearchQuery = '');
+                    },
+                  )
+                : null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.grey.shade300),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.grey.shade300),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFF10B981)),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            filled: true,
+            fillColor: Colors.white,
+          ),
+          onChanged: (value) => setState(() => _pendingSearchQuery = value.trim()),
+        ),
         const SizedBox(height: 16),
 
         // Results info
@@ -3809,9 +4024,19 @@ class _SubscriptionManagementSheetState
               children: [
                 Icon(Icons.info_outline, size: 16, color: Colors.grey.shade600),
                 const SizedBox(width: 8),
-                Text(
-                  '${_pendingReceiptsUsers.length} user(s) with pending receipts',
-                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                Builder(
+                  builder: (context) {
+                    final filteredCount = _pendingSearchQuery.isEmpty
+                        ? _pendingReceiptsUsers.length
+                        : _pendingReceiptsUsers.where((user) {
+                            final phone = (user['phone'] ?? '').toString().toLowerCase();
+                            return phone.contains(_pendingSearchQuery.toLowerCase());
+                          }).length;
+                    return Text(
+                      '$filteredCount user(s) with pending receipts',
+                      style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                    );
+                  },
                 ),
               ],
             ),
@@ -3856,62 +4081,92 @@ class _SubscriptionManagementSheetState
                     ],
                   ),
                 )
-              : SingleChildScrollView(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade200),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      children: [
-                        // Table header
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(8),
+              : Builder(
+                  builder: (context) {
+                    final filteredUsers = _pendingSearchQuery.isEmpty
+                        ? _pendingReceiptsUsers
+                        : _pendingReceiptsUsers.where((user) {
+                            final phone = (user['phone'] ?? '').toString().toLowerCase();
+                            return phone.contains(_pendingSearchQuery.toLowerCase());
+                          }).toList();
+
+                    if (filteredUsers.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.search_off, size: 48, color: Colors.grey.shade400),
+                            const SizedBox(height: 16),
+                            Text(
+                              'No matching users',
+                              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
                             ),
-                          ),
-                          child: const Row(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  'Phone',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                  ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Try a different phone number',
+                              style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return SingleChildScrollView(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade200),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          children: [
+                            // Table header
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(8),
                                 ),
                               ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  'Name',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
+                              child: const Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Phone',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Plan',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Name',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Days',
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Plan',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Days',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12,
@@ -3997,6 +4252,8 @@ class _SubscriptionManagementSheetState
                       ],
                     ),
                   ),
+                );
+                  },
                 ),
         ),
       ],
