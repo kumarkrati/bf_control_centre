@@ -439,21 +439,31 @@ class ServerUtils {
   }
 
   static Future<FetchPendingReceiptsResult> fetchPendingReceipts({
-    required DateTime filterDate,
+    required DateTime startDate,
+    required DateTime endDate,
   }) async {
     try {
-      final date = DateTime(
-        filterDate.year,
-        filterDate.month,
-        filterDate.day,
+      final start = DateTime(
+        startDate.year,
+        startDate.month,
+        startDate.day,
         0,
         0,
         0,
       );
+      final end = DateTime(
+        endDate.year,
+        endDate.month,
+        endDate.day,
+        23,
+        59,
+        59,
+      );
       final Map<String, dynamic> reqBody = {
         'key': _key,
         'credentials': _credentials,
-        'filterDate': date.toIso8601String(),
+        'startDate': start.toIso8601String(),
+        'endDate': end.toIso8601String(),
       };
       final response = await http.post(
         Uri.parse('${_api}fetch-pending-receipts'),

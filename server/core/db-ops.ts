@@ -483,15 +483,15 @@ export class DbOps {
     }
   }
 
-  async fetchPendingReceipts(filterDate: string): Promise<any[] | null> {
+  async fetchPendingReceipts(startDate: string, endDate: string): Promise<any[] | null> {
     try {
-      this.logger.log(`Fetching pending receipts for date: ${filterDate}`);
+      this.logger.log(`Fetching pending receipts from ${startDate} to ${endDate}`);
 
-      // Parse filter date to compare only the date part (ignoring time)
-      const filterDateTime = new Date(filterDate);
-      const filterDateStr = `${filterDateTime.getFullYear()}-${String(filterDateTime.getMonth() + 1).padStart(2, "0")}-${String(filterDateTime.getDate()).padStart(2, "0")}`;
+      // Parse dates for comparison
+      const startDateTime = new Date(startDate);
+      const endDateTime = new Date(endDate);
 
-      // Fetch all subscriptions with active status where substartedat matches the filter date
+      // Fetch all subscriptions
       const { data: subscriptions, error } = await this.supabase
         .from("subscriptions")
         .select("id, subdays, subplan, isultra, substartedat, receipts");
@@ -509,10 +509,9 @@ export class DbOps {
 
         // Parse subscription start date
         const subStartedAt = new Date(subscription.substartedat);
-        const subStartedDateStr = `${subStartedAt.getFullYear()}-${String(subStartedAt.getMonth() + 1).padStart(2, "0")}-${String(subStartedAt.getDate()).padStart(2, "0")}`;
 
-        // Check if substartedat matches the filter date
-        if (subStartedDateStr !== filterDateStr) continue;
+        // Check if substartedat is within the date range
+        if (subStartedAt.getTime() < startDateTime.getTime() || subStartedAt.getTime() > endDateTime.getTime()) continue;
 
         // Check if subscription is active (substartedat + subdays > now)
         const subEndDate = new Date(subStartedAt);
@@ -521,6 +520,9 @@ export class DbOps {
 
         // Extract phone from subscription id (format: phone-subscriptions)
         const phone = subscription.id.replace("-subscriptions", "");
+
+        // Get substartedat date string for comparison
+        const subStartedDateStr = `${subStartedAt.getFullYear()}-${String(subStartedAt.getMonth() + 1).padStart(2, "0")}-${String(subStartedAt.getDate()).padStart(2, "0")}`;
 
         // Check receipts - pending if null, empty, or no receipt matching substartedat date
         const receipts = Array.isArray(subscription.receipts) ? subscription.receipts : [];

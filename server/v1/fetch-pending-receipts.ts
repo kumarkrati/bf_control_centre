@@ -8,10 +8,10 @@ export function fetchPendingReceipts(app: Hono, logger: AppLogger, dbops: DbOps)
   app.post(
     "/v1/fetch-pending-receipts",
     encrypted(async (json: any, context: Context) => {
-      const { filterDate } = json;
-      logger.log(`Fetching pending receipts for date: ${filterDate}`);
+      const { startDate, endDate } = json;
+      logger.log(`Fetching pending receipts from ${startDate} to ${endDate}`);
 
-      const result = await dbops.fetchPendingReceipts(filterDate);
+      const result = await dbops.fetchPendingReceipts(startDate, endDate);
 
       if (result === null) {
         return context.json({ message: "failed" }, 500);

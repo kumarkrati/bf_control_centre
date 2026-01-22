@@ -1252,7 +1252,8 @@ class _SubscriptionManagementSheetState
   bool _isLoadingInvoices = false;
 
   // Pending Receipts fields
-  DateTime _pendingReceiptsFilterDate = DateTime.now();
+  DateTime _pendingReceiptsStartDate = DateTime.now().subtract(const Duration(days: 30));
+  DateTime _pendingReceiptsEndDate = DateTime.now();
   List<Map<String, dynamic>> _pendingReceiptsUsers = [];
   bool _isLoadingPendingReceipts = false;
 
@@ -1344,7 +1345,8 @@ class _SubscriptionManagementSheetState
   Future<void> _fetchPendingReceipts() async {
     setState(() => _isLoadingPendingReceipts = true);
     final result = await ServerUtils.fetchPendingReceipts(
-      filterDate: _pendingReceiptsFilterDate,
+      startDate: _pendingReceiptsStartDate,
+      endDate: _pendingReceiptsEndDate,
     );
     setState(() {
       _isLoadingPendingReceipts = false;
@@ -3278,12 +3280,12 @@ class _SubscriptionManagementSheetState
                   onTap: () async {
                     final date = await showDatePicker(
                       context: context,
-                      initialDate: _pendingReceiptsFilterDate,
+                      initialDate: _pendingReceiptsStartDate,
                       firstDate: DateTime(2020),
                       lastDate: DateTime.now().add(const Duration(days: 365)),
                     );
                     if (date != null) {
-                      setState(() => _pendingReceiptsFilterDate = date);
+                      setState(() => _pendingReceiptsStartDate = date);
                     }
                   },
                   child: Container(
@@ -3298,7 +3300,50 @@ class _SubscriptionManagementSheetState
                             size: 16, color: Color(0xFF10B981)),
                         const SizedBox(width: 8),
                         Text(
-                          _pendingReceiptsFilterDate.toString().split(' ')[0],
+                          _pendingReceiptsStartDate.toString().split(' ')[0],
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  'to',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: InkWell(
+                  onTap: () async {
+                    final date = await showDatePicker(
+                      context: context,
+                      initialDate: _pendingReceiptsEndDate,
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime.now().add(const Duration(days: 365)),
+                    );
+                    if (date != null) {
+                      setState(() => _pendingReceiptsEndDate = date);
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.calendar_today,
+                            size: 16, color: Color(0xFF10B981)),
+                        const SizedBox(width: 8),
+                        Text(
+                          _pendingReceiptsEndDate.toString().split(' ')[0],
                           style: const TextStyle(fontSize: 14),
                         ),
                       ],
