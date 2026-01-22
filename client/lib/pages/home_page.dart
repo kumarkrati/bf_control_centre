@@ -1228,12 +1228,14 @@ class SubscriptionManagementSheet extends StatefulWidget {
 
 class _SubscriptionManagementSheetState
     extends State<SubscriptionManagementSheet> {
-  int _selectedOption = 0; // 0 = Update Subscription, 1 = Generate Invoice, 2 = View Invoices, 3 = Pending Receipts
+  int _selectedOption =
+      0; // 0 = Update Subscription, 1 = Generate Invoice, 2 = View Invoices, 3 = Pending Receipts
 
   // Update Subscription fields
   String _subSelectedPlan = 'PREMIUM';
   String _subSelectedDuration = '1 month';
   DateTime _subStartDate = DateTime.now();
+  bool _generateReceiptAfterUpdate = true;
 
   // Generate Invoice fields
   String _selectedPlan = 'PREMIUM';
@@ -1252,7 +1254,9 @@ class _SubscriptionManagementSheetState
   bool _isLoadingInvoices = false;
 
   // Pending Receipts fields
-  DateTime _pendingReceiptsStartDate = DateTime.now().subtract(const Duration(days: 30));
+  DateTime _pendingReceiptsStartDate = DateTime.now().subtract(
+    const Duration(days: 30),
+  );
   DateTime _pendingReceiptsEndDate = DateTime.now();
   List<Map<String, dynamic>> _pendingReceiptsUsers = [];
   bool _isLoadingPendingReceipts = false;
@@ -1394,7 +1398,8 @@ class _SubscriptionManagementSheetState
 
   String _formatAmount(dynamic amount) {
     if (amount == null) return '0.00';
-    final amountInRupees = (amount is int ? amount : (amount as num).toInt()) / 100;
+    final amountInRupees =
+        (amount is int ? amount : (amount as num).toInt()) / 100;
     return amountInRupees.toStringAsFixed(2);
   }
 
@@ -1694,10 +1699,8 @@ class _SubscriptionManagementSheetState
                     ),
                     items: _planTypes
                         .map(
-                          (plan) => DropdownMenuItem(
-                            value: plan,
-                            child: Text(plan),
-                          ),
+                          (plan) =>
+                              DropdownMenuItem(value: plan, child: Text(plan)),
                         )
                         .toList(),
                     onChanged: (value) =>
@@ -1743,9 +1746,7 @@ class _SubscriptionManagementSheetState
                         context: context,
                         initialDate: _subStartDate,
                         firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(
-                          const Duration(days: 365),
-                        ),
+                        lastDate: DateTime.now().add(const Duration(days: 365)),
                       );
                       if (date != null) setState(() => _subStartDate = date);
                     },
@@ -1768,6 +1769,67 @@ class _SubscriptionManagementSheetState
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Generate Receipt checkbox
+                InkWell(
+                  onTap: () => setState(
+                    () => _generateReceiptAfterUpdate =
+                        !_generateReceiptAfterUpdate,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: _generateReceiptAfterUpdate
+                          ? const Color(0xFF10B981).withOpacity(0.1)
+                          : Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: _generateReceiptAfterUpdate
+                            ? const Color(0xFF10B981)
+                            : Colors.grey.shade200,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          _generateReceiptAfterUpdate
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank,
+                          color: _generateReceiptAfterUpdate
+                              ? const Color(0xFF10B981)
+                              : Colors.grey.shade400,
+                          size: 24,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Generate Receipt',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF172a43),
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                'Shows a dialog to generate receipt after successful update',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -1800,9 +1862,7 @@ class _SubscriptionManagementSheetState
     final mobile = _mobileController.text.trim();
     if (mobile.isEmpty) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter customer mobile number'),
-        ),
+        const SnackBar(content: Text('Please enter customer mobile number')),
       );
       return;
     }
@@ -1813,9 +1873,7 @@ class _SubscriptionManagementSheetState
     final confirmed = await showDialog<bool>(
       context: Get.context!,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Row(
           children: [
             Container(
@@ -1824,10 +1882,7 @@ class _SubscriptionManagementSheetState
                 color: const Color(0xFF10B981).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(
-                Icons.credit_card,
-                color: Color(0xFF10B981),
-              ),
+              child: const Icon(Icons.credit_card, color: Color(0xFF10B981)),
             ),
             const SizedBox(width: 12),
             const Text('Update Subscription'),
@@ -1837,9 +1892,7 @@ class _SubscriptionManagementSheetState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Are you sure you want to update subscription for:',
-            ),
+            const Text('Are you sure you want to update subscription for:'),
             const SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(12),
@@ -1849,17 +1902,11 @@ class _SubscriptionManagementSheetState
               ),
               child: Row(
                 children: [
-                  const Icon(
-                    Icons.person,
-                    color: Color(0xFF10B981),
-                    size: 18,
-                  ),
+                  const Icon(Icons.person, color: Color(0xFF10B981), size: 18),
                   const SizedBox(width: 8),
                   Text(
                     mobile,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -1867,19 +1914,14 @@ class _SubscriptionManagementSheetState
             const SizedBox(height: 12),
             Text(
               'Plan: $_subSelectedPlan\nDuration: $_subSelectedDuration\nStart Date: ${_subStartDate.toString().split(' ')[0]}',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey.shade600,
-              ),
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.grey.shade600,
-            ),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
             child: const Text('Cancel'),
           ),
           ElevatedButton.icon(
@@ -1905,9 +1947,7 @@ class _SubscriptionManagementSheetState
       context: Get.context!,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -1916,26 +1956,18 @@ class _SubscriptionManagementSheetState
               height: 50,
               child: CircularProgressIndicator(
                 strokeWidth: 3,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Color(0xFF10B981),
-                ),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
               ),
             ),
             const SizedBox(height: 20),
             const Text(
               'Updating Subscription...',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
             Text(
               'Please wait while we update the subscription',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey.shade600,
-              ),
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
               textAlign: TextAlign.center,
             ),
           ],
@@ -1957,60 +1989,70 @@ class _SubscriptionManagementSheetState
     await Future.delayed(const Duration(milliseconds: 500));
 
     if (result == UpdateSubscriptionStatus.success) {
-      showDialog(
-        context: Get.context!,
-        builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF10B981).withOpacity(0.1),
-                  shape: BoxShape.circle,
+      if (_generateReceiptAfterUpdate) {
+        // Show dialog to collect amount and optional details for receipt generation
+        await _showGenerateReceiptDialog(
+          mobile: mobile,
+          planType: _subSelectedPlan,
+          planDuration: _subSelectedDuration,
+          invoiceDate: _subStartDate,
+        );
+      } else {
+        showDialog(
+          context: Get.context!,
+          builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF10B981).withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check_circle,
+                    color: Color(0xFF10B981),
+                    size: 30,
+                  ),
                 ),
-                child: const Icon(
-                  Icons.check_circle,
-                  color: Color(0xFF10B981),
-                  size: 30,
+                const SizedBox(height: 16),
+                const Text(
+                  'Success!',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF10B981),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Success!',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF10B981),
+                const SizedBox(height: 8),
+                Text(
+                  'Subscription has been successfully updated for customer $mobile',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey.shade600),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Subscription has been successfully updated for customer $mobile',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey.shade600),
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF10B981),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text('Done'),
               ),
             ],
           ),
-          actions: [
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF10B981),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text('Done'),
-            ),
-          ],
-        ),
-      );
+        );
+      }
     } else if (result == UpdateSubscriptionStatus.unauthorized) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(
@@ -2019,9 +2061,7 @@ class _SubscriptionManagementSheetState
               Icon(Icons.security, color: Colors.white),
               SizedBox(width: 8),
               Expanded(
-                child: Text(
-                  'Your session has expired, relogin is required.',
-                ),
+                child: Text('Your session has expired, relogin is required.'),
               ),
             ],
           ),
@@ -2056,9 +2096,7 @@ class _SubscriptionManagementSheetState
             children: [
               Icon(Icons.error_outline, color: Colors.white),
               SizedBox(width: 8),
-              Text(
-                'Failed to update subscription. Please try again.',
-              ),
+              Text('Failed to update subscription. Please try again.'),
             ],
           ),
           backgroundColor: const Color(0xFFEF4444),
@@ -2069,6 +2107,411 @@ class _SubscriptionManagementSheetState
         ),
       );
     }
+  }
+
+  Future<void> _showGenerateReceiptDialog({
+    required String mobile,
+    required String planType,
+    required String planDuration,
+    required DateTime invoiceDate,
+  }) async {
+    final amountController = TextEditingController();
+    final gstinController = TextEditingController();
+    final addressController = TextEditingController();
+    final businessNameController = TextEditingController();
+
+    final result = await showDialog<Map<String, dynamic>?>(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(0xFF10B981).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.receipt_long, color: Color(0xFF10B981)),
+            ),
+            const SizedBox(width: 12),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Generate Receipt', style: TextStyle(fontSize: 18)),
+                  Text(
+                    'Subscription updated successfully!',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Color(0xFF10B981),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Summary
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildDialogDetailRow('Phone', mobile),
+                    _buildDialogDetailRow('Plan', planType),
+                    _buildDialogDetailRow('Duration', planDuration),
+                    _buildDialogDetailRow(
+                      'Date',
+                      invoiceDate.toString().split(' ')[0],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Amount field (required)
+              const Text(
+                'Amount Paid (in Rupees) *',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: amountController,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'e.g., 299.00',
+                  prefixText: '\u20B9 ',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  helperText: '18% GST auto-calculated for Indian numbers',
+                  helperStyle: TextStyle(
+                    fontSize: 10,
+                    color: Colors.grey.shade500,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Optional fields section
+              ExpansionTile(
+                title: Text(
+                  'Optional Details',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+                tilePadding: EdgeInsets.zero,
+                childrenPadding: const EdgeInsets.only(top: 8),
+                children: [
+                  TextField(
+                    controller: gstinController,
+                    decoration: InputDecoration(
+                      labelText: 'GSTIN',
+                      hintText: 'Enter GSTIN',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: businessNameController,
+                    decoration: InputDecoration(
+                      labelText: 'Business Name',
+                      hintText: 'Enter business name',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: addressController,
+                    maxLines: 2,
+                    decoration: InputDecoration(
+                      labelText: 'Address',
+                      hintText: 'Enter address',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, null),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
+            child: const Text('Skip'),
+          ),
+          ElevatedButton.icon(
+            onPressed: () {
+              final amountText = amountController.text.trim();
+              if (amountText.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please enter the amount')),
+                );
+                return;
+              }
+              final amount = double.tryParse(amountText);
+              if (amount == null || amount <= 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Please enter a valid amount')),
+                );
+                return;
+              }
+              Navigator.pop(context, {
+                'amount': (amount * 100).round(), // Convert to paisa
+                'gstin': gstinController.text.trim(),
+                'address': addressController.text.trim(),
+                'businessName': businessNameController.text.trim(),
+              });
+            },
+            icon: const Icon(Icons.receipt_long, size: 18),
+            label: const Text('Generate'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF10B981),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // Dispose controllers
+    amountController.dispose();
+    gstinController.dispose();
+    addressController.dispose();
+    businessNameController.dispose();
+
+    if (result == null) {
+      // User skipped receipt generation
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white),
+              SizedBox(width: 8),
+              Text('Subscription updated successfully!'),
+            ],
+          ),
+          backgroundColor: const Color(0xFF10B981),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
+      return;
+    }
+
+    // Show loading dialog
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator(
+                strokeWidth: 3,
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Generating Receipt...',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    // Generate the invoice
+    final invoiceResult = await ServerUtils.generateInvoice(
+      phone: mobile,
+      planType: planType,
+      planDuration: convertToDays(
+        int.parse(planDuration.split(" ")[0]),
+        planDuration.split(" ")[1],
+      ),
+      invoiceDate: invoiceDate,
+      amount: result['amount'] as int,
+      gstin: result['gstin']?.isNotEmpty == true ? result['gstin'] : null,
+      address: result['address']?.isNotEmpty == true ? result['address'] : null,
+      businessName: result['businessName']?.isNotEmpty == true
+          ? result['businessName']
+          : null,
+    );
+
+    Navigator.pop(Get.context!); // Close loading dialog
+
+    if (invoiceResult.status == GenerateInvoiceStatus.success) {
+      showDialog(
+        context: Get.context!,
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF10B981).withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.check_circle,
+                  color: Color(0xFF10B981),
+                  size: 30,
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'All Done!',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF10B981),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Subscription updated and Receipt #${invoiceResult.invoice?['invoiceNo'] ?? 'N/A'} generated for $mobile',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.grey.shade600),
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF10B981),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text('Done'),
+            ),
+          ],
+        ),
+      );
+    } else if (invoiceResult.status == GenerateInvoiceStatus.unauthorized) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.security, color: Colors.white),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Session expired. Subscription was updated but receipt generation failed.',
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: const Color(0xFF660011),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
+        SnackBar(
+          content: const Row(
+            children: [
+              Icon(Icons.warning, color: Colors.white),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Subscription updated but receipt generation failed.',
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: const Color(0xFFF59E0B),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
+    }
+  }
+
+  Widget _buildDialogDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 60,
+            child: Text(
+              '$label:',
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildGenerateInvoiceForm() {
@@ -2115,10 +2558,8 @@ class _SubscriptionManagementSheetState
                     ),
                     items: _planTypes
                         .map(
-                          (plan) => DropdownMenuItem(
-                            value: plan,
-                            child: Text(plan),
-                          ),
+                          (plan) =>
+                              DropdownMenuItem(value: plan, child: Text(plan)),
                         )
                         .toList(),
                     onChanged: (value) =>
@@ -2197,7 +2638,9 @@ class _SubscriptionManagementSheetState
                   Icons.currency_rupee,
                   TextFormField(
                     controller: _amountController,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     decoration: InputDecoration(
                       hintText: 'Enter amount (e.g., 299.00)',
                       prefixText: '\u20B9 ',
@@ -2208,7 +2651,8 @@ class _SubscriptionManagementSheetState
                         horizontal: 16,
                         vertical: 12,
                       ),
-                      helperText: 'For Indian numbers, 18% GST will be calculated automatically',
+                      helperText:
+                          'For Indian numbers, 18% GST will be calculated automatically',
                       helperStyle: TextStyle(
                         fontSize: 11,
                         color: Colors.grey.shade500,
@@ -2338,29 +2782,23 @@ class _SubscriptionManagementSheetState
     final phone = _phoneController.text.trim();
     if (phone.isEmpty) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter customer phone number'),
-        ),
+        const SnackBar(content: Text('Please enter customer phone number')),
       );
       return;
     }
 
     final amountText = _amountController.text.trim();
     if (amountText.isEmpty) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter the amount'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        Get.context!,
+      ).showSnackBar(const SnackBar(content: Text('Please enter the amount')));
       return;
     }
 
     final amountInRupees = double.tryParse(amountText);
     if (amountInRupees == null || amountInRupees <= 0) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter a valid amount'),
-        ),
+        const SnackBar(content: Text('Please enter a valid amount')),
       );
       return;
     }
@@ -2374,9 +2812,7 @@ class _SubscriptionManagementSheetState
     final confirmed = await showDialog<bool>(
       context: Get.context!,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Row(
           children: [
             Container(
@@ -2385,10 +2821,7 @@ class _SubscriptionManagementSheetState
                 color: const Color(0xFF10B981).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(
-                Icons.receipt_long,
-                color: Color(0xFF10B981),
-              ),
+              child: const Icon(Icons.receipt_long, color: Color(0xFF10B981)),
             ),
             const SizedBox(width: 12),
             const Text('Generate Invoice'),
@@ -2412,7 +2845,10 @@ class _SubscriptionManagementSheetState
                   _buildDetailRow('Phone', phone),
                   _buildDetailRow('Plan', _selectedPlan),
                   _buildDetailRow('Duration', _selectedDuration),
-                  _buildDetailRow('Date', _invoiceDate.toString().split(' ')[0]),
+                  _buildDetailRow(
+                    'Date',
+                    _invoiceDate.toString().split(' ')[0],
+                  ),
                   _buildDetailRow('Amount', '\u20B9 $amountText'),
                   if (_gstinController.text.isNotEmpty)
                     _buildDetailRow('GSTIN', _gstinController.text),
@@ -2426,9 +2862,7 @@ class _SubscriptionManagementSheetState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.grey.shade600,
-            ),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
             child: const Text('Cancel'),
           ),
           ElevatedButton.icon(
@@ -2454,9 +2888,7 @@ class _SubscriptionManagementSheetState
       context: Get.context!,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         content: const Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -2465,18 +2897,13 @@ class _SubscriptionManagementSheetState
               height: 50,
               child: CircularProgressIndicator(
                 strokeWidth: 3,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Color(0xFF10B981),
-                ),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
               ),
             ),
             SizedBox(height: 20),
             Text(
               'Generating Invoice...',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -2493,7 +2920,9 @@ class _SubscriptionManagementSheetState
       invoiceDate: _invoiceDate,
       amount: amountInPaisa,
       gstin: _gstinController.text.isNotEmpty ? _gstinController.text : null,
-      address: _addressController.text.isNotEmpty ? _addressController.text : null,
+      address: _addressController.text.isNotEmpty
+          ? _addressController.text
+          : null,
       businessName: _businessNameController.text.isNotEmpty
           ? _businessNameController.text
           : null,
@@ -2623,19 +3052,13 @@ class _SubscriptionManagementSheetState
             width: 70,
             child: Text(
               '$label:',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey.shade600,
-              ),
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
             ),
           ),
           Expanded(
             child: Text(
               value,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
             ),
           ),
         ],
@@ -2878,171 +3301,167 @@ class _SubscriptionManagementSheetState
                   ),
                 )
               : _invoices.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.receipt_long,
-                            size: 48,
-                            color: Colors.grey.shade300,
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'No invoices found',
-                            style: TextStyle(
-                              color: Colors.grey.shade500,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Try adjusting the date filter',
-                            style: TextStyle(
-                              color: Colors.grey.shade400,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.receipt_long,
+                        size: 48,
+                        color: Colors.grey.shade300,
                       ),
-                    )
-                  : Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade200),
-                        borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(12),
+                      const SizedBox(height: 16),
+                      Text(
+                        'No invoices found',
+                        style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 16,
                         ),
                       ),
-                      child: ListView.separated(
-                        itemCount: _invoices.length,
-                        separatorBuilder: (context, index) => Divider(
-                          height: 1,
-                          color: Colors.grey.shade200,
+                      const SizedBox(height: 8),
+                      Text(
+                        'Try adjusting the date filter',
+                        style: TextStyle(
+                          color: Colors.grey.shade400,
+                          fontSize: 12,
                         ),
-                        itemBuilder: (context, index) {
-                          final invoice = _invoices[index];
-                          return Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                            color: index % 2 == 0
-                                ? Colors.white
-                                : Colors.grey.shade50,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    '#${invoice['invoiceNo'] ?? '-'}',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    invoice['phone'] ?? '-',
-                                    style: const TextStyle(fontSize: 12),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 2,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: _getPlanColor(invoice['plan'])
-                                          .withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: Text(
-                                      invoice['plan'] ?? '-',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                        color: _getPlanColor(invoice['plan']),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(
-                                    '${invoice['days'] ?? '-'}',
-                                    style: const TextStyle(fontSize: 12),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    '${invoice['currency'] ?? 'INR'} ${_formatAmount(invoice['amount'])}',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    _formatDate(invoice['time']),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () =>
-                                            _showReceiptPreview(invoice),
-                                        icon: const Icon(
-                                          Icons.visibility,
-                                          size: 18,
-                                        ),
-                                        tooltip: 'Preview',
-                                        color: const Color(0xFF3B82F6),
-                                        constraints: const BoxConstraints(
-                                          minWidth: 32,
-                                          minHeight: 32,
-                                        ),
-                                        padding: EdgeInsets.zero,
-                                      ),
-                                      IconButton(
-                                        onPressed: () =>
-                                            _downloadSingleReceipt(invoice),
-                                        icon: const Icon(
-                                          Icons.download,
-                                          size: 18,
-                                        ),
-                                        tooltip: 'Download',
-                                        color: const Color(0xFF10B981),
-                                        constraints: const BoxConstraints(
-                                          minWidth: 32,
-                                          minHeight: 32,
-                                        ),
-                                        padding: EdgeInsets.zero,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
                       ),
+                    ],
+                  ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade200),
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(12),
                     ),
+                  ),
+                  child: ListView.separated(
+                    itemCount: _invoices.length,
+                    separatorBuilder: (context, index) =>
+                        Divider(height: 1, color: Colors.grey.shade200),
+                    itemBuilder: (context, index) {
+                      final invoice = _invoices[index];
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        color: index % 2 == 0
+                            ? Colors.white
+                            : Colors.grey.shade50,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                '#${invoice['invoiceNo'] ?? '-'}',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                invoice['phone'] ?? '-',
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: _getPlanColor(
+                                    invoice['plan'],
+                                  ).withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  invoice['plan'] ?? '-',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: _getPlanColor(invoice['plan']),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                '${invoice['days'] ?? '-'}',
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                '${invoice['currency'] ?? 'INR'} ${_formatAmount(invoice['amount'])}',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                _formatDate(invoice['time']),
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade600,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () =>
+                                        _showReceiptPreview(invoice),
+                                    icon: const Icon(
+                                      Icons.visibility,
+                                      size: 18,
+                                    ),
+                                    tooltip: 'Preview',
+                                    color: const Color(0xFF3B82F6),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 32,
+                                      minHeight: 32,
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                  IconButton(
+                                    onPressed: () =>
+                                        _downloadSingleReceipt(invoice),
+                                    icon: const Icon(Icons.download, size: 18),
+                                    tooltip: 'Download',
+                                    color: const Color(0xFF10B981),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 32,
+                                      minHeight: 32,
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
         ),
 
         // Summary row
@@ -3102,10 +3521,7 @@ class _SubscriptionManagementSheetState
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(16),
         build: (pw.Context context) => [
-          buildSubscriptionReceiptTemplate1(
-            invoice,
-            logo.buffer.asUint8List(),
-          ),
+          buildSubscriptionReceiptTemplate1(invoice, logo.buffer.asUint8List()),
         ],
       ),
     );
@@ -3116,9 +3532,7 @@ class _SubscriptionManagementSheetState
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.height * 0.85,
@@ -3200,9 +3614,7 @@ class _SubscriptionManagementSheetState
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -3296,8 +3708,11 @@ class _SubscriptionManagementSheetState
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.calendar_today,
-                            size: 16, color: Color(0xFF10B981)),
+                        const Icon(
+                          Icons.calendar_today,
+                          size: 16,
+                          color: Color(0xFF10B981),
+                        ),
                         const SizedBox(width: 8),
                         Text(
                           _pendingReceiptsStartDate.toString().split(' ')[0],
@@ -3312,10 +3727,7 @@ class _SubscriptionManagementSheetState
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
                   'to',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                 ),
               ),
               Expanded(
@@ -3339,8 +3751,11 @@ class _SubscriptionManagementSheetState
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.calendar_today,
-                            size: 16, color: Color(0xFF10B981)),
+                        const Icon(
+                          Icons.calendar_today,
+                          size: 16,
+                          color: Color(0xFF10B981),
+                        ),
                         const SizedBox(width: 8),
                         Text(
                           _pendingReceiptsEndDate.toString().split(' ')[0],
@@ -3353,15 +3768,18 @@ class _SubscriptionManagementSheetState
               ),
               const SizedBox(width: 12),
               ElevatedButton.icon(
-                onPressed: _isLoadingPendingReceipts ? null : _fetchPendingReceipts,
+                onPressed: _isLoadingPendingReceipts
+                    ? null
+                    : _fetchPendingReceipts,
                 icon: _isLoadingPendingReceipts
                     ? const SizedBox(
                         width: 16,
                         height: 16,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       )
                     : const Icon(Icons.search, size: 18),
@@ -3369,8 +3787,10 @@ class _SubscriptionManagementSheetState
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF10B981),
                   foregroundColor: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -3391,10 +3811,7 @@ class _SubscriptionManagementSheetState
                 const SizedBox(width: 8),
                 Text(
                   '${_pendingReceiptsUsers.length} user(s) with pending receipts',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
               ],
             ),
@@ -3405,170 +3822,182 @@ class _SubscriptionManagementSheetState
           child: _isLoadingPendingReceipts
               ? const Center(
                   child: CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFF10B981),
+                    ),
                   ),
                 )
               : _pendingReceiptsUsers.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.pending_actions,
-                              size: 48, color: Colors.grey.shade400),
-                          const SizedBox(height: 16),
-                          Text(
-                            'No pending receipts found',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey.shade600,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Select a date and click Search',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey.shade500,
-                            ),
-                          ),
-                        ],
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.pending_actions,
+                        size: 48,
+                        color: Colors.grey.shade400,
                       ),
-                    )
-                  : SingleChildScrollView(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade200),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          children: [
-                            // Table header
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
-                                borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(8)),
-                              ),
-                              child: const Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      'Phone',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      'Name',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      'Plan',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      'Days',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 80),
-                                ],
-                              ),
-                            ),
-                            // Table rows
-                            ..._pendingReceiptsUsers.map((user) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 10),
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(color: Colors.grey.shade200),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Text(
-                                        user['phone'] ?? '-',
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Text(
-                                        user['name'] ?? '-',
-                                        style: const TextStyle(fontSize: 12),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Text(
-                                        user['subplan'] ?? '-',
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Text(
-                                        '${user['subdays'] ?? '-'}',
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 80,
-                                      child: ElevatedButton(
-                                        onPressed: () => _prefillAndSwitchToGenerate(user),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(0xFF10B981),
-                                          foregroundColor: Colors.white,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12, vertical: 6),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(6),
-                                          ),
-                                          minimumSize: Size.zero,
-                                          tapTargetSize:
-                                              MaterialTapTargetSize.shrinkWrap,
-                                        ),
-                                        child: const Text(
-                                          'Generate',
-                                          style: TextStyle(fontSize: 11),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }),
-                          ],
+                      const SizedBox(height: 16),
+                      Text(
+                        'No pending receipts found',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade600,
                         ),
                       ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Select a date and click Search',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade200),
+                      borderRadius: BorderRadius.circular(8),
                     ),
+                    child: Column(
+                      children: [
+                        // Table header
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(8),
+                            ),
+                          ),
+                          child: const Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  'Phone',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  'Plan',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  'Days',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 80),
+                            ],
+                          ),
+                        ),
+                        // Table rows
+                        ..._pendingReceiptsUsers.map((user) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(color: Colors.grey.shade200),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    user['phone'] ?? '-',
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    user['name'] ?? '-',
+                                    style: const TextStyle(fontSize: 12),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    user['subplan'] ?? '-',
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    '${user['subdays'] ?? '-'}',
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 80,
+                                  child: ElevatedButton(
+                                    onPressed: () =>
+                                        _prefillAndSwitchToGenerate(user),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF10B981),
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 6,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      minimumSize: Size.zero,
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                    ),
+                                    child: const Text(
+                                      'Generate',
+                                      style: TextStyle(fontSize: 11),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                ),
         ),
       ],
     );
