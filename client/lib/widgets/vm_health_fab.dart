@@ -201,7 +201,7 @@ class _StylishHealthButtonState extends State<_StylishHealthButton>
                               height: 28,
                               child: CircularProgressIndicator(
                                 strokeWidth: 3,
-                                color: const Color(0xFF111827),
+                                color: Color(0xFF111827),
                               ),
                             )
                           : Stack(
@@ -212,7 +212,7 @@ class _StylishHealthButtonState extends State<_StylishHealthButton>
                                   scale: 1.1,
                                   child: const Icon(
                                     Icons.monitor_heart_outlined,
-                                    color: const Color(0xFF111827),
+                                    color: Color(0xFF111827),
                                     size: 28,
                                   ),
                                 ),

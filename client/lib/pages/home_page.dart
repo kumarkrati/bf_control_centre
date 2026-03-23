@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.security, color: const Color(0xFF111827)),
+              const Icon(Icons.security, color: Color(0xFF111827)),
               const SizedBox(width: 8),
               const Expanded(
                 child: Text('Your session has expired, relogin is required.'),
@@ -289,7 +289,7 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.info_outline, color: const Color(0xFF111827)),
+              const Icon(Icons.info_outline, color: Color(0xFF111827)),
               const SizedBox(width: 8),
               const Expanded(child: Text('User is already registered.')),
             ],
@@ -306,7 +306,7 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.error_outline, color: const Color(0xFF111827)),
+              const Icon(Icons.error_outline, color: Color(0xFF111827)),
               const SizedBox(width: 8),
               const Text('Failed to create account. Please try again.'),
             ],
@@ -1138,7 +1138,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                   SnackBar(
                     content: Row(
                       children: [
-                        const Icon(Icons.security, color: const Color(0xFF111827)),
+                        const Icon(Icons.security, color: Color(0xFF111827)),
                         const SizedBox(width: 8),
                         const Expanded(
                           child: Text(
@@ -1238,7 +1238,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                   SnackBar(
                     content: Row(
                       children: [
-                        const Icon(Icons.security, color: const Color(0xFF111827)),
+                        const Icon(Icons.security, color: Color(0xFF111827)),
                         const SizedBox(width: 8),
                         const Expanded(
                           child: Text(
@@ -1441,7 +1441,7 @@ class _SubscriptionManagementSheetState
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.security, color: const Color(0xFF111827)),
+                Icon(Icons.security, color: Color(0xFF111827)),
                 SizedBox(width: 8),
                 Expanded(
                   child: Text('Your session has expired, relogin is required.'),
@@ -1460,7 +1460,7 @@ class _SubscriptionManagementSheetState
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.error_outline, color: const Color(0xFF111827)),
+                Icon(Icons.error_outline, color: Color(0xFF111827)),
                 SizedBox(width: 8),
                 Text('Failed to fetch invoices.'),
               ],
@@ -1491,7 +1491,7 @@ class _SubscriptionManagementSheetState
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.security, color: const Color(0xFF111827)),
+                Icon(Icons.security, color: Color(0xFF111827)),
                 SizedBox(width: 8),
                 Expanded(
                   child: Text('Your session has expired, relogin is required.'),
@@ -1510,7 +1510,7 @@ class _SubscriptionManagementSheetState
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.error_outline, color: const Color(0xFF111827)),
+                Icon(Icons.error_outline, color: Color(0xFF111827)),
                 SizedBox(width: 8),
                 Text('Failed to fetch pending receipts.'),
               ],
@@ -2194,7 +2194,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.security, color: const Color(0xFF111827)),
+              Icon(Icons.security, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(
                 child: Text('Your session has expired, relogin is required.'),
@@ -2213,7 +2213,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.info_outline, color: const Color(0xFF111827)),
+              Icon(Icons.info_outline, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(child: Text('User not registered.')),
             ],
@@ -2230,7 +2230,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.error_outline, color: const Color(0xFF111827)),
+              Icon(Icons.error_outline, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Text('Failed to update subscription. Please try again.'),
             ],
@@ -2465,7 +2465,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.check_circle, color: const Color(0xFF111827)),
+              Icon(Icons.check_circle, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Text('Subscription updated successfully!'),
             ],
@@ -2586,7 +2586,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.security, color: const Color(0xFF111827)),
+              Icon(Icons.security, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -2607,7 +2607,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.warning, color: const Color(0xFF111827)),
+              Icon(Icons.warning, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -3127,7 +3127,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.info_outline, color: const Color(0xFF111827)),
+              Icon(Icons.info_outline, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(child: Text('User not registered.')),
             ],
@@ -3144,7 +3144,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.security, color: const Color(0xFF111827)),
+              Icon(Icons.security, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(
                 child: Text('Your session has expired, relogin is required.'),
@@ -3163,7 +3163,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.error_outline, color: const Color(0xFF111827)),
+              Icon(Icons.error_outline, color: Color(0xFF111827)),
               SizedBox(width: 8),
               Text('Failed to generate invoice. Please try again.'),
             ],
@@ -4473,7 +4473,7 @@ class ShopManagementSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: const Color(0xFF111827),
+        color: Color(0xFF111827),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: SingleChildScrollView(
@@ -4765,7 +4765,7 @@ class ShopManagementSheet extends StatelessWidget {
                     SnackBar(
                       content: Row(
                         children: [
-                          const Icon(Icons.security, color: const Color(0xFF111827)),
+                          const Icon(Icons.security, color: Color(0xFF111827)),
                           const SizedBox(width: 8),
                           const Expanded(
                             child: Text(
@@ -5097,7 +5097,7 @@ class ShopManagementSheet extends StatelessWidget {
                     SnackBar(
                       content: Row(
                         children: [
-                          const Icon(Icons.security, color: const Color(0xFF111827)),
+                          const Icon(Icons.security, color: Color(0xFF111827)),
                           const SizedBox(width: 8),
                           const Expanded(
                             child: Text(
@@ -5230,7 +5230,7 @@ class CustomerRetentionSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: const Color(0xFF111827),
+        color: Color(0xFF111827),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(

@@ -39,7 +39,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.security, color: const Color(0xFF111827)),
+                const Icon(Icons.security, color: Color(0xFF111827)),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Text('Your session has expired, relogin is required.'),
@@ -97,7 +97,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.check_circle, color: const Color(0xFF111827)),
+                const Icon(Icons.check_circle, color: Color(0xFF111827)),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Text('CSV file downloaded successfully!'),
@@ -118,7 +118,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: const Color(0xFF111827)),
+                const Icon(Icons.error_outline, color: Color(0xFF111827)),
                 const SizedBox(width: 8),
                 const Expanded(child: Text('Failed to download CSV file')),
               ],
@@ -140,7 +140,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
       padding: const EdgeInsets.all(24),
       height: MediaQuery.of(context).size.height * 0.85,
       decoration: const BoxDecoration(
-        color: const Color(0xFF111827),
+        color: Color(0xFF111827),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(

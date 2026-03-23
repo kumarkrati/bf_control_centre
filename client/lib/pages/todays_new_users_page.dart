@@ -59,7 +59,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.security, color: const Color(0xFF111827)),
+                const Icon(Icons.security, color: Color(0xFF111827)),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Text('Your session has expired, relogin is required.'),
@@ -146,7 +146,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
-                                color: const Color(0xFF111827),
+                                color: Color(0xFF111827),
                               ),
                             ),
                             const SizedBox(height: 2),
@@ -164,7 +164,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                       ),
                       IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.close, color: const Color(0xFF111827)),
+                        icon: const Icon(Icons.close, color: Color(0xFF111827)),
                         style: IconButton.styleFrom(
                           backgroundColor: const Color(0xFF111827).withOpacity(0.2),
                         ),
@@ -424,7 +424,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.warning_amber_rounded, color: const Color(0xFF111827), size: 20),
+              Icon(Icons.warning_amber_rounded, color: Color(0xFF111827), size: 20),
               SizedBox(width: 8),
               Text('Please enter the sales staff name'),
             ],
@@ -504,7 +504,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.check_circle, color: const Color(0xFF111827), size: 20),
+              const Icon(Icons.check_circle, color: Color(0xFF111827), size: 20),
               const SizedBox(width: 8),
               Text(
                 isEditing
@@ -526,7 +526,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.error_outline, color: const Color(0xFF111827), size: 20),
+              const Icon(Icons.error_outline, color: Color(0xFF111827), size: 20),
               const SizedBox(width: 8),
               Text(
                 isEditing
