@@ -39,7 +39,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.security, color: Colors.white),
+                const Icon(Icons.security, color: const Color(0xFF111827)),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Text('Your session has expired, relogin is required.'),
@@ -97,7 +97,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.check_circle, color: Colors.white),
+                const Icon(Icons.check_circle, color: const Color(0xFF111827)),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Text('CSV file downloaded successfully!'),
@@ -118,12 +118,12 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline, color: const Color(0xFF111827)),
                 const SizedBox(width: 8),
                 const Expanded(child: Text('Failed to download CSV file')),
               ],
             ),
-            backgroundColor: const Color(0xFFEF4444),
+            backgroundColor: const Color(0xFFFF4757),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -140,7 +140,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
       padding: const EdgeInsets.all(24),
       height: MediaQuery.of(context).size.height * 0.85,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF111827),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
@@ -149,7 +149,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: const Color(0xFF1E293B),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -159,12 +159,12 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF3B82F6).withOpacity(0.1),
+                  color: const Color(0xFF00D4FF).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.cloud_download,
-                  color: Color(0xFF3B82F6),
+                  color: Color(0xFF00D4FF),
                   size: 20,
                 ),
               ),
@@ -175,7 +175,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
               ),
@@ -184,7 +184,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                   onPressed: _downloadAsCSV,
                   icon: const Icon(Icons.file_download),
                   tooltip: 'Download as CSV',
-                  color: Colors.white,
+                  color: const Color(0xFF111827),
                 ),
             ],
           ),
@@ -250,7 +250,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                   : const Icon(Icons.search, size: 20),
               label: Text(_isLoading ? 'Loading...' : 'Fetch Users'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF3B82F6),
+                backgroundColor: const Color(0xFF00D4FF),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -271,13 +271,13 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
+                          color: const Color(0xFF0F1629),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           Icons.inbox_outlined,
                           size: 60,
-                          color: Colors.grey.shade400,
+                          color: const Color(0xFF475569),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -286,7 +286,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Colors.grey.shade700,
+                          color: const Color(0xFF94A3B8),
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -294,7 +294,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                         'No users downloaded the app in this timeline',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey.shade500,
+                          color: const Color(0xFF94A3B8),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -312,7 +312,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                         const Icon(
                           Icons.people,
                           size: 18,
-                          color: Color(0xFF3B82F6),
+                          color: Color(0xFF00D4FF),
                         ),
                         const SizedBox(width: 8),
                         Text(
@@ -320,7 +320,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF172a43),
+                            color: Color(0xFFE2E8F0),
                           ),
                         ),
                       ],
@@ -369,7 +369,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
             const Icon(
               Icons.calendar_today,
               size: 14,
-              color: Color(0xFF3B82F6),
+              color: Color(0xFF00D4FF),
             ),
             const SizedBox(width: 6),
             Text(
@@ -377,7 +377,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF172a43),
+                color: Color(0xFFE2E8F0),
               ),
             ),
           ],
@@ -389,7 +389,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
           child: Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade300),
+              border: Border.all(color: const Color(0xFF1E293B)),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -402,7 +402,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Icon(Icons.arrow_drop_down, color: Colors.grey.shade600),
+                Icon(Icons.arrow_drop_down, color: const Color(0xFF94A3B8)),
               ],
             ),
           ),
@@ -419,21 +419,21 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF111827),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: const Color(0xFF1E293B)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: const Color(0xFF3B82F6).withOpacity(0.1),
+              color: const Color(0xFF00D4FF).withOpacity(0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: const Icon(
               Icons.person,
-              color: Color(0xFF3B82F6),
+              color: Color(0xFF00D4FF),
               size: 16,
             ),
           ),
@@ -447,20 +447,20 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Row(
                   children: [
-                    Icon(Icons.store, size: 12, color: Colors.grey.shade600),
+                    Icon(Icons.store, size: 12, color: const Color(0xFF94A3B8)),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
                         shop,
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.grey.shade600,
+                          color: const Color(0xFF94A3B8),
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -476,7 +476,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF172a43),
+              color: Color(0xFFE2E8F0),
             ),
           ),
           IconButton(
@@ -498,7 +498,7 @@ class _DownloadedUsersSheetState extends State<DownloadedUsersSheet> {
             },
             icon: const Icon(Icons.copy, size: 16),
             tooltip: 'Copy phone number',
-            color: const Color(0xFF3B82F6),
+            color: const Color(0xFF00D4FF),
             padding: const EdgeInsets.all(6),
             constraints: const BoxConstraints(),
           ),

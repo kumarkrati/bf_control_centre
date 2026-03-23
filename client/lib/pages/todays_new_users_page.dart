@@ -59,7 +59,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.security, color: Colors.white),
+                const Icon(Icons.security, color: const Color(0xFF111827)),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Text('Your session has expired, relogin is required.'),
@@ -94,7 +94,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
       builder: (context) => Container(
         margin: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFF111827),
           borderRadius: BorderRadius.circular(24),
         ),
         child: Padding(
@@ -112,7 +112,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: isEditing
-                          ? [const Color(0xFF3B82F6), const Color(0xFF1D4ED8)]
+                          ? [const Color(0xFF00D4FF), const Color(0xFF1D4ED8)]
                           : [const Color(0xFFF59E0B), const Color(0xFFD97706)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -127,12 +127,12 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: const Color(0xFF111827).withOpacity(0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
                           isEditing ? Icons.edit : Icons.person_add,
-                          color: Colors.white,
+                          color: const Color(0xFF111827),
                           size: 24,
                         ),
                       ),
@@ -146,7 +146,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                                color: const Color(0xFF111827),
                               ),
                             ),
                             const SizedBox(height: 2),
@@ -156,7 +156,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                                   : 'Assign a sales staff to this customer',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Colors.white.withOpacity(0.85),
+                                color: const Color(0xFF111827).withOpacity(0.85),
                               ),
                             ),
                           ],
@@ -164,9 +164,9 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                       ),
                       IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.close, color: Colors.white),
+                        icon: const Icon(Icons.close, color: const Color(0xFF111827)),
                         style: IconButton.styleFrom(
-                          backgroundColor: Colors.white.withOpacity(0.2),
+                          backgroundColor: const Color(0xFF111827).withOpacity(0.2),
                         ),
                       ),
                     ],
@@ -179,9 +179,9 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade50,
+                      color: const Color(0xFF0F1629),
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.grey.shade200),
+                      border: Border.all(color: const Color(0xFF1E293B)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,7 +191,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                             Icon(
                               Icons.person_outline,
                               size: 16,
-                              color: Colors.grey.shade600,
+                              color: const Color(0xFF94A3B8),
                             ),
                             const SizedBox(width: 6),
                             Text(
@@ -199,7 +199,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.grey.shade600,
+                                color: const Color(0xFF94A3B8),
                               ),
                             ),
                           ],
@@ -253,24 +253,24 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                           prefixIcon: Icon(
                             Icons.support_agent,
                             color: isEditing
-                                ? const Color(0xFF3B82F6)
+                                ? const Color(0xFF00D4FF)
                                 : const Color(0xFFF59E0B),
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade50,
+                          fillColor: const Color(0xFF0F1629),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.grey.shade300),
+                            borderSide: BorderSide(color: const Color(0xFF1E293B)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.grey.shade300),
+                            borderSide: BorderSide(color: const Color(0xFF1E293B)),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide(
                               color: isEditing
-                                  ? const Color(0xFF3B82F6)
+                                  ? const Color(0xFF00D4FF)
                                   : const Color(0xFFF59E0B),
                               width: 2,
                             ),
@@ -289,25 +289,25 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                             child: Icon(
                               Icons.note_alt_outlined,
                               color: isEditing
-                                  ? const Color(0xFF3B82F6)
+                                  ? const Color(0xFF00D4FF)
                                   : const Color(0xFFF59E0B),
                             ),
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade50,
+                          fillColor: const Color(0xFF0F1629),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.grey.shade300),
+                            borderSide: BorderSide(color: const Color(0xFF1E293B)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.grey.shade300),
+                            borderSide: BorderSide(color: const Color(0xFF1E293B)),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide(
                               color: isEditing
-                                  ? const Color(0xFF3B82F6)
+                                  ? const Color(0xFF00D4FF)
                                   : const Color(0xFFF59E0B),
                               width: 2,
                             ),
@@ -329,7 +329,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                           onPressed: () => Navigator.pop(context),
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 14),
-                            side: BorderSide(color: Colors.grey.shade300),
+                            side: BorderSide(color: const Color(0xFF1E293B)),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -337,7 +337,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                           child: Text(
                             'Cancel',
                             style: TextStyle(
-                              color: Colors.grey.shade700,
+                              color: const Color(0xFF94A3B8),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -358,7 +358,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                           label: Text(isEditing ? 'Save Changes' : 'Assign'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: isEditing
-                                ? const Color(0xFF3B82F6)
+                                ? const Color(0xFF00D4FF)
                                 : const Color(0xFFF59E0B),
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 14),
@@ -384,7 +384,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
       IconData icon, String label, String value, bool isEmpty) {
     return Row(
       children: [
-        Icon(icon, size: 18, color: const Color(0xFF3B82F6)),
+        Icon(icon, size: 18, color: const Color(0xFF00D4FF)),
         const SizedBox(width: 10),
         SizedBox(
           width: 50,
@@ -392,7 +392,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
             label,
             style: TextStyle(
               fontSize: 13,
-              color: Colors.grey.shade600,
+              color: const Color(0xFF94A3B8),
             ),
           ),
         ),
@@ -403,7 +403,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: isEmpty ? Colors.grey.shade500 : const Color(0xFF172a43),
+              color: isEmpty ? const Color(0xFF94A3B8) : const Color(0xFFE2E8F0),
               fontStyle: isEmpty ? FontStyle.italic : FontStyle.normal,
             ),
           ),
@@ -424,12 +424,12 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.warning_amber_rounded, color: Colors.white, size: 20),
+              Icon(Icons.warning_amber_rounded, color: const Color(0xFF111827), size: 20),
               SizedBox(width: 8),
               Text('Please enter the sales staff name'),
             ],
           ),
-          backgroundColor: const Color(0xFFEF4444),
+          backgroundColor: const Color(0xFFFF4757),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -449,7 +449,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFF111827),
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
@@ -469,7 +469,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                   strokeWidth: 3,
                   valueColor: AlwaysStoppedAnimation<Color>(
                     isEditing
-                        ? const Color(0xFF3B82F6)
+                        ? const Color(0xFF00D4FF)
                         : const Color(0xFFF59E0B),
                   ),
                 ),
@@ -480,7 +480,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF172a43),
+                  color: Color(0xFFE2E8F0),
                 ),
               ),
             ],
@@ -504,7 +504,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.check_circle, color: Colors.white, size: 20),
+              const Icon(Icons.check_circle, color: const Color(0xFF111827), size: 20),
               const SizedBox(width: 8),
               Text(
                 isEditing
@@ -526,7 +526,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.error_outline, color: Colors.white, size: 20),
+              const Icon(Icons.error_outline, color: const Color(0xFF111827), size: 20),
               const SizedBox(width: 8),
               Text(
                 isEditing
@@ -535,7 +535,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
               ),
             ],
           ),
-          backgroundColor: const Color(0xFFEF4444),
+          backgroundColor: const Color(0xFFFF4757),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -548,7 +548,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: const Color(0xFF0A0E1A),
       appBar: AppBar(
         title: const Text("Today's New Users"),
         actions: [
@@ -601,7 +601,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        Color(0xFF3B82F6),
+                        Color(0xFF00D4FF),
                       ),
                     ),
                   )
@@ -615,7 +615,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
           // Stats bar
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            color: Colors.white,
+            color: const Color(0xFF111827),
             child: Row(
               children: [
                 const Icon(Icons.people, size: 20, color: Color(0xFF10B981)),
@@ -627,19 +627,19 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
                 const Spacer(),
                 if (_users != null)
                   Text(
                     '${_users!.where((u) => u['isAssigned'] == true).length} assigned',
-                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                    style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
                   ),
                 const SizedBox(width: 16),
                 Text(
                   'Auto-refresh: 30s',
-                  style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+                  style: TextStyle(fontSize: 11, color: const Color(0xFF94A3B8)),
                 ),
               ],
             ),
@@ -670,13 +670,13 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: const Color(0xFF0F1629),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.inbox_outlined,
                 size: 60,
-                color: Colors.grey.shade400,
+                color: const Color(0xFF475569),
               ),
             ),
             const SizedBox(height: 16),
@@ -685,13 +685,13 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: Colors.grey.shade700,
+                color: const Color(0xFF94A3B8),
               ),
             ),
             const SizedBox(height: 8),
             Text(
               'New users who sign up today will appear here',
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+              style: TextStyle(fontSize: 14, color: const Color(0xFF94A3B8)),
               textAlign: TextAlign.center,
             ),
           ],
@@ -707,7 +707,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
       children: [
         // Table header
         Container(
-          color: Colors.grey.shade100,
+          color: const Color(0xFF0F1629),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           child: Row(
             children: [
@@ -778,7 +778,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
           child: ListView.separated(
             itemCount: _users!.length,
             separatorBuilder: (context, index) =>
-                Divider(height: 1, color: Colors.grey.shade200),
+                Divider(height: 1, color: const Color(0xFF1E293B)),
             itemBuilder: (context, index) {
               final user = _users![index];
               return _buildTableRow(user, index + 1);
@@ -799,7 +799,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-      color: Colors.white,
+      color: const Color(0xFF111827),
       child: Row(
         children: [
           // Row number
@@ -809,7 +809,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
               '$rowNumber',
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Colors.grey.shade600,
+                color: const Color(0xFF94A3B8),
               ),
               textAlign: TextAlign.center,
             ),
@@ -858,8 +858,8 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: name.isEmpty
-                    ? Colors.grey.shade500
-                    : const Color(0xFF172a43),
+                    ? const Color(0xFF94A3B8)
+                    : const Color(0xFFE2E8F0),
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -871,8 +871,8 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
               shop.isEmpty ? 'Unnamed' : shop,
               style: TextStyle(
                 color: shop.isEmpty
-                    ? Colors.grey.shade500
-                    : const Color(0xFF172a43),
+                    ? const Color(0xFF94A3B8)
+                    : const Color(0xFFE2E8F0),
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -889,7 +889,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                           mobile,
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF172a43),
+                            color: Color(0xFFE2E8F0),
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -915,7 +915,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                         child: const Icon(
                           Icons.copy,
                           size: 16,
-                          color: Color(0xFF3B82F6),
+                          color: Color(0xFF00D4FF),
                         ),
                       ),
                     ],
@@ -987,7 +987,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
               assignedTo.isEmpty ? '-' : assignedTo,
               style: TextStyle(
                 color: assignedTo.isEmpty
-                    ? Colors.grey.shade400
+                    ? const Color(0xFF475569)
                     : const Color(0xFF10B981),
                 fontWeight: assignedTo.isEmpty
                     ? FontWeight.normal
@@ -1003,8 +1003,8 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
               notes.isEmpty ? '-' : notes,
               style: TextStyle(
                 color: notes.isEmpty
-                    ? Colors.grey.shade400
-                    : Colors.grey.shade700,
+                    ? const Color(0xFF475569)
+                    : const Color(0xFF94A3B8),
                 fontStyle: notes.isEmpty ? FontStyle.normal : FontStyle.italic,
                 fontSize: 13,
               ),
@@ -1020,7 +1020,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                 onPressed: () => _showAssignDialog(user),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isAssigned
-                      ? const Color(0xFF3B82F6)
+                      ? const Color(0xFF00D4FF)
                       : const Color(0xFFF59E0B),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(

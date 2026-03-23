@@ -47,35 +47,40 @@ class _SplashState extends State<Splash> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF172a43),
-          brightness: Brightness.light,
-        ).copyWith(surface: Colors.white, background: Colors.white),
-        scaffoldBackgroundColor: const Color(0xFFF8F9FA),
-        textTheme: GoogleFonts.poppinsTextTheme(),
+          seedColor: const Color(0xFF00D4FF),
+          brightness: Brightness.dark,
+        ).copyWith(
+          surface: const Color(0xFF111827),
+          background: const Color(0xFF0A0E1A),
+        ),
+        scaffoldBackgroundColor: const Color(0xFF0A0E1A),
+        textTheme: GoogleFonts.poppinsTextTheme(
+          ThemeData.dark().textTheme,
+        ),
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: const Color(0xFF172a43),
+          backgroundColor: const Color(0xFF0F1629),
+          foregroundColor: const Color(0xFFE2E8F0),
           elevation: 0,
           centerTitle: true,
           titleTextStyle: GoogleFonts.poppins(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: const Color(0xFF172a43),
+            color: const Color(0xFFE2E8F0),
           ),
         ),
         cardTheme: CardThemeData(
-          elevation: 2,
+          elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
           ),
-          color: Colors.white,
+          color: const Color(0xFF111827),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             elevation: 0,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
             ),
             textStyle: GoogleFonts.poppins(
               fontSize: 14,
@@ -85,28 +90,31 @@ class _SplashState extends State<Splash> {
         ),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFF1E293B)),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFF1E293B)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color(0xFF172a43), width: 2),
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFF00D4FF), width: 2),
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: const Color(0xFF0F1629),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 14,
           ),
+          labelStyle: const TextStyle(color: Color(0xFF94A3B8)),
+          hintStyle: const TextStyle(color: Color(0xFF475569)),
+          prefixIconColor: const Color(0xFF00D4FF),
         ),
         useMaterial3: true,
       ),
       home: Scaffold(
-        backgroundColor: const Color(0xFFF8F9FA),
+        backgroundColor: const Color(0xFF0A0E1A),
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -114,11 +122,19 @@ class _SplashState extends State<Splash> {
               Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: const Color(0xFF111827),
                       borderRadius: BorderRadius.circular(24),
+                      border: Border.all(
+                        color: const Color(0xFF00D4FF).withOpacity(0.3),
+                      ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: const Color(0xFF00D4FF).withOpacity(0.15),
+                          blurRadius: 30,
+                          spreadRadius: 2,
+                        ),
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
                           blurRadius: 20,
                           offset: const Offset(0, 8),
                         ),
@@ -133,14 +149,17 @@ class _SplashState extends State<Splash> {
                     ),
                   )
                   .animate(onComplete: (e) => e.repeat())
-                  .shimmer(duration: const Duration(seconds: 2)),
+                  .shimmer(
+                    duration: const Duration(seconds: 2),
+                    color: const Color(0xFF00D4FF).withOpacity(0.3),
+                  ),
               const Gap(24),
               Text(
                 "BillingFast Control Centre",
                 style: GoogleFonts.poppins(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
-                  color: const Color(0xFF172a43),
+                  color: const Color(0xFFE2E8F0),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -149,7 +168,7 @@ class _SplashState extends State<Splash> {
                 "Swiss knife for quick actions",
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  color: Colors.grey.shade600,
+                  color: const Color(0xFF94A3B8),
                 ),
                 textAlign: TextAlign.center,
               ),

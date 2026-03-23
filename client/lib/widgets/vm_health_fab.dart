@@ -201,7 +201,7 @@ class _StylishHealthButtonState extends State<_StylishHealthButton>
                               height: 28,
                               child: CircularProgressIndicator(
                                 strokeWidth: 3,
-                                color: Colors.white,
+                                color: const Color(0xFF111827),
                               ),
                             )
                           : Stack(
@@ -212,7 +212,7 @@ class _StylishHealthButtonState extends State<_StylishHealthButton>
                                   scale: 1.1,
                                   child: const Icon(
                                     Icons.monitor_heart_outlined,
-                                    color: Colors.white,
+                                    color: const Color(0xFF111827),
                                     size: 28,
                                   ),
                                 ),
@@ -225,10 +225,10 @@ class _StylishHealthButtonState extends State<_StylishHealthButton>
                                     height: 8,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.white,
+                                      color: const Color(0xFF111827),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.white
+                                          color: const Color(0xFF111827)
                                               .withOpacity(_glowAnimation.value),
                                           blurRadius: 4,
                                           spreadRadius: 1,
@@ -349,7 +349,7 @@ class _HealthSheetState extends State<_HealthSheet>
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: const Color(0xFF1E293B),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -542,7 +542,7 @@ class _InfoCard extends StatelessWidget {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: Colors.grey[600],
+              color: const Color(0xFF94A3B8),
             ),
           ),
           const SizedBox(height: 4),
@@ -624,7 +624,7 @@ class _AnimatedMemoryBar extends StatelessWidget {
                 builder: (context, child) {
                   return LinearProgressIndicator(
                     value: percentage * animationController.value,
-                    backgroundColor: Colors.grey[200],
+                    backgroundColor: const Color(0xFF1E293B),
                     valueColor: AlwaysStoppedAnimation<Color>(color),
                     minHeight: 24,
                   );
@@ -638,18 +638,18 @@ class _AnimatedMemoryBar extends StatelessWidget {
             children: [
               Text(
                 'Used: $used',
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
               ),
               Text(
                 'Total: $total',
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
               ),
             ],
           ),
           if (available != null)
             Text(
               'Available: $available',
-              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
             ),
         ],
       ),
@@ -758,7 +758,7 @@ class _AnimatedServerTile extends StatelessWidget {
                     description,
                     style: TextStyle(
                       fontSize: 11,
-                      color: Colors.grey[600],
+                      color: const Color(0xFF94A3B8),
                       fontStyle: FontStyle.italic,
                     ),
                     maxLines: 2,

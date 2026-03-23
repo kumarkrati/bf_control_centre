@@ -24,8 +24,8 @@ class _LoginPageState extends State<LoginPage>
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
-  static const _primaryColor = Color(0xFF172a43);
-  static const _accentColor = Color(0xFF2E7D32);
+  static const _accentCyan = Color(0xFF00D4FF);
+  static const _accentPurple = Color(0xFF7C3AED);
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage>
 
         _handleLoginStatus(loginStatus);
       } catch (e) {
-        _showSnackBar('An unexpected error occurred', Colors.red);
+        _showSnackBar('An unexpected error occurred', const Color(0xFFFF4757));
       } finally {
         setState(() {
           _isLoading = false;
@@ -84,17 +84,17 @@ class _LoginPageState extends State<LoginPage>
   void _handleLoginStatus(LoginStatus status) {
     switch (status) {
       case LoginStatus.success:
-        _showSnackBar('Login successful!', _accentColor);
+        _showSnackBar('Login successful!', const Color(0xFF00F5A0));
         Get.off(() => HomePage());
         break;
       case LoginStatus.invalid:
-        _showSnackBar('Invalid username or password', Colors.red.shade600);
+        _showSnackBar('Invalid username or password', const Color(0xFFFF4757));
         break;
       case LoginStatus.denied:
-        _showSnackBar('Access denied', Colors.red.shade600);
+        _showSnackBar('Access denied', const Color(0xFFFF4757));
         break;
       case LoginStatus.error:
-        _showSnackBar('Server error occurred', Colors.red.shade600);
+        _showSnackBar('Server error occurred', const Color(0xFFFF4757));
         break;
     }
   }
@@ -105,20 +105,25 @@ class _LoginPageState extends State<LoginPage>
         content: Row(
           children: [
             Icon(
-              color == _accentColor ? Icons.check_circle : Icons.error,
+              color == const Color(0xFF00F5A0)
+                  ? Icons.check_circle
+                  : Icons.error,
               color: Colors.white,
               size: 20,
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(
-                message,
-                style: const TextStyle(fontWeight: FontWeight.w500),
+              child: Material(
+                color: Colors.transparent,
+                child: Text(
+                  message,
+                  style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+                ),
               ),
             ),
           ],
         ),
-        backgroundColor: color,
+        backgroundColor: const Color(0xFF1E293B),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.all(16),
@@ -135,31 +140,32 @@ class _LoginPageState extends State<LoginPage>
     return InputDecoration(
       labelText: label,
       hintText: hint,
-      prefixIcon: Icon(icon, color: _primaryColor.withOpacity(0.7)),
+      prefixIcon: Icon(icon, color: _accentCyan.withOpacity(0.7)),
       suffixIcon: suffix,
       filled: true,
-      fillColor: Colors.grey.shade50,
+      fillColor: const Color(0xFF0F1629),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(color: Colors.grey.shade200),
+        borderSide: const BorderSide(color: Color(0xFF1E293B)),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(color: _primaryColor, width: 2),
+        borderSide: const BorderSide(color: _accentCyan, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(color: Colors.red.shade300),
+        borderSide: const BorderSide(color: Color(0xFFFF4757)),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(color: Colors.red.shade400, width: 2),
+        borderSide: const BorderSide(color: Color(0xFFFF4757), width: 2),
       ),
-      labelStyle: TextStyle(color: Colors.grey.shade600),
+      labelStyle: const TextStyle(color: Color(0xFF94A3B8)),
+      hintStyle: const TextStyle(color: Color(0xFF475569)),
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
     );
   }
@@ -171,14 +177,14 @@ class _LoginPageState extends State<LoginPage>
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              _primaryColor,
-              _primaryColor.withBlue(80),
-              const Color(0xFF1a3a5c),
+              Color(0xFF0A0E1A),
+              Color(0xFF0F1629),
+              Color(0xFF0A0E1A),
             ],
           ),
         ),
@@ -201,19 +207,34 @@ class _LoginPageState extends State<LoginPage>
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.15),
                             shape: BoxShape.circle,
+                            gradient: RadialGradient(
+                              colors: [
+                                _accentCyan.withOpacity(0.15),
+                                Colors.transparent,
+                              ],
+                            ),
                           ),
                           child: Container(
                             padding: const EdgeInsets.all(16),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF111827),
                               shape: BoxShape.circle,
+                              border: Border.all(
+                                color: _accentCyan.withOpacity(0.3),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: _accentCyan.withOpacity(0.2),
+                                  blurRadius: 20,
+                                  spreadRadius: 2,
+                                ),
+                              ],
                             ),
                             child: const Icon(
                               Icons.admin_panel_settings_rounded,
                               size: 48,
-                              color: _primaryColor,
+                              color: _accentCyan,
                             ),
                           ),
                         ),
@@ -223,7 +244,7 @@ class _LoginPageState extends State<LoginPage>
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Color(0xFFE2E8F0),
                             letterSpacing: -0.5,
                           ),
                         ),
@@ -232,7 +253,7 @@ class _LoginPageState extends State<LoginPage>
                           'Sign in to access your control panel',
                           style: TextStyle(
                             fontSize: 15,
-                            color: Colors.white.withOpacity(0.8),
+                            color: const Color(0xFF94A3B8).withOpacity(0.8),
                           ),
                         ),
                         const SizedBox(height: 40),
@@ -241,11 +262,19 @@ class _LoginPageState extends State<LoginPage>
                         Container(
                           padding: const EdgeInsets.all(28),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: const Color(0xFF111827),
                             borderRadius: BorderRadius.circular(24),
+                            border: Border.all(
+                              color: const Color(0xFF1E293B),
+                            ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.15),
+                                color: _accentCyan.withOpacity(0.05),
+                                blurRadius: 30,
+                                spreadRadius: 2,
+                              ),
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
                                 blurRadius: 30,
                                 offset: const Offset(0, 15),
                               ),
@@ -256,20 +285,20 @@ class _LoginPageState extends State<LoginPage>
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Sign In',
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w700,
-                                    color: Colors.grey.shade800,
+                                    color: Color(0xFFE2E8F0),
                                   ),
                                 ),
                                 const SizedBox(height: 6),
-                                Text(
+                                const Text(
                                   'Enter your credentials to continue',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.grey.shade500,
+                                    color: Color(0xFF94A3B8),
                                   ),
                                 ),
                                 const SizedBox(height: 28),
@@ -279,6 +308,9 @@ class _LoginPageState extends State<LoginPage>
                                   controller: _usernameController,
                                   focusNode: _usernameFocus,
                                   textInputAction: TextInputAction.next,
+                                  style: const TextStyle(
+                                    color: Color(0xFFE2E8F0),
+                                  ),
                                   onFieldSubmitted: (_) {
                                     _passwordFocus.requestFocus();
                                   },
@@ -305,6 +337,9 @@ class _LoginPageState extends State<LoginPage>
                                   focusNode: _passwordFocus,
                                   obscureText: _obscurePassword,
                                   textInputAction: TextInputAction.done,
+                                  style: const TextStyle(
+                                    color: Color(0xFFE2E8F0),
+                                  ),
                                   onFieldSubmitted: (_) => _submit(),
                                   decoration: _buildInputDecoration(
                                     label: 'Password',
@@ -315,7 +350,7 @@ class _LoginPageState extends State<LoginPage>
                                         _obscurePassword
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
-                                        color: Colors.grey.shade500,
+                                        color: const Color(0xFF94A3B8),
                                         size: 22,
                                       ),
                                       onPressed: () {
@@ -341,54 +376,73 @@ class _LoginPageState extends State<LoginPage>
                                 SizedBox(
                                   width: double.infinity,
                                   height: 54,
-                                  child: ElevatedButton(
-                                    onPressed: _isLoading ? null : _submit,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: _primaryColor,
-                                      foregroundColor: Colors.white,
-                                      disabledBackgroundColor: _primaryColor
-                                          .withOpacity(0.6),
-                                      elevation: 0,
-                                      shadowColor: Colors.transparent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(14),
+                                      gradient: const LinearGradient(
+                                        colors: [_accentCyan, _accentPurple],
                                       ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: _accentCyan.withOpacity(0.3),
+                                          blurRadius: 16,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
                                     ),
-                                    child: AnimatedSwitcher(
-                                      duration: const Duration(
-                                        milliseconds: 200,
+                                    child: ElevatedButton(
+                                      onPressed: _isLoading ? null : _submit,
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.transparent,
+                                        shadowColor: Colors.transparent,
+                                        foregroundColor: Colors.white,
+                                        disabledBackgroundColor:
+                                            Colors.transparent,
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                        ),
                                       ),
-                                      child: _isLoading
-                                          ? const SizedBox(
-                                              width: 24,
-                                              height: 24,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2.5,
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                      Color
-                                                    >(Colors.white),
-                                              ),
-                                            )
-                                          : const Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'Sign In',
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    letterSpacing: 0.5,
+                                      child: AnimatedSwitcher(
+                                        duration: const Duration(
+                                          milliseconds: 200,
+                                        ),
+                                        child: _isLoading
+                                            ? const SizedBox(
+                                                width: 24,
+                                                height: 24,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2.5,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                        Color
+                                                      >(Colors.white),
+                                                ),
+                                              )
+                                            : const Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Sign In',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      letterSpacing: 0.5,
+                                                    ),
                                                   ),
-                                                ),
-                                                SizedBox(width: 8),
-                                                Icon(
-                                                  Icons.arrow_forward_rounded,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            ),
+                                                  SizedBox(width: 8),
+                                                  Icon(
+                                                    Icons
+                                                        .arrow_forward_rounded,
+                                                    size: 20,
+                                                  ),
+                                                ],
+                                              ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -400,10 +454,11 @@ class _LoginPageState extends State<LoginPage>
 
                         // Footer
                         Text(
-                          'BIllingFast Control Centre v6.0',
+                          'BillingFast Control Centre v6.0',
                           style: TextStyle(
                             fontSize: 13,
-                            color: Colors.white.withOpacity(0.6),
+                            color:
+                                const Color(0xFF94A3B8).withOpacity(0.6),
                             letterSpacing: 1,
                           ),
                         ),

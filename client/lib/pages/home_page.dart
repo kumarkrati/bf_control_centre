@@ -15,6 +15,7 @@ import 'package:bf_control_centre/widgets/vm_health_fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pdf/pdf.dart' show PdfPageFormat;
 import 'package:pdf/widgets.dart' as pw;
@@ -80,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
       const SnackBar(
         content: Text('Coming soon'),
-        backgroundColor: Color(0xFF3B82F6),
+        backgroundColor: Color(0xFF00D4FF),
       ),
     );
   }
@@ -97,7 +98,7 @@ class _HomePageState extends State<HomePage> {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         const SnackBar(
           content: Text('Please enter customer mobile number'),
-          backgroundColor: Color(0xFFEF4444),
+          backgroundColor: Color(0xFFFF4757),
         ),
       );
       return;
@@ -113,10 +114,10 @@ class _HomePageState extends State<HomePage> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: const Color(0xFF3B82F6).withOpacity(0.1),
+                color: const Color(0xFF00D4FF).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(Icons.person_add, color: Color(0xFF3B82F6)),
+              child: const Icon(Icons.person_add, color: Color(0xFF00D4FF)),
             ),
             const SizedBox(width: 12),
             const Text('Create New Account'),
@@ -131,12 +132,12 @@ class _HomePageState extends State<HomePage> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: const Color(0xFF0F1629),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.phone, color: Color(0xFF3B82F6), size: 18),
+                  const Icon(Icons.phone, color: Color(0xFF00D4FF), size: 18),
                   const SizedBox(width: 8),
                   Text(
                     mobile,
@@ -150,7 +151,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
+            style: TextButton.styleFrom(foregroundColor: const Color(0xFF94A3B8)),
             child: const Text('Cancel'),
           ),
           ElevatedButton.icon(
@@ -158,7 +159,7 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.check, size: 18),
             label: const Text('Create'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF3B82F6),
+              backgroundColor: const Color(0xFF00D4FF),
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -185,7 +186,7 @@ class _HomePageState extends State<HomePage> {
               height: 50,
               child: CircularProgressIndicator(
                 strokeWidth: 3,
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF3B82F6)),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF00D4FF)),
               ),
             ),
             const SizedBox(height: 20),
@@ -196,7 +197,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 8),
             Text(
               'Please wait while we create the account',
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
               textAlign: TextAlign.center,
             ),
           ],
@@ -245,7 +246,7 @@ class _HomePageState extends State<HomePage> {
               Text(
                 'Account has been successfully created for $mobile',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey.shade600),
+                style: TextStyle(color: const Color(0xFF94A3B8)),
               ),
             ],
           ),
@@ -269,7 +270,7 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.security, color: Colors.white),
+              const Icon(Icons.security, color: const Color(0xFF111827)),
               const SizedBox(width: 8),
               const Expanded(
                 child: Text('Your session has expired, relogin is required.'),
@@ -288,7 +289,7 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.info_outline, color: Colors.white),
+              const Icon(Icons.info_outline, color: const Color(0xFF111827)),
               const SizedBox(width: 8),
               const Expanded(child: Text('User is already registered.')),
             ],
@@ -305,12 +306,12 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
           content: Row(
             children: [
-              const Icon(Icons.error_outline, color: Colors.white),
+              const Icon(Icons.error_outline, color: const Color(0xFF111827)),
               const SizedBox(width: 8),
               const Text('Failed to create account. Please try again.'),
             ],
           ),
-          backgroundColor: const Color(0xFFEF4444),
+          backgroundColor: const Color(0xFFFF4757),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -328,7 +329,7 @@ class _HomePageState extends State<HomePage> {
 
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF111827),
       builder: (context) => const PasswordManagementSheet(),
     );
   }
@@ -341,7 +342,7 @@ class _HomePageState extends State<HomePage> {
 
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF111827),
       isScrollControlled: true,
       builder: (context) => const SubscriptionManagementSheet(),
     );
@@ -355,7 +356,7 @@ class _HomePageState extends State<HomePage> {
 
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF111827),
       builder: (context) => const ShopManagementSheet(),
     );
   }
@@ -368,7 +369,7 @@ class _HomePageState extends State<HomePage> {
 
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF111827),
       builder: (context) => const CustomerRetentionSheet(),
     );
   }
@@ -376,14 +377,14 @@ class _HomePageState extends State<HomePage> {
   void _showFeaturesList() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF111827),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(24),
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color(0xFF111827),
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
@@ -393,7 +394,9 @@ class _HomePageState extends State<HomePage> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF00D4FF), Color(0xFF7C3AED)],
+                ),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -403,12 +406,15 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF3B82F6).withOpacity(0.1),
+                    color: const Color(0xFF00D4FF).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: const Color(0xFF00D4FF).withOpacity(0.3),
+                    ),
                   ),
                   child: const Icon(
                     Icons.info_outline,
-                    color: Color(0xFF3B82F6),
+                    color: Color(0xFF00D4FF),
                     size: 20,
                   ),
                 ),
@@ -422,7 +428,7 @@ class _HomePageState extends State<HomePage> {
                       style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF172a43),
+                        color: const Color(0xFFE2E8F0),
                       ),
                     ),
                     SizedBox(
@@ -433,7 +439,7 @@ class _HomePageState extends State<HomePage> {
                         style: GoogleFonts.poppins(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xFF172a43),
+                          color: const Color(0xFF94A3B8),
                         ),
                       ),
                     ),
@@ -446,7 +452,7 @@ class _HomePageState extends State<HomePage> {
               'v6.0.0+600',
               style: GoogleFonts.poppins(
                 fontSize: 14,
-                color: Colors.grey.shade600,
+                color: const Color(0xFF94A3B8),
               ),
             ),
             const SizedBox(height: 24),
@@ -457,7 +463,7 @@ class _HomePageState extends State<HomePage> {
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
-                  color: const Color(0xFF172a43),
+                  color: const Color(0xFFE2E8F0),
                 ),
               ),
             ),
@@ -488,25 +494,32 @@ class _HomePageState extends State<HomePage> {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
+        color: const Color(0xFF0F1629),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: const Color(0xFF1E293B)),
       ),
       child: Row(
         children: [
           Container(
             width: 6,
             height: 6,
-            decoration: const BoxDecoration(
-              color: Color(0xFF3B82F6),
+            decoration: BoxDecoration(
+              color: const Color(0xFF00D4FF),
               shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF00D4FF).withOpacity(0.5),
+                  blurRadius: 4,
+                  spreadRadius: 1,
+                ),
+              ],
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               feature,
-              style: const TextStyle(fontSize: 14, color: Color(0xFF172a43)),
+              style: const TextStyle(fontSize: 14, color: Color(0xFFE2E8F0)),
             ),
           ),
         ],
@@ -517,26 +530,52 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: const Color(0xFF0A0E1A),
       floatingActionButton: LoginUtils.isAdmin ? const VMHealthFAB() : null,
       appBar: AppBar(
-        title: const Text('BillingFast Control Centre'),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 8,
+              height: 8,
+              decoration: BoxDecoration(
+                color: const Color(0xFF00D4FF),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF00D4FF).withOpacity(0.6),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Text('BillingFast Control Centre'),
+          ],
+        ),
         automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFF0F1629),
+        surfaceTintColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.info_outline),
+          icon: const Icon(Icons.info_outline, color: Color(0xFF94A3B8)),
           tooltip: 'Info',
           onPressed: _showFeaturesList,
         ),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(12),
+          preferredSize: const Size.fromHeight(12),
           child: Text(
             "Logged in as ${AppStorage.get('name')}",
-            style: GoogleFonts.poppins(fontSize: 12),
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              color: const Color(0xFF94A3B8),
+            ),
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout, color: Color(0xFF94A3B8)),
             tooltip: 'Logout',
             onPressed: () {
               AppStorage.set('accessToken', '');
@@ -554,13 +593,16 @@ class _HomePageState extends State<HomePage> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color(0xFF111827),
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: const Color(0xFF1E293B),
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    color: const Color(0xFF00D4FF).withOpacity(0.05),
+                    blurRadius: 20,
+                    spreadRadius: 1,
                   ),
                 ],
               ),
@@ -572,12 +614,20 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF3B82F6).withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color(0xFF00D4FF).withOpacity(0.2),
+                              const Color(0xFF7C3AED).withOpacity(0.2),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: const Color(0xFF00D4FF).withOpacity(0.3),
+                          ),
                         ),
                         child: const Icon(
                           Icons.search,
-                          color: Color(0xFF3B82F6),
+                          color: Color(0xFF00D4FF),
                           size: 20,
                         ),
                       ),
@@ -587,7 +637,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF172a43),
+                          color: Color(0xFFE2E8F0),
                         ),
                       ),
                     ],
@@ -595,6 +645,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 16),
                   TextField(
                     controller: _mobileController,
+                    style: const TextStyle(color: Color(0xFFE2E8F0)),
                     decoration: const InputDecoration(
                       labelText: 'Enter Customer Mobile Number',
                       prefixIcon: Icon(Icons.phone),
@@ -610,30 +661,32 @@ class _HomePageState extends State<HomePage> {
                           _showRecentMobiles = !_showRecentMobiles;
                         });
                       },
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade50,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey.shade200),
+                          color: const Color(0xFF0F1629),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: const Color(0xFF1E293B),
+                          ),
                         ),
                         child: Row(
                           children: [
                             Icon(
                               Icons.history,
                               size: 18,
-                              color: Colors.grey.shade600,
+                              color: const Color(0xFF00D4FF).withOpacity(0.7),
                             ),
                             const SizedBox(width: 8),
                             Text(
                               'Recent mobile numbers (${_recentMobiles.length})',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 13,
-                                color: Colors.grey.shade700,
+                                color: Color(0xFF94A3B8),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -643,7 +696,7 @@ class _HomePageState extends State<HomePage> {
                                   ? Icons.keyboard_arrow_up
                                   : Icons.keyboard_arrow_down,
                               size: 20,
-                              color: Colors.grey.shade600,
+                              color: const Color(0xFF94A3B8),
                             ),
                           ],
                         ),
@@ -655,14 +708,15 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       constraints: const BoxConstraints(maxHeight: 200),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade200),
-                        borderRadius: BorderRadius.circular(8),
+                        color: const Color(0xFF0F1629),
+                        border: Border.all(color: const Color(0xFF1E293B)),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: ListView.separated(
                         shrinkWrap: true,
                         itemCount: _recentMobiles.length,
                         separatorBuilder: (context, index) =>
-                            Divider(height: 1, color: Colors.grey.shade200),
+                            const Divider(height: 1, color: Color(0xFF1E293B)),
                         itemBuilder: (context, index) {
                           final mobile = _recentMobiles[index];
                           return ListTile(
@@ -670,25 +724,31 @@ class _HomePageState extends State<HomePage> {
                             leading: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF3B82F6).withOpacity(0.1),
+                                color: const Color(0xFF00D4FF).withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                  color: const Color(0xFF00D4FF).withOpacity(0.2),
+                                ),
                               ),
                               child: const Icon(
                                 Icons.phone,
                                 size: 16,
-                                color: Color(0xFF3B82F6),
+                                color: Color(0xFF00D4FF),
                               ),
                             ),
                             title: Text(
                               mobile,
-                              style: const TextStyle(fontSize: 14),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFFE2E8F0),
+                              ),
                             ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
                                   icon: const Icon(Icons.copy, size: 18),
-                                  color: Colors.grey.shade600,
+                                  color: const Color(0xFF94A3B8),
                                   tooltip: 'Copy',
                                   onPressed: () async {
                                     await Clipboard.setData(
@@ -701,9 +761,10 @@ class _HomePageState extends State<HomePage> {
                                         content: Text('Copied: $mobile'),
                                         duration: const Duration(seconds: 1),
                                         behavior: SnackBarBehavior.floating,
+                                        backgroundColor: const Color(0xFF1E293B),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
-                                            8,
+                                            10,
                                           ),
                                         ),
                                       ),
@@ -712,7 +773,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.delete, size: 18),
-                                  color: Colors.red.shade400,
+                                  color: const Color(0xFFFF4757),
                                   tooltip: 'Delete',
                                   onPressed: () async {
                                     setState(() {
@@ -743,32 +804,50 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: _loginToBillingFast,
-                            icon: const Icon(Icons.login, size: 18),
-                            label: const Text('Login'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF10B981),
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF00F5A0), Color(0xFF00D4FF)],
+                              ),
+                            ),
+                            child: ElevatedButton.icon(
+                              onPressed: _loginToBillingFast,
+                              icon: const Icon(Icons.login, size: 18),
+                              label: const Text('Login'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                                foregroundColor: const Color(0xFF0A0E1A),
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: _createNewAccount,
-                            icon: const Icon(Icons.person_add, size: 18),
-                            label: const Text('Create Account'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF3B82F6),
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF00D4FF), Color(0xFF7C3AED)],
+                              ),
+                            ),
+                            child: ElevatedButton.icon(
+                              onPressed: _createNewAccount,
+                              icon: const Icon(Icons.person_add, size: 18),
+                              label: const Text('Create Account'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                               ),
                             ),
                           ),
@@ -780,15 +859,32 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 28),
 
-            const Text(
-              'Management Tools',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF172a43),
-              ),
+            Row(
+              children: [
+                Container(
+                  width: 3,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFF00D4FF), Color(0xFF7C3AED)],
+                    ),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  'Management Tools',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFE2E8F0),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
 
@@ -797,34 +893,34 @@ class _HomePageState extends State<HomePage> {
               title: 'Password Management',
               subtitle: 'View and reset customer passwords',
               icon: Icons.security,
-              color: const Color(0xFFEF4444),
+              color: const Color(0xFFFF4757),
               onTap: _showPasswordManagement,
             ),
             if (LoginUtils.isAdmin) ...[
-              const SizedBox(height: 16),
+              const SizedBox(height: 14),
               _buildManagementCard(
                 title: 'Subscription Management',
                 subtitle: 'Manage plans and billing cycles',
                 icon: Icons.credit_card,
-                color: const Color(0xFF10B981),
+                color: const Color(0xFF00F5A0),
                 onTap: _showSubscriptionManagement,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 14),
               _buildManagementCard(
                 title: 'Shop Management',
                 subtitle: 'Configure stores and products',
                 icon: Icons.storefront,
-                color: const Color(0xFF8B5CF6),
+                color: const Color(0xFF7C3AED),
                 onTap: _showShopManagement,
               ),
             ],
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
             _buildManagementCard(
               title: 'Customer Retention',
               subtitle:
                   'See new unsubscribed customers from last 5 days or expiring plans',
               icon: Icons.people_alt,
-              color: const Color(0xFFF59E0B),
+              color: const Color(0xFFFFB800),
               onTap: _showCustomerRetention,
             ),
           ],
@@ -842,13 +938,16 @@ class _HomePageState extends State<HomePage> {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF111827),
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: color.withOpacity(0.15),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: color.withOpacity(0.06),
+            blurRadius: 16,
+            spreadRadius: 1,
           ),
         ],
       ),
@@ -864,8 +963,16 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    gradient: LinearGradient(
+                      colors: [
+                        color.withOpacity(0.2),
+                        color.withOpacity(0.05),
+                      ],
+                    ),
                     borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: color.withOpacity(0.3),
+                    ),
                   ),
                   child: Icon(icon, color: color, size: 24),
                 ),
@@ -879,15 +986,15 @@ class _HomePageState extends State<HomePage> {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF172a43),
+                          color: Color(0xFFE2E8F0),
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         subtitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 13,
-                          color: Colors.grey.shade600,
+                          color: Color(0xFF94A3B8),
                         ),
                       ),
                     ],
@@ -896,13 +1003,16 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: color.withOpacity(0.2),
+                    ),
                   ),
                   child: Icon(
                     Icons.arrow_forward_ios,
                     size: 16,
-                    color: Colors.grey.shade600,
+                    color: color.withOpacity(0.7),
                   ),
                 ),
               ],
@@ -928,7 +1038,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: Color(0xFF111827),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
@@ -938,7 +1048,9 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFF4757), Color(0xFF7C3AED)],
+              ),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -948,12 +1060,15 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEF4444).withOpacity(0.1),
+                  color: const Color(0xFFFF4757).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFFFF4757).withOpacity(0.3),
+                  ),
                 ),
                 child: const Icon(
                   Icons.security,
-                  color: Color(0xFFEF4444),
+                  color: Color(0xFFFF4757),
                   size: 20,
                 ),
               ),
@@ -963,7 +1078,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF172a43),
+                  color: Color(0xFFE2E8F0),
                 ),
               ),
             ],
@@ -974,7 +1089,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
             icon: Icons.visibility_outlined,
             title: 'View Current Password',
             subtitle: 'Display the current password',
-            color: const Color(0xFF3B82F6),
+            color: const Color(0xFF00D4FF),
             onTap: () async {
               final mobile = _mobileController.text.trim();
               if (mobile.isEmpty) {
@@ -991,7 +1106,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                 showDialog(
                   context: Get.context!,
                   builder: (context) => AlertDialog(
-                    backgroundColor: Colors.white,
+                    backgroundColor: const Color(0xFF111827),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1023,7 +1138,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                   SnackBar(
                     content: Row(
                       children: [
-                        const Icon(Icons.security, color: Colors.white),
+                        const Icon(Icons.security, color: const Color(0xFF111827)),
                         const SizedBox(width: 8),
                         const Expanded(
                           child: Text(
@@ -1059,7 +1174,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
             icon: Icons.refresh_rounded,
             title: 'Reset Password',
             subtitle: 'Generate a new password',
-            color: const Color(0xFFEF4444),
+            color: const Color(0xFFFF4757),
             onTap: () async {
               final mobile = _mobileController.text.trim();
               if (mobile.isEmpty) {
@@ -1123,7 +1238,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                   SnackBar(
                     content: Row(
                       children: [
-                        const Icon(Icons.security, color: Colors.white),
+                        const Icon(Icons.security, color: const Color(0xFF111827)),
                         const SizedBox(width: 8),
                         const Expanded(
                           child: Text(
@@ -1143,7 +1258,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                 ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Failed to reset password'),
-                    backgroundColor: Color(0xFFEF4444),
+                    backgroundColor: Color(0xFFFF4757),
                   ),
                 );
               }
@@ -1163,7 +1278,8 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
   }) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade200),
+        color: const Color(0xFF0F1629),
+        border: Border.all(color: color.withOpacity(0.15)),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Material(
@@ -1180,6 +1296,9 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                   decoration: BoxDecoration(
                     color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: color.withOpacity(0.3),
+                    ),
                   ),
                   child: Icon(icon, color: color, size: 20),
                 ),
@@ -1193,14 +1312,14 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF172a43),
+                          color: Color(0xFFE2E8F0),
                         ),
                       ),
                       Text(
                         subtitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
-                          color: Colors.grey.shade600,
+                          color: Color(0xFF94A3B8),
                         ),
                       ),
                     ],
@@ -1209,7 +1328,7 @@ class _PasswordManagementSheetState extends State<PasswordManagementSheet> {
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 16,
-                  color: Colors.grey.shade400,
+                  color: color.withOpacity(0.5),
                 ),
               ],
             ),
@@ -1322,7 +1441,7 @@ class _SubscriptionManagementSheetState
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.security, color: Colors.white),
+                Icon(Icons.security, color: const Color(0xFF111827)),
                 SizedBox(width: 8),
                 Expanded(
                   child: Text('Your session has expired, relogin is required.'),
@@ -1341,12 +1460,12 @@ class _SubscriptionManagementSheetState
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.error_outline, color: Colors.white),
+                Icon(Icons.error_outline, color: const Color(0xFF111827)),
                 SizedBox(width: 8),
                 Text('Failed to fetch invoices.'),
               ],
             ),
-            backgroundColor: const Color(0xFFEF4444),
+            backgroundColor: const Color(0xFFFF4757),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -1372,7 +1491,7 @@ class _SubscriptionManagementSheetState
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.security, color: Colors.white),
+                Icon(Icons.security, color: const Color(0xFF111827)),
                 SizedBox(width: 8),
                 Expanded(
                   child: Text('Your session has expired, relogin is required.'),
@@ -1391,12 +1510,12 @@ class _SubscriptionManagementSheetState
           SnackBar(
             content: const Row(
               children: [
-                Icon(Icons.error_outline, color: Colors.white),
+                Icon(Icons.error_outline, color: const Color(0xFF111827)),
                 SizedBox(width: 8),
                 Text('Failed to fetch pending receipts.'),
               ],
             ),
-            backgroundColor: const Color(0xFFEF4444),
+            backgroundColor: const Color(0xFFFF4757),
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -1430,7 +1549,7 @@ class _SubscriptionManagementSheetState
       padding: const EdgeInsets.all(24),
       height: MediaQuery.of(context).size.height * 0.85,
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: Color(0xFF111827),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
@@ -1439,7 +1558,9 @@ class _SubscriptionManagementSheetState
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              gradient: const LinearGradient(
+                colors: [Color(0xFF00F5A0), Color(0xFF00D4FF)],
+              ),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -1449,12 +1570,15 @@ class _SubscriptionManagementSheetState
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF10B981).withOpacity(0.1),
+                  color: const Color(0xFF00F5A0).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFF00F5A0).withOpacity(0.3),
+                  ),
                 ),
                 child: const Icon(
                   Icons.credit_card,
-                  color: Color(0xFF10B981),
+                  color: Color(0xFF00F5A0),
                   size: 20,
                 ),
               ),
@@ -1464,7 +1588,7 @@ class _SubscriptionManagementSheetState
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF172a43),
+                  color: Color(0xFFE2E8F0),
                 ),
               ),
             ],
@@ -1474,8 +1598,9 @@ class _SubscriptionManagementSheetState
           // Tab selector
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey.shade100,
+              color: const Color(0xFF0F1629),
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFF1E293B)),
             ),
             padding: const EdgeInsets.all(4),
             child: Row(
@@ -1487,7 +1612,7 @@ class _SubscriptionManagementSheetState
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
                         color: _selectedOption == 0
-                            ? Colors.white
+                            ? const Color(0xFF1E293B)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: _selectedOption == 0
@@ -1508,7 +1633,7 @@ class _SubscriptionManagementSheetState
                             size: 18,
                             color: _selectedOption == 0
                                 ? const Color(0xFF10B981)
-                                : Colors.grey.shade600,
+                                : const Color(0xFF94A3B8),
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -1517,7 +1642,7 @@ class _SubscriptionManagementSheetState
                               fontWeight: FontWeight.w600,
                               color: _selectedOption == 0
                                   ? const Color(0xFF10B981)
-                                  : Colors.grey.shade600,
+                                  : const Color(0xFF94A3B8),
                             ),
                           ),
                         ],
@@ -1532,7 +1657,7 @@ class _SubscriptionManagementSheetState
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
                         color: _selectedOption == 1
-                            ? Colors.white
+                            ? const Color(0xFF1E293B)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: _selectedOption == 1
@@ -1553,7 +1678,7 @@ class _SubscriptionManagementSheetState
                             size: 18,
                             color: _selectedOption == 1
                                 ? const Color(0xFF10B981)
-                                : Colors.grey.shade600,
+                                : const Color(0xFF94A3B8),
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -1562,7 +1687,7 @@ class _SubscriptionManagementSheetState
                               fontWeight: FontWeight.w600,
                               color: _selectedOption == 1
                                   ? const Color(0xFF10B981)
-                                  : Colors.grey.shade600,
+                                  : const Color(0xFF94A3B8),
                             ),
                           ),
                         ],
@@ -1582,7 +1707,7 @@ class _SubscriptionManagementSheetState
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
                         color: _selectedOption == 2
-                            ? Colors.white
+                            ? const Color(0xFF1E293B)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: _selectedOption == 2
@@ -1603,7 +1728,7 @@ class _SubscriptionManagementSheetState
                             size: 18,
                             color: _selectedOption == 2
                                 ? const Color(0xFF10B981)
-                                : Colors.grey.shade600,
+                                : const Color(0xFF94A3B8),
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -1612,7 +1737,7 @@ class _SubscriptionManagementSheetState
                               fontWeight: FontWeight.w600,
                               color: _selectedOption == 2
                                   ? const Color(0xFF10B981)
-                                  : Colors.grey.shade600,
+                                  : const Color(0xFF94A3B8),
                             ),
                           ),
                         ],
@@ -1629,7 +1754,7 @@ class _SubscriptionManagementSheetState
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
                         color: _selectedOption == 3
-                            ? Colors.white
+                            ? const Color(0xFF1E293B)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: _selectedOption == 3
@@ -1650,7 +1775,7 @@ class _SubscriptionManagementSheetState
                             size: 18,
                             color: _selectedOption == 3
                                 ? const Color(0xFF10B981)
-                                : Colors.grey.shade600,
+                                : const Color(0xFF94A3B8),
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -1659,7 +1784,7 @@ class _SubscriptionManagementSheetState
                               fontWeight: FontWeight.w600,
                               color: _selectedOption == 3
                                   ? const Color(0xFF10B981)
-                                  : Colors.grey.shade600,
+                                  : const Color(0xFF94A3B8),
                             ),
                           ),
                         ],
@@ -1764,7 +1889,7 @@ class _SubscriptionManagementSheetState
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade300),
+                        border: Border.all(color: const Color(0xFF1E293B)),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -1797,12 +1922,12 @@ class _SubscriptionManagementSheetState
                     decoration: BoxDecoration(
                       color: _generateReceiptAfterUpdate
                           ? const Color(0xFF10B981).withOpacity(0.1)
-                          : Colors.grey.shade50,
+                          : const Color(0xFF0F1629),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         color: _generateReceiptAfterUpdate
                             ? const Color(0xFF10B981)
-                            : Colors.grey.shade200,
+                            : const Color(0xFF1E293B),
                       ),
                     ),
                     child: Row(
@@ -1813,7 +1938,7 @@ class _SubscriptionManagementSheetState
                               : Icons.check_box_outline_blank,
                           color: _generateReceiptAfterUpdate
                               ? const Color(0xFF10B981)
-                              : Colors.grey.shade400,
+                              : const Color(0xFF475569),
                           size: 24,
                         ),
                         const SizedBox(width: 12),
@@ -1826,7 +1951,7 @@ class _SubscriptionManagementSheetState
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xFF172a43),
+                                  color: Color(0xFFE2E8F0),
                                 ),
                               ),
                               const SizedBox(height: 2),
@@ -1834,7 +1959,7 @@ class _SubscriptionManagementSheetState
                                 'Shows a dialog to generate receipt after successful update',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey.shade600,
+                                  color: const Color(0xFF94A3B8),
                                 ),
                               ),
                             ],
@@ -1908,7 +2033,7 @@ class _SubscriptionManagementSheetState
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: const Color(0xFF0F1629),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
@@ -1925,14 +2050,14 @@ class _SubscriptionManagementSheetState
             const SizedBox(height: 12),
             Text(
               'Plan: $_subSelectedPlan\nDuration: $_subSelectedDuration\nStart Date: ${_subStartDate.toString().split(' ')[0]}',
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
+            style: TextButton.styleFrom(foregroundColor: const Color(0xFF94A3B8)),
             child: const Text('Cancel'),
           ),
           ElevatedButton.icon(
@@ -1978,7 +2103,7 @@ class _SubscriptionManagementSheetState
             const SizedBox(height: 8),
             Text(
               'Please wait while we update the subscription',
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
               textAlign: TextAlign.center,
             ),
           ],
@@ -2044,7 +2169,7 @@ class _SubscriptionManagementSheetState
                 Text(
                   'Subscription has been successfully updated for customer $mobile',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey.shade600),
+                  style: TextStyle(color: const Color(0xFF94A3B8)),
                 ),
               ],
             ),
@@ -2069,7 +2194,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.security, color: Colors.white),
+              Icon(Icons.security, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(
                 child: Text('Your session has expired, relogin is required.'),
@@ -2088,7 +2213,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.info_outline, color: Colors.white),
+              Icon(Icons.info_outline, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(child: Text('User not registered.')),
             ],
@@ -2105,12 +2230,12 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.error_outline, color: Colors.white),
+              Icon(Icons.error_outline, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Text('Failed to update subscription. Please try again.'),
             ],
           ),
-          backgroundColor: const Color(0xFFEF4444),
+          backgroundColor: const Color(0xFFFF4757),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -2174,7 +2299,7 @@ class _SubscriptionManagementSheetState
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: const Color(0xFF0F1629),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
@@ -2216,7 +2341,7 @@ class _SubscriptionManagementSheetState
                   helperText: '18% GST auto-calculated for Indian numbers',
                   helperStyle: TextStyle(
                     fontSize: 10,
-                    color: Colors.grey.shade500,
+                    color: const Color(0xFF94A3B8),
                   ),
                 ),
               ),
@@ -2229,7 +2354,7 @@ class _SubscriptionManagementSheetState
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: Colors.grey.shade700,
+                    color: const Color(0xFF94A3B8),
                   ),
                 ),
                 tilePadding: EdgeInsets.zero,
@@ -2288,7 +2413,7 @@ class _SubscriptionManagementSheetState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, null),
-            style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
+            style: TextButton.styleFrom(foregroundColor: const Color(0xFF94A3B8)),
             child: const Text('Skip'),
           ),
           ElevatedButton.icon(
@@ -2340,7 +2465,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.white),
+              Icon(Icons.check_circle, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Text('Subscription updated successfully!'),
             ],
@@ -2437,7 +2562,7 @@ class _SubscriptionManagementSheetState
               Text(
                 'Subscription updated and Receipt #${invoiceResult.invoice?['invoiceNo'] ?? 'N/A'} generated for $mobile',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey.shade600),
+                style: TextStyle(color: const Color(0xFF94A3B8)),
               ),
             ],
           ),
@@ -2461,7 +2586,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.security, color: Colors.white),
+              Icon(Icons.security, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -2482,7 +2607,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.warning, color: Colors.white),
+              Icon(Icons.warning, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -2511,7 +2636,7 @@ class _SubscriptionManagementSheetState
             width: 60,
             child: Text(
               '$label:',
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
             ),
           ),
           Expanded(
@@ -2623,7 +2748,7 @@ class _SubscriptionManagementSheetState
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade300),
+                        border: Border.all(color: const Color(0xFF1E293B)),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -2666,7 +2791,7 @@ class _SubscriptionManagementSheetState
                           'For Indian numbers, 18% GST will be calculated automatically',
                       helperStyle: TextStyle(
                         fontSize: 11,
-                        color: Colors.grey.shade500,
+                        color: const Color(0xFF94A3B8),
                       ),
                     ),
                   ),
@@ -2677,9 +2802,9 @@ class _SubscriptionManagementSheetState
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
+                    color: const Color(0xFF0F1629),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade200),
+                    border: Border.all(color: const Color(0xFF1E293B)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -2689,7 +2814,7 @@ class _SubscriptionManagementSheetState
                           Icon(
                             Icons.info_outline,
                             size: 16,
-                            color: Colors.grey.shade600,
+                            color: const Color(0xFF94A3B8),
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -2697,7 +2822,7 @@ class _SubscriptionManagementSheetState
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: Colors.grey.shade600,
+                              color: const Color(0xFF94A3B8),
                             ),
                           ),
                         ],
@@ -2847,7 +2972,7 @@ class _SubscriptionManagementSheetState
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: const Color(0xFF0F1629),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -2873,7 +2998,7 @@ class _SubscriptionManagementSheetState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            style: TextButton.styleFrom(foregroundColor: Colors.grey.shade600),
+            style: TextButton.styleFrom(foregroundColor: const Color(0xFF94A3B8)),
             child: const Text('Cancel'),
           ),
           ElevatedButton.icon(
@@ -2978,7 +3103,7 @@ class _SubscriptionManagementSheetState
               Text(
                 'Invoice #${result.invoice?['invoiceNo'] ?? 'N/A'} has been generated for $phone',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey.shade600),
+                style: TextStyle(color: const Color(0xFF94A3B8)),
               ),
             ],
           ),
@@ -3002,7 +3127,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.info_outline, color: Colors.white),
+              Icon(Icons.info_outline, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(child: Text('User not registered.')),
             ],
@@ -3019,7 +3144,7 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.security, color: Colors.white),
+              Icon(Icons.security, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Expanded(
                 child: Text('Your session has expired, relogin is required.'),
@@ -3038,12 +3163,12 @@ class _SubscriptionManagementSheetState
         SnackBar(
           content: const Row(
             children: [
-              Icon(Icons.error_outline, color: Colors.white),
+              Icon(Icons.error_outline, color: const Color(0xFF111827)),
               SizedBox(width: 8),
               Text('Failed to generate invoice. Please try again.'),
             ],
           ),
-          backgroundColor: const Color(0xFFEF4444),
+          backgroundColor: const Color(0xFFFF4757),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -3063,7 +3188,7 @@ class _SubscriptionManagementSheetState
             width: 70,
             child: Text(
               '$label:',
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 12, color: const Color(0xFF94A3B8)),
             ),
           ),
           Expanded(
@@ -3084,9 +3209,9 @@ class _SubscriptionManagementSheetState
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.grey.shade50,
+            color: const Color(0xFF0F1629),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey.shade200),
+            border: Border.all(color: const Color(0xFF1E293B)),
           ),
           child: Row(
             children: [
@@ -3106,9 +3231,9 @@ class _SubscriptionManagementSheetState
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: const Color(0xFF111827),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey.shade300),
+                      border: Border.all(color: const Color(0xFF1E293B)),
                     ),
                     child: Row(
                       children: [
@@ -3147,9 +3272,9 @@ class _SubscriptionManagementSheetState
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: const Color(0xFF111827),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey.shade300),
+                      border: Border.all(color: const Color(0xFF1E293B)),
                     ),
                     child: Row(
                       children: [
@@ -3189,7 +3314,7 @@ class _SubscriptionManagementSheetState
                 ElevatedButton.icon(
                   onPressed: _downloadAllReceipts,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF3B82F6),
+                    backgroundColor: const Color(0xFF00D4FF),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -3228,11 +3353,11 @@ class _SubscriptionManagementSheetState
                       : null,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
+                    borderSide: BorderSide(color: const Color(0xFF1E293B)),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
+                    borderSide: BorderSide(color: const Color(0xFF1E293B)),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -3240,7 +3365,7 @@ class _SubscriptionManagementSheetState
                   ),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: const Color(0xFF0F1629),
                 ),
                 onChanged: (value) => setState(() => _invoiceSearchQuery = value.trim()),
               ),
@@ -3251,13 +3376,13 @@ class _SubscriptionManagementSheetState
               icon: const Icon(Icons.download, size: 18),
               label: const Text('Export CSV'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF3B82F6),
+                backgroundColor: const Color(0xFF00D4FF),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                disabledBackgroundColor: Colors.grey.shade300,
+                disabledBackgroundColor: const Color(0xFF1E293B),
               ),
             ),
           ],
@@ -3280,7 +3405,7 @@ class _SubscriptionManagementSheetState
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
               ),
@@ -3291,7 +3416,7 @@ class _SubscriptionManagementSheetState
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
               ),
@@ -3302,7 +3427,7 @@ class _SubscriptionManagementSheetState
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
               ),
@@ -3313,7 +3438,7 @@ class _SubscriptionManagementSheetState
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
               ),
@@ -3324,7 +3449,7 @@ class _SubscriptionManagementSheetState
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                   textAlign: TextAlign.right,
                 ),
@@ -3336,7 +3461,7 @@ class _SubscriptionManagementSheetState
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                   textAlign: TextAlign.right,
                 ),
@@ -3348,7 +3473,7 @@ class _SubscriptionManagementSheetState
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -3375,13 +3500,13 @@ class _SubscriptionManagementSheetState
                       Icon(
                         Icons.receipt_long,
                         size: 48,
-                        color: Colors.grey.shade300,
+                        color: const Color(0xFF1E293B),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'No invoices found',
                         style: TextStyle(
-                          color: Colors.grey.shade500,
+                          color: const Color(0xFF94A3B8),
                           fontSize: 16,
                         ),
                       ),
@@ -3389,7 +3514,7 @@ class _SubscriptionManagementSheetState
                       Text(
                         'Try adjusting the date filter',
                         style: TextStyle(
-                          color: Colors.grey.shade400,
+                          color: const Color(0xFF475569),
                           fontSize: 12,
                         ),
                       ),
@@ -3410,16 +3535,16 @@ class _SubscriptionManagementSheetState
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.search_off, size: 48, color: Colors.grey.shade300),
+                            Icon(Icons.search_off, size: 48, color: const Color(0xFF1E293B)),
                             const SizedBox(height: 16),
                             Text(
                               'No matching invoices',
-                              style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
+                              style: TextStyle(color: const Color(0xFF94A3B8), fontSize: 16),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'Try a different phone number',
-                              style: TextStyle(color: Colors.grey.shade400, fontSize: 12),
+                              style: TextStyle(color: const Color(0xFF475569), fontSize: 12),
                             ),
                           ],
                         ),
@@ -3428,7 +3553,7 @@ class _SubscriptionManagementSheetState
 
                     return Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade200),
+                        border: Border.all(color: const Color(0xFF1E293B)),
                         borderRadius: const BorderRadius.vertical(
                           bottom: Radius.circular(12),
                         ),
@@ -3436,7 +3561,7 @@ class _SubscriptionManagementSheetState
                       child: ListView.separated(
                         itemCount: filteredInvoices.length,
                         separatorBuilder: (context, index) =>
-                            Divider(height: 1, color: Colors.grey.shade200),
+                            Divider(height: 1, color: const Color(0xFF1E293B)),
                         itemBuilder: (context, index) {
                           final invoice = filteredInvoices[index];
                       return Container(
@@ -3445,8 +3570,8 @@ class _SubscriptionManagementSheetState
                           vertical: 12,
                         ),
                         color: index % 2 == 0
-                            ? Colors.white
-                            : Colors.grey.shade50,
+                            ? const Color(0xFF111827)
+                            : const Color(0xFF0F1629),
                         child: Row(
                           children: [
                             Expanded(
@@ -3513,7 +3638,7 @@ class _SubscriptionManagementSheetState
                                 _formatDate(invoice['time']),
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey.shade600,
+                                  color: const Color(0xFF94A3B8),
                                 ),
                                 textAlign: TextAlign.right,
                               ),
@@ -3531,7 +3656,7 @@ class _SubscriptionManagementSheetState
                                       size: 18,
                                     ),
                                     tooltip: 'Preview',
-                                    color: const Color(0xFF3B82F6),
+                                    color: const Color(0xFF00D4FF),
                                     constraints: const BoxConstraints(
                                       minWidth: 32,
                                       minHeight: 32,
@@ -3582,7 +3707,7 @@ class _SubscriptionManagementSheetState
                   'Total Invoices: ${_invoices.length}',
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
                 Text(
@@ -3604,7 +3729,7 @@ class _SubscriptionManagementSheetState
       case 'ULTRA':
         return const Color(0xFF8B5CF6);
       case 'PREMIUM':
-        return const Color(0xFF3B82F6);
+        return const Color(0xFF00D4FF);
       case 'LITE':
         return const Color(0xFF10B981);
       default:
@@ -3646,7 +3771,7 @@ class _SubscriptionManagementSheetState
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF172a43),
+                      color: Color(0xFFE2E8F0),
                     ),
                   ),
                   Row(
@@ -3864,9 +3989,9 @@ class _SubscriptionManagementSheetState
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.grey.shade50,
+            color: const Color(0xFF0F1629),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey.shade200),
+            border: Border.all(color: const Color(0xFF1E293B)),
           ),
           child: Row(
             children: [
@@ -3886,7 +4011,7 @@ class _SubscriptionManagementSheetState
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
+                      border: Border.all(color: const Color(0xFF1E293B)),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -3910,7 +4035,7 @@ class _SubscriptionManagementSheetState
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
                   'to',
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 14, color: const Color(0xFF94A3B8)),
                 ),
               ),
               Expanded(
@@ -3929,7 +4054,7 @@ class _SubscriptionManagementSheetState
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
+                      border: Border.all(color: const Color(0xFF1E293B)),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -4001,11 +4126,11 @@ class _SubscriptionManagementSheetState
                 : null,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey.shade300),
+              borderSide: BorderSide(color: const Color(0xFF1E293B)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey.shade300),
+              borderSide: BorderSide(color: const Color(0xFF1E293B)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
@@ -4013,7 +4138,7 @@ class _SubscriptionManagementSheetState
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: const Color(0xFF0F1629),
           ),
           onChanged: (value) => setState(() => _pendingSearchQuery = value.trim()),
         ),
@@ -4025,7 +4150,7 @@ class _SubscriptionManagementSheetState
             padding: const EdgeInsets.only(bottom: 8),
             child: Row(
               children: [
-                Icon(Icons.info_outline, size: 16, color: Colors.grey.shade600),
+                Icon(Icons.info_outline, size: 16, color: const Color(0xFF94A3B8)),
                 const SizedBox(width: 8),
                 Builder(
                   builder: (context) {
@@ -4037,7 +4162,7 @@ class _SubscriptionManagementSheetState
                           }).length;
                     return Text(
                       '$filteredCount user(s) with pending receipts',
-                      style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                      style: TextStyle(fontSize: 13, color: const Color(0xFF94A3B8)),
                     );
                   },
                 ),
@@ -4063,14 +4188,14 @@ class _SubscriptionManagementSheetState
                       Icon(
                         Icons.pending_actions,
                         size: 48,
-                        color: Colors.grey.shade400,
+                        color: const Color(0xFF475569),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'No pending receipts found',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.shade600,
+                          color: const Color(0xFF94A3B8),
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -4078,7 +4203,7 @@ class _SubscriptionManagementSheetState
                         'Select a date and click Search',
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.grey.shade500,
+                          color: const Color(0xFF94A3B8),
                         ),
                       ),
                     ],
@@ -4098,16 +4223,16 @@ class _SubscriptionManagementSheetState
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.search_off, size: 48, color: Colors.grey.shade400),
+                            Icon(Icons.search_off, size: 48, color: const Color(0xFF475569)),
                             const SizedBox(height: 16),
                             Text(
                               'No matching users',
-                              style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                              style: TextStyle(fontSize: 16, color: const Color(0xFF94A3B8)),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'Try a different phone number',
-                              style: TextStyle(fontSize: 13, color: Colors.grey.shade500),
+                              style: TextStyle(fontSize: 13, color: const Color(0xFF94A3B8)),
                             ),
                           ],
                         ),
@@ -4117,7 +4242,7 @@ class _SubscriptionManagementSheetState
                     return SingleChildScrollView(
                       child: Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade200),
+                          border: Border.all(color: const Color(0xFF1E293B)),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Column(
@@ -4129,7 +4254,7 @@ class _SubscriptionManagementSheetState
                                 vertical: 10,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
+                                color: const Color(0xFF0F1629),
                                 borderRadius: const BorderRadius.vertical(
                                   top: Radius.circular(8),
                                 ),
@@ -4189,7 +4314,7 @@ class _SubscriptionManagementSheetState
                             ),
                             decoration: BoxDecoration(
                               border: Border(
-                                top: BorderSide(color: Colors.grey.shade200),
+                                top: BorderSide(color: const Color(0xFF1E293B)),
                               ),
                             ),
                             child: Row(
@@ -4321,14 +4446,14 @@ class _SubscriptionManagementSheetState
       children: [
         Row(
           children: [
-            Icon(icon, size: 16, color: const Color(0xFF10B981)),
+            Icon(icon, size: 16, color: const Color(0xFF00F5A0)),
             const SizedBox(width: 8),
             Text(
               label,
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF172a43),
+                color: Color(0xFFE2E8F0),
               ),
             ),
           ],
@@ -4348,7 +4473,7 @@ class ShopManagementSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF111827),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: SingleChildScrollView(
@@ -4359,7 +4484,9 @@ class ShopManagementSheet extends StatelessWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF8B5CF6), Color(0xFF00D4FF)],
+                ),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -4371,6 +4498,9 @@ class ShopManagementSheet extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xFF8B5CF6).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: const Color(0xFF8B5CF6).withOpacity(0.3),
+                    ),
                   ),
                   child: const Icon(
                     Icons.storefront,
@@ -4384,7 +4514,7 @@ class ShopManagementSheet extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF172a43),
+                    color: Color(0xFFE2E8F0),
                   ),
                 ),
               ],
@@ -4395,12 +4525,12 @@ class ShopManagementSheet extends StatelessWidget {
               icon: Icons.store_outlined,
               title: 'View Shops',
               subtitle: 'See store listings',
-              color: const Color(0xFF3B82F6),
+              color: const Color(0xFF00D4FF),
               onTap: () {
                 ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Coming soon'),
-                    backgroundColor: Color(0xFF3B82F6),
+                    backgroundColor: Color(0xFF00D4FF),
                   ),
                 );
               },
@@ -4421,13 +4551,13 @@ class ShopManagementSheet extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.warning_amber_rounded,
-                            color: Colors.white,
+                            color: const Color(0xFF111827),
                           ),
                           SizedBox(width: 8),
                           Text('Please enter customer mobile number first'),
                         ],
                       ),
-                      backgroundColor: Color(0xFFEF4444),
+                      backgroundColor: Color(0xFFFF4757),
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -4472,7 +4602,7 @@ class ShopManagementSheet extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
+                            color: const Color(0xFF0F1629),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -4495,7 +4625,7 @@ class ShopManagementSheet extends StatelessWidget {
                           'This will recover all previously deleted products for this customer.',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey.shade600,
+                            color: const Color(0xFF94A3B8),
                           ),
                         ),
                       ],
@@ -4504,7 +4634,7 @@ class ShopManagementSheet extends StatelessWidget {
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
                         style: TextButton.styleFrom(
-                          foregroundColor: Colors.grey.shade600,
+                          foregroundColor: const Color(0xFF94A3B8),
                         ),
                         child: Text('Cancel'),
                       ),
@@ -4560,7 +4690,7 @@ class ShopManagementSheet extends StatelessWidget {
                           'Please wait while we recover deleted products',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey.shade600,
+                            color: const Color(0xFF94A3B8),
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -4611,7 +4741,7 @@ class ShopManagementSheet extends StatelessWidget {
                           Text(
                             'Products have been successfully restored for customer $mobile',
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey.shade600),
+                            style: TextStyle(color: const Color(0xFF94A3B8)),
                           ),
                         ],
                       ),
@@ -4635,7 +4765,7 @@ class ShopManagementSheet extends StatelessWidget {
                     SnackBar(
                       content: Row(
                         children: [
-                          const Icon(Icons.security, color: Colors.white),
+                          const Icon(Icons.security, color: const Color(0xFF111827)),
                           const SizedBox(width: 8),
                           const Expanded(
                             child: Text(
@@ -4656,7 +4786,7 @@ class ShopManagementSheet extends StatelessWidget {
                     SnackBar(
                       content: Row(
                         children: [
-                          Icon(Icons.info_outline, color: Colors.white),
+                          Icon(Icons.info_outline, color: const Color(0xFF111827)),
                           SizedBox(width: 8),
                           Expanded(child: Text('User not registered.')),
                         ],
@@ -4673,12 +4803,12 @@ class ShopManagementSheet extends StatelessWidget {
                     SnackBar(
                       content: Row(
                         children: [
-                          Icon(Icons.error_outline, color: Colors.white),
+                          Icon(Icons.error_outline, color: const Color(0xFF111827)),
                           SizedBox(width: 8),
                           Text('Failed to restore products. Please try again.'),
                         ],
                       ),
-                      backgroundColor: Color(0xFFEF4444),
+                      backgroundColor: Color(0xFFFF4757),
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -4699,7 +4829,7 @@ class ShopManagementSheet extends StatelessWidget {
                 ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Coming soon'),
-                    backgroundColor: Color(0xFF3B82F6),
+                    backgroundColor: Color(0xFF00D4FF),
                   ),
                 );
               },
@@ -4715,7 +4845,7 @@ class ShopManagementSheet extends StatelessWidget {
                 ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Coming soon'),
-                    backgroundColor: Color(0xFF3B82F6),
+                    backgroundColor: Color(0xFF00D4FF),
                   ),
                 );
               },
@@ -4731,7 +4861,7 @@ class ShopManagementSheet extends StatelessWidget {
                 ScaffoldMessenger.of(Get.context!).showSnackBar(
                   const SnackBar(
                     content: Text('Coming soon'),
-                    backgroundColor: Color(0xFF3B82F6),
+                    backgroundColor: Color(0xFF00D4FF),
                   ),
                 );
               },
@@ -4742,7 +4872,7 @@ class ShopManagementSheet extends StatelessWidget {
               icon: Icons.receipt_long,
               title: 'Repair Order Invoices',
               subtitle: 'Click to fix invoice nos of this shop',
-              color: const Color(0xFFEF4444),
+              color: const Color(0xFFFF4757),
               onTap: () async {
                 final mobile = _mobileController.text.trim();
                 if (mobile.isEmpty) {
@@ -4752,13 +4882,13 @@ class ShopManagementSheet extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.warning_amber_rounded,
-                            color: Colors.white,
+                            color: const Color(0xFF111827),
                           ),
                           SizedBox(width: 8),
                           Text('Please enter customer mobile number first'),
                         ],
                       ),
-                      backgroundColor: Color(0xFFEF4444),
+                      backgroundColor: Color(0xFFFF4757),
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -4802,7 +4932,7 @@ class ShopManagementSheet extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
+                            color: const Color(0xFF0F1629),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -4825,7 +4955,7 @@ class ShopManagementSheet extends StatelessWidget {
                           'This will realign invoice no for all orders of this customer.',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey.shade600,
+                            color: const Color(0xFF94A3B8),
                           ),
                         ),
                       ],
@@ -4834,7 +4964,7 @@ class ShopManagementSheet extends StatelessWidget {
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
                         style: TextButton.styleFrom(
-                          foregroundColor: Colors.grey.shade600,
+                          foregroundColor: const Color(0xFF94A3B8),
                         ),
                         child: Text('Cancel'),
                       ),
@@ -4890,7 +5020,7 @@ class ShopManagementSheet extends StatelessWidget {
                           'Please wait while we repair orders',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey.shade600,
+                            color: const Color(0xFF94A3B8),
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -4943,7 +5073,7 @@ class ShopManagementSheet extends StatelessWidget {
                           Text(
                             'Orders have been successfully processed for customer $mobile',
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey.shade600),
+                            style: TextStyle(color: const Color(0xFF94A3B8)),
                           ),
                         ],
                       ),
@@ -4967,7 +5097,7 @@ class ShopManagementSheet extends StatelessWidget {
                     SnackBar(
                       content: Row(
                         children: [
-                          const Icon(Icons.security, color: Colors.white),
+                          const Icon(Icons.security, color: const Color(0xFF111827)),
                           const SizedBox(width: 8),
                           const Expanded(
                             child: Text(
@@ -4988,7 +5118,7 @@ class ShopManagementSheet extends StatelessWidget {
                     SnackBar(
                       content: Row(
                         children: [
-                          Icon(Icons.info_outline, color: Colors.white),
+                          Icon(Icons.info_outline, color: const Color(0xFF111827)),
                           SizedBox(width: 8),
                           Expanded(child: Text('User not registered.')),
                         ],
@@ -5005,12 +5135,12 @@ class ShopManagementSheet extends StatelessWidget {
                     SnackBar(
                       content: Row(
                         children: [
-                          Icon(Icons.error_outline, color: Colors.white),
+                          Icon(Icons.error_outline, color: const Color(0xFF111827)),
                           SizedBox(width: 8),
                           Text('Failed to repair orders. Please try again.'),
                         ],
                       ),
-                      backgroundColor: Color(0xFFEF4444),
+                      backgroundColor: Color(0xFFFF4757),
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -5035,7 +5165,7 @@ class ShopManagementSheet extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: const Color(0xFF1E293B)),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Material(
@@ -5065,14 +5195,14 @@ class ShopManagementSheet extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF172a43),
+                          color: Color(0xFFE2E8F0),
                         ),
                       ),
                       Text(
                         subtitle,
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.grey.shade600,
+                          color: const Color(0xFF94A3B8),
                         ),
                       ),
                     ],
@@ -5081,7 +5211,7 @@ class ShopManagementSheet extends StatelessWidget {
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 16,
-                  color: Colors.grey.shade400,
+                  color: const Color(0xFF475569),
                 ),
               ],
             ),
@@ -5100,7 +5230,7 @@ class CustomerRetentionSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF111827),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
@@ -5110,7 +5240,9 @@ class CustomerRetentionSheet extends StatelessWidget {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFB800), Color(0xFFFF4757)],
+              ),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -5120,12 +5252,15 @@ class CustomerRetentionSheet extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF59E0B).withOpacity(0.1),
+                  color: const Color(0xFFFFB800).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFFFFB800).withOpacity(0.3),
+                  ),
                 ),
                 child: const Icon(
                   Icons.people_alt,
-                  color: Color(0xFFF59E0B),
+                  color: Color(0xFFFFB800),
                   size: 20,
                 ),
               ),
@@ -5135,7 +5270,7 @@ class CustomerRetentionSheet extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF172a43),
+                  color: Color(0xFFE2E8F0),
                 ),
               ),
             ],
@@ -5161,7 +5296,7 @@ class CustomerRetentionSheet extends StatelessWidget {
               ScaffoldMessenger.of(Get.context!).showSnackBar(
                 const SnackBar(
                   content: Text('Coming soon'),
-                  backgroundColor: Color(0xFF3B82F6),
+                  backgroundColor: Color(0xFF00D4FF),
                 ),
               );
             },
@@ -5171,12 +5306,12 @@ class CustomerRetentionSheet extends StatelessWidget {
             icon: Icons.schedule_outlined,
             title: 'See Expiring Subscriptions',
             subtitle: 'Check subscriptions ending soon',
-            color: const Color(0xFFEF4444),
+            color: const Color(0xFFFF4757),
             onTap: () {
               ScaffoldMessenger.of(Get.context!).showSnackBar(
                 const SnackBar(
                   content: Text('Coming soon'),
-                  backgroundColor: Color(0xFF3B82F6),
+                  backgroundColor: Color(0xFF00D4FF),
                 ),
               );
             },
@@ -5186,12 +5321,12 @@ class CustomerRetentionSheet extends StatelessWidget {
             icon: Icons.cloud_download_outlined,
             title: 'Get a list of download users',
             subtitle: 'View users who downloaded the app',
-            color: const Color(0xFF3B82F6),
+            color: const Color(0xFF00D4FF),
             onTap: () {
               Navigator.pop(context);
               showModalBottomSheet(
                 context: Get.context!,
-                backgroundColor: Colors.white,
+                backgroundColor: const Color(0xFF111827),
                 isScrollControlled: true,
                 builder: (context) => const DownloadedUsersSheet(),
               );
@@ -5211,7 +5346,7 @@ class CustomerRetentionSheet extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: const Color(0xFF1E293B)),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Material(
@@ -5241,14 +5376,14 @@ class CustomerRetentionSheet extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF172a43),
+                          color: Color(0xFFE2E8F0),
                         ),
                       ),
                       Text(
                         subtitle,
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.grey.shade600,
+                          color: const Color(0xFF94A3B8),
                         ),
                       ),
                     ],
@@ -5257,7 +5392,7 @@ class CustomerRetentionSheet extends StatelessWidget {
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 16,
-                  color: Colors.grey.shade400,
+                  color: const Color(0xFF475569),
                 ),
               ],
             ),
