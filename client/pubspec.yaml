@@ -13,7 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.2
   gap: ^3.0.1
-  shared_preferences: ^2.5.3
+  get_storage: ^2.1.1
   flutter_animate: ^4.5.2
   google_fonts: ^6.2.1
   http: ^1.2.2

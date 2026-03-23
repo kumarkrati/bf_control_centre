@@ -1,39 +1,36 @@
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AppStorage {
   AppStorage._();
 
-  static late SharedPreferences _prefs;
+  static late GetStorage _box;
 
   static Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+    await GetStorage.init('control-centre-box');
+    _box = GetStorage('control-centre-box');
   }
 
   static Future<void> set(String key, dynamic value) async {
-    if (value.runtimeType == double || value.runtimeType == num) {
-      await _prefs.setDouble(key, value);
-    } else if (value.runtimeType == int) {
-      await _prefs.setInt(key, value);
-    } else if (value.runtimeType == bool) {
-      await _prefs.setBool(key, value);
+    if (value.runtimeType == String ||
+        value.runtimeType == double ||
+        value.runtimeType == num ||
+        value.runtimeType == int ||
+        value.runtimeType == bool) {
+      await _box.write(key, value);
     } else {
-      if (value.runtimeType == String) {
-        await _prefs.setString(key, value);
-      } else {
-        await _prefs.setString(key, jsonEncode(value));
-      }
+      await _box.write(key, jsonEncode(value));
     }
   }
 
   static T? get<T>(String key) {
-    final value = _prefs.get(key);
+    final value = _box.read(key);
     if (value == null) {
       print("[AppStorage] No value available for '${key}'");
       return null;
     }
-    if (T.runtimeType == Map) {
+    if (T == Map) {
       return jsonDecode(value.toString());
     }
     return value as T;
@@ -59,15 +56,16 @@ class AppStorage {
       recentMobiles.removeRange(_maxRecentEntries, recentMobiles.length);
     }
 
-    await _prefs.setString(_recentMobilesKey, jsonEncode(recentMobiles));
+    await _box.write(_recentMobilesKey, jsonEncode(recentMobiles));
   }
 
   static List<String> getRecentMobiles() {
-    final value = _prefs.getString(_recentMobilesKey);
+    final value = _box.read(_recentMobilesKey);
     if (value == null) return [];
 
     try {
-      final List<dynamic> decoded = jsonDecode(value);
+      final List<dynamic> decoded =
+          value is String ? jsonDecode(value) : value;
       return decoded.map((e) => e.toString()).toList();
     } catch (e) {
       print("[AppStorage] Error decoding recent mobiles: $e");
@@ -76,6 +74,6 @@ class AppStorage {
   }
 
   static Future<void> clearRecentMobiles() async {
-    await _prefs.remove(_recentMobilesKey);
+    await _box.remove(_recentMobilesKey);
   }
 }

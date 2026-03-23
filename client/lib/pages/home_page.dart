@@ -19,7 +19,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pdf/pdf.dart' show PdfPageFormat;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,17 +34,17 @@ class _HomePageState extends State<HomePage> {
   bool _showLoginButton = false;
   bool _showRecentMobiles = false;
   List<String> _recentMobiles = [];
-  late SharedPreferences _prefs;
+  late GetStorage _box;
 
   @override
   void initState() {
     super.initState();
     _mobileController.addListener(_onMobileNumberChanged);
-    _initPrefs();
+    _initStorage();
   }
 
-  Future<void> _initPrefs() async {
-    _prefs = await SharedPreferences.getInstance();
+  void _initStorage() {
+    _box = GetStorage('control-centre-box');
     _loadRecentMobiles();
   }
 
@@ -443,7 +443,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 8),
             Text(
-              'v4.0.0+400',
+              'v6.0.0+600',
               style: GoogleFonts.poppins(
                 fontSize: 14,
                 color: Colors.grey.shade600,
@@ -718,7 +718,7 @@ class _HomePageState extends State<HomePage> {
                                     setState(() {
                                       _recentMobiles.removeAt(index);
                                     });
-                                    await _prefs.setString(
+                                    await _box.write(
                                       'recent_mobile_numbers',
                                       jsonEncode(_recentMobiles),
                                     );
@@ -800,7 +800,7 @@ class _HomePageState extends State<HomePage> {
               color: const Color(0xFFEF4444),
               onTap: _showPasswordManagement,
             ),
-            if (AppStorage.isAdmin) ...[
+            if (LoginUtils.isAdmin) ...[
               const SizedBox(height: 16),
               _buildManagementCard(
                 title: 'Subscription Management',

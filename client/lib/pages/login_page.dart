@@ -400,7 +400,7 @@ class _LoginPageState extends State<LoginPage>
 
                         // Footer
                         Text(
-                          'BIllingFast Control Centre v4.0',
+                          'BIllingFast Control Centre v6.0',
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.white.withOpacity(0.6),
