@@ -800,7 +800,7 @@ class _HomePageState extends State<HomePage> {
               color: const Color(0xFFEF4444),
               onTap: _showPasswordManagement,
             ),
-            if (AppStorage.get<String>('role') == 'ADMIN') ...[
+            if (AppStorage.isAdmin) ...[
               const SizedBox(height: 16),
               _buildManagementCard(
                 title: 'Subscription Management',

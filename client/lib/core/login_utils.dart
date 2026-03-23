@@ -8,5 +8,5 @@ class LoginUtils {
     return token != null && token.length > 10;
   }
 
-  static bool get isAdmin => AppStorage.get<String>('role') == 'ADMIN';
+  static bool get isAdmin => AppStorage.get<String>('staffRole') == 'ADMIN';
 }

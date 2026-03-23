@@ -41,7 +41,7 @@ class ServerUtils {
         await AppStorage.set('name', responseData['name']);
         await AppStorage.set('username', username);
         await AppStorage.set('accessToken', responseData['token']);
-        await AppStorage.set('role', responseData['role']);
+        await AppStorage.set('staffRole', responseData['role']);
         return LoginStatus.success;
       } else if (response.statusCode == 401) {
         return LoginStatus.invalid;
