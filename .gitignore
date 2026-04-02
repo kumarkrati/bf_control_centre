@@ -5,3 +5,6 @@ deno.lock
 .env
 control-centre-logs.log
 server/.logs/
+
+# FVM Version Cache
+.fvm/

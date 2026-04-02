@@ -1350,7 +1350,7 @@ class SubscriptionManagementSheet extends StatefulWidget {
 class _SubscriptionManagementSheetState
     extends State<SubscriptionManagementSheet> {
   int _selectedOption =
-      0; // 0 = Update Subscription, 1 = Generate Invoice, 2 = View Invoices, 3 = Pending Receipts
+      0; // 0 = Update Subscription, 1 = Generate Invoice, 2 = View Invoices, 3 = Pending Receipts, 4 = Monthly
 
   // Update Subscription fields
   String _subSelectedPlan = 'PREMIUM';
@@ -1385,6 +1385,14 @@ class _SubscriptionManagementSheetState
   bool _isLoadingPendingReceipts = false;
   final TextEditingController _pendingSearchController = TextEditingController();
   String _pendingSearchQuery = '';
+
+  // Monthly Subs fields
+  int _monthlySelectedMonth = DateTime.now().month;
+  int _monthlySelectedYear = DateTime.now().year;
+  List<Map<String, dynamic>> _monthlySubsUsers = [];
+  bool _isLoadingMonthlySubs = false;
+  final TextEditingController _monthlySearchController = TextEditingController();
+  String _monthlySearchQuery = '';
 
   final List<String> _planTypes = ['PREMIUM', 'ULTRA', 'LITE'];
   final List<String> _durations = [
@@ -1792,6 +1800,53 @@ class _SubscriptionManagementSheetState
                     ),
                   ),
                 ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() => _selectedOption = 4);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: _selectedOption == 4
+                            ? const Color(0xFF1E293B)
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: _selectedOption == 4
+                            ? [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ]
+                            : null,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.calendar_month,
+                            size: 18,
+                            color: _selectedOption == 4
+                                ? const Color(0xFF10B981)
+                                : const Color(0xFF94A3B8),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Monthly',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: _selectedOption == 4
+                                  ? const Color(0xFF10B981)
+                                  : const Color(0xFF94A3B8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -1804,7 +1859,9 @@ class _SubscriptionManagementSheetState
                 ? _buildGenerateInvoiceForm()
                 : _selectedOption == 2
                 ? _buildViewInvoicesTable()
-                : _buildPendingReceiptsTable(),
+                : _selectedOption == 3
+                ? _buildPendingReceiptsTable()
+                : _buildMonthlySubsView(),
           ),
         ],
       ),
@@ -3982,6 +4039,557 @@ class _SubscriptionManagementSheetState
     }
   }
 
+  static const List<String> _monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+
+  Future<void> _fetchMonthlySubs() async {
+    setState(() => _isLoadingMonthlySubs = true);
+    final startDate = DateTime(_monthlySelectedYear, _monthlySelectedMonth, 1);
+    final endDate = DateTime(_monthlySelectedYear, _monthlySelectedMonth + 1, 0);
+    final result = await ServerUtils.fetchPendingReceipts(
+      startDate: startDate,
+      endDate: endDate,
+    );
+    setState(() {
+      _isLoadingMonthlySubs = false;
+      if (result.status == FetchPendingReceiptsStatus.success) {
+        _monthlySubsUsers = result.users;
+      } else if (result.status == FetchPendingReceiptsStatus.unauthorized) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.security, color: Color(0xFF111827)),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text('Your session has expired, relogin is required.'),
+                ),
+              ],
+            ),
+            backgroundColor: const Color(0xFF660011),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(
+            content: const Text('Failed to fetch monthly subscriptions'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    });
+  }
+
+  Future<void> _downloadMonthlySubsCSV() async {
+    try {
+      final users = _monthlySearchQuery.isEmpty
+          ? _monthlySubsUsers
+          : _monthlySubsUsers.where((user) {
+              final phone = (user['phone'] ?? '').toString().toLowerCase();
+              return phone.contains(_monthlySearchQuery.toLowerCase());
+            }).toList();
+
+      final rows = <List<String>>[
+        ['Phone', 'Name', 'Plan', 'Days', 'Date'],
+        ...users.map((user) {
+          String date = '-';
+          if (user['substartedat'] != null) {
+            try {
+              final dt = DateTime.parse(user['substartedat']);
+              date = '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
+            } catch (_) {}
+          }
+          return [
+            user['phone']?.toString() ?? '-',
+            user['name']?.toString() ?? '-',
+            user['subplan']?.toString() ?? '-',
+            user['subdays']?.toString() ?? '-',
+            date,
+          ];
+        }),
+      ];
+
+      final csvData = const ListToCsvConverter().convert(rows);
+      final bytes = Uint8List.fromList(utf8.encode(csvData));
+
+      final monthName = _monthNames[_monthlySelectedMonth - 1];
+      final filename = 'BillingFast_Subs_${monthName}_$_monthlySelectedYear.csv';
+
+      await FileSaver.instance.saveFile(
+        name: filename,
+        bytes: bytes,
+        mimeType: MimeType.csv,
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Exported ${users.length} subscriptions to $filename'),
+            backgroundColor: const Color(0xFF10B981),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to export: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Widget _buildMonthlySubsView() {
+    final now = DateTime.now();
+    return Column(
+      children: [
+        // Month & Year selector row
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xFF0F1629),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xFF1E293B)),
+          ),
+          child: Row(
+            children: [
+              // Month dropdown
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: const Color(0xFF1E293B)),
+                    borderRadius: BorderRadius.circular(8),
+                    color: const Color(0xFF1E293B),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<int>(
+                      value: _monthlySelectedMonth,
+                      dropdownColor: const Color(0xFF1E293B),
+                      isExpanded: true,
+                      style: const TextStyle(fontSize: 13, color: Colors.white),
+                      items: List.generate(12, (i) {
+                        return DropdownMenuItem(
+                          value: i + 1,
+                          child: Text(_monthNames[i]),
+                        );
+                      }),
+                      onChanged: (value) {
+                        if (value != null) {
+                          setState(() => _monthlySelectedMonth = value);
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              // Year dropdown
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFF1E293B)),
+                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xFF1E293B),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<int>(
+                    value: _monthlySelectedYear,
+                    dropdownColor: const Color(0xFF1E293B),
+                    style: const TextStyle(fontSize: 13, color: Colors.white),
+                    items: List.generate(now.year - 2020 + 1, (i) {
+                      final year = 2020 + i;
+                      return DropdownMenuItem(
+                        value: year,
+                        child: Text('$year'),
+                      );
+                    }),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => _monthlySelectedYear = value);
+                      }
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              // Search button
+              ElevatedButton.icon(
+                onPressed: _isLoadingMonthlySubs ? null : _fetchMonthlySubs,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF10B981),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: _isLoadingMonthlySubs
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
+                    : const Icon(Icons.search, size: 18),
+                label: const Text('Search'),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        // Phone search field
+        TextField(
+          controller: _monthlySearchController,
+          style: const TextStyle(fontSize: 13),
+          decoration: InputDecoration(
+            hintText: 'Filter by phone number...',
+            hintStyle: const TextStyle(color: Color(0xFF475569), fontSize: 13),
+            prefixIcon: const Icon(Icons.search, size: 18, color: Color(0xFF475569)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            filled: true,
+            fillColor: const Color(0xFF0F1629),
+          ),
+          onChanged: (value) => setState(() => _monthlySearchQuery = value.trim()),
+        ),
+        const SizedBox(height: 16),
+
+        // Results info + download button
+        if (_monthlySubsUsers.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Row(
+              children: [
+                Icon(Icons.info_outline, size: 16, color: const Color(0xFF94A3B8)),
+                const SizedBox(width: 8),
+                Builder(
+                  builder: (context) {
+                    final filteredCount = _monthlySearchQuery.isEmpty
+                        ? _monthlySubsUsers.length
+                        : _monthlySubsUsers.where((user) {
+                            final phone = (user['phone'] ?? '').toString().toLowerCase();
+                            return phone.contains(_monthlySearchQuery.toLowerCase());
+                          }).length;
+                    return Text(
+                      '$filteredCount subscription(s) in ${_monthNames[_monthlySelectedMonth - 1]} $_monthlySelectedYear',
+                      style: TextStyle(fontSize: 13, color: const Color(0xFF94A3B8)),
+                    );
+                  },
+                ),
+                const Spacer(),
+                ElevatedButton.icon(
+                  onPressed: _downloadMonthlySubsCSV,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF00D4FF),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  icon: const Icon(Icons.download, size: 16),
+                  label: const Text('Download', style: TextStyle(fontSize: 12)),
+                ),
+              ],
+            ),
+          ),
+
+        // Table
+        Expanded(
+          child: _isLoadingMonthlySubs
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF10B981)),
+                  ),
+                )
+              : _monthlySubsUsers.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.calendar_month,
+                        size: 48,
+                        color: const Color(0xFF475569),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'No subscriptions found',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: const Color(0xFF94A3B8),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Select a month and year, then click Search',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: const Color(0xFF94A3B8),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Builder(
+                  builder: (context) {
+                    final filteredUsers = _monthlySearchQuery.isEmpty
+                        ? _monthlySubsUsers
+                        : _monthlySubsUsers.where((user) {
+                            final phone = (user['phone'] ?? '').toString().toLowerCase();
+                            return phone.contains(_monthlySearchQuery.toLowerCase());
+                          }).toList();
+
+                    if (filteredUsers.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.search_off, size: 48, color: const Color(0xFF475569)),
+                            const SizedBox(height: 16),
+                            Text(
+                              'No matching users',
+                              style: TextStyle(fontSize: 16, color: const Color(0xFF94A3B8)),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Try a different phone number',
+                              style: TextStyle(fontSize: 13, color: const Color(0xFF94A3B8)),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return SingleChildScrollView(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xFF1E293B)),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          children: [
+                            // Table header
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF0F1629),
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(8),
+                                ),
+                              ),
+                              child: const Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Phone',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Name',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Plan',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Days',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Date',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Table rows
+                            ...filteredUsers.map((user) {
+                              String date = '-';
+                              if (user['substartedat'] != null) {
+                                try {
+                                  final dt = DateTime.parse(user['substartedat']);
+                                  date = '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
+                                } catch (_) {}
+                              }
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(color: const Color(0xFF1E293B)),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        user['phone'] ?? '-',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        user['name'] ?? '-',
+                                        style: const TextStyle(fontSize: 12),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        user['subplan'] ?? '-',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        '${user['subdays'] ?? '-'}',
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        date,
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _downloadPendingReceiptsCSV() async {
+    try {
+      final users = _pendingSearchQuery.isEmpty
+          ? _pendingReceiptsUsers
+          : _pendingReceiptsUsers.where((user) {
+              final phone = (user['phone'] ?? '').toString().toLowerCase();
+              return phone.contains(_pendingSearchQuery.toLowerCase());
+            }).toList();
+
+      final rows = <List<String>>[
+        ['Phone', 'Name', 'Plan', 'Days', 'Date'],
+        ...users.map((user) {
+          String date = '-';
+          if (user['substartedat'] != null) {
+            try {
+              final dt = DateTime.parse(user['substartedat']);
+              date = '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
+            } catch (_) {}
+          }
+          return [
+            user['phone']?.toString() ?? '-',
+            user['name']?.toString() ?? '-',
+            user['subplan']?.toString() ?? '-',
+            user['subdays']?.toString() ?? '-',
+            date,
+          ];
+        }),
+      ];
+
+      final csvData = const ListToCsvConverter().convert(rows);
+      final bytes = Uint8List.fromList(utf8.encode(csvData));
+
+      final startStr = _pendingReceiptsStartDate.toString().split(' ')[0];
+      final endStr = _pendingReceiptsEndDate.toString().split(' ')[0];
+      final filename = 'BillingFast_PendingReceipts_${startStr}_to_$endStr.csv';
+
+      await FileSaver.instance.saveFile(
+        name: filename,
+        bytes: bytes,
+        mimeType: MimeType.csv,
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Exported ${users.length} pending receipts to $filename'),
+            backgroundColor: const Color(0xFF10B981),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to export: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   Widget _buildPendingReceiptsTable() {
     return Column(
       children: [
@@ -4165,6 +4773,25 @@ class _SubscriptionManagementSheetState
                       style: TextStyle(fontSize: 13, color: const Color(0xFF94A3B8)),
                     );
                   },
+                ),
+                const Spacer(),
+                ElevatedButton.icon(
+                  onPressed: _downloadPendingReceiptsCSV,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF00D4FF),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  icon: const Icon(Icons.download, size: 16),
+                  label: const Text('Download', style: TextStyle(fontSize: 12)),
                 ),
               ],
             ),

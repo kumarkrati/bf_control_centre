@@ -43,7 +43,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "Control Centre v6",
+      title: "Control Centre v8",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
