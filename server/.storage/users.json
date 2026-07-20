@@ -30,15 +30,9 @@
     "role": "STAFF"
   },
   {
-    "name": "Kritika",
-    "username": "kritika",
-    "password": "user@123",
-    "role": "STAFF"
-  },
-  {
-    "name": "Rani",
-    "username": "rani",
-    "password": "user@123",
+    "name": "Mohan",
+    "username": "mohan",
+    "password": "mohan@bf.com",
     "role": "STAFF"
   },
   {
