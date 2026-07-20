@@ -288,11 +288,12 @@ class ServerUtils {
     }
   }
 
-  static Future<List<dynamic>?> getTodaysNewUsers() async {
+  static Future<List<dynamic>?> getTodaysNewUsers({String? date}) async {
     try {
       final Map<String, dynamic> reqBody = {
         'key': _key,
         'credentials': _credentials,
+        if (date != null) 'date': date,
       };
       final response = await http.post(
         Uri.parse('${_api}live-new-users'),

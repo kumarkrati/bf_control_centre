@@ -194,12 +194,14 @@ export class DbOps {
     }
   }
 
-  async getTodaysNewUsers(): Promise<any[]> {
+  async getTodaysNewUsers(forDate?: string): Promise<any[]> {
     try {
       const date = new Date();
-      const today = `${date.getFullYear()}-${
-        String(date.getMonth() + 1).padStart(2, "0")
-      }-${String(date.getDate()).padStart(2, "0")}`;
+      const today = forDate && /^\d{4}-\d{2}-\d{2}$/.test(forDate)
+        ? forDate
+        : `${date.getFullYear()}-${
+          String(date.getMonth() + 1).padStart(2, "0")
+        }-${String(date.getDate()).padStart(2, "0")}`;
 
       this.logger.log(`Fetching users for date: ${today}`);
 

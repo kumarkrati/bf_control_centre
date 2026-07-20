@@ -11,7 +11,7 @@ export function liveNewUsers(app: Hono, logger: AppLogger, dbops: DbOps) {
     encrypted(async (json: any, context: Context) => {
       logger.log("Fetching today's new users ...");
 
-      const users = await dbops.getTodaysNewUsers();
+      const users = await dbops.getTodaysNewUsers(json.date);
 
       return context.json({
         message: users,

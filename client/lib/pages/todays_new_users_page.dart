@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:bf_control_centre/core/server_utils.dart';
+import 'package:csv/csv.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,6 +22,17 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
   Timer? _pollTimer;
   bool _isLoading = false;
   late AnimationController _blinkController;
+  DateTime _selectedDate = DateTime.now();
+
+  bool get _isToday {
+    final now = DateTime.now();
+    return _selectedDate.year == now.year &&
+        _selectedDate.month == now.month &&
+        _selectedDate.day == now.day;
+  }
+
+  String get _selectedDateStr =>
+      '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}';
 
   @override
   void initState() {
@@ -28,9 +43,9 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
     )..repeat(reverse: true);
     _fetchUsers();
 
-    // Poll every 30 seconds
+    // Poll every 30 seconds (only while viewing today)
     _pollTimer = Timer.periodic(const Duration(seconds: 30), (_) {
-      if (mounted) _fetchUsers();
+      if (mounted && _isToday) _fetchUsers();
     });
   }
 
@@ -46,7 +61,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
 
     setState(() => _isLoading = true);
 
-    final users = await ServerUtils.getTodaysNewUsers();
+    final users = await ServerUtils.getTodaysNewUsers(date: _selectedDateStr);
 
     if (mounted) {
       setState(() {
@@ -545,14 +560,127 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
     }
   }
 
+  Future<void> _pickDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && mounted) {
+      setState(() {
+        _selectedDate = picked;
+        _users = null;
+      });
+      _fetchUsers();
+    }
+  }
+
+  Future<void> _exportLeadsCsv() async {
+    final users = _users;
+    if (users == null || users.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No leads to download'),
+          backgroundColor: Colors.orange,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+
+    try {
+      final List<List<dynamic>> rows = [
+        ['#', 'Name', 'Shop', 'Mobile', 'Status', 'Assigned To', 'Notes'],
+      ];
+      for (var i = 0; i < users.length; i++) {
+        final user = users[i];
+        rows.add([
+          i + 1,
+          user['name'] ?? '',
+          user['shop'] ?? '',
+          user['mobile'] ?? '',
+          user['isAssigned'] == true ? 'Assigned' : 'Pending',
+          user['assignedTo'] ?? '',
+          user['notes'] ?? '',
+        ]);
+      }
+
+      final csvData = const ListToCsvConverter().convert(rows);
+      final bytes = Uint8List.fromList(utf8.encode(csvData));
+      final filename = 'BillingFast_Leads_$_selectedDateStr.csv';
+
+      await FileSaver.instance.saveFile(
+        name: filename,
+        bytes: bytes,
+        mimeType: MimeType.csv,
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Downloaded ${users.length} leads to $filename'),
+            backgroundColor: const Color(0xFF10B981),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to download leads: $e'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E1A),
       appBar: AppBar(
-        title: const Text("Today's New Users"),
+        title: Text(_isToday ? "Today's New Users" : 'New Users'),
         actions: [
+          // Date filter
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            child: TextButton.icon(
+              onPressed: _pickDate,
+              icon: const Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: Color(0xFF3B82F6),
+              ),
+              label: Text(
+                _isToday ? 'Today' : _selectedDateStr,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF3B82F6),
+                ),
+              ),
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xFF3B82F6).withOpacity(0.1),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+            ),
+          ),
+          // Download leads
+          IconButton(
+            onPressed:
+                (_users == null || _users!.isEmpty) ? null : _exportLeadsCsv,
+            icon: const Icon(Icons.download),
+            tooltip: 'Download leads (CSV)',
+          ),
           // Live indicator
+          if (_isToday)
           Container(
             margin: const EdgeInsets.only(right: 8),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -622,7 +750,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                 const SizedBox(width: 8),
                 Text(
                   _users != null
-                      ? '${_users!.length} new user${_users!.length == 1 ? '' : 's'} today'
+                      ? '${_users!.length} new user${_users!.length == 1 ? '' : 's'} ${_isToday ? 'today' : 'on $_selectedDateStr'}'
                       : 'Loading...',
                   style: const TextStyle(
                     fontSize: 14,
@@ -638,8 +766,8 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
                   ),
                 const SizedBox(width: 16),
                 Text(
-                  'Auto-refresh: 30s',
-                  style: TextStyle(fontSize: 11, color: const Color(0xFF94A3B8)),
+                  _isToday ? 'Auto-refresh: 30s' : 'Auto-refresh paused',
+                  style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
                 ),
               ],
             ),
@@ -681,7 +809,7 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
             ),
             const SizedBox(height: 16),
             Text(
-              'No new users today',
+              _isToday ? 'No new users today' : 'No new users on $_selectedDateStr',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -690,8 +818,10 @@ class _TodaysNewUsersPageState extends State<TodaysNewUsersPage>
             ),
             const SizedBox(height: 8),
             Text(
-              'New users who sign up today will appear here',
-              style: TextStyle(fontSize: 14, color: const Color(0xFF94A3B8)),
+              _isToday
+                  ? 'New users who sign up today will appear here'
+                  : 'Pick another date to view its new users',
+              style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
               textAlign: TextAlign.center,
             ),
           ],
